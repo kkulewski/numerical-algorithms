@@ -6,7 +6,12 @@ namespace PowerSeries
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Math.Atan(1));
+            Console.WriteLine(GetArctanUsingMathLibrary(1));
+        }
+
+        public static double GetArctanUsingMathLibrary(int x)
+        {
+            return Math.Atan(x);
         }
     }
 }
