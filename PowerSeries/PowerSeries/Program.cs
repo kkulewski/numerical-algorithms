@@ -8,10 +8,17 @@ namespace PowerSeries
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(GetArctanUsingMathLibrary(1));
+            var arg = 1.0;
+            var seriesLastElementIndex = 100_000;
 
+            Console.WriteLine("Using library function:");
+            Console.WriteLine(GetArctanUsingMathLibrary(arg));
 
-            Console.WriteLine(GetArctanPowerSeries(1, 10000).Sum());
+            Console.WriteLine("Power series summation (first to last):");
+            Console.WriteLine(GetArctanPowerSeries(arg, seriesLastElementIndex).Sum());
+
+            Console.WriteLine("Power series summation (last to first):");
+            Console.WriteLine(GetArctanPowerSeries(arg, seriesLastElementIndex).Reverse().Sum());
         }
 
         public static double GetArctanUsingMathLibrary(double x)
