@@ -10,7 +10,8 @@ namespace PowerSeries
         {
             Console.WriteLine(GetArctanUsingMathLibrary(1));
 
-            Console.WriteLine(GetArctanPowerSeries(1, 0, 10000).Sum());
+
+            Console.WriteLine(GetArctanPowerSeries(1, 10000).Sum());
         }
 
         public static double GetArctanUsingMathLibrary(double x)
@@ -18,9 +19,16 @@ namespace PowerSeries
             return Math.Atan(x);
         }
 
-        public static IEnumerable<double> GetArctanPowerSeries(double x, int first, int last)
+        public static IEnumerable<double> GetArctanPowerSeries(double argument, int lastIndex)
         {
-            return Enumerable.Range(first, last).Select(r => Math.Pow(-1, r) * Math.Pow(x, 2 * r + 1) / (2 * r + 1));
+            // (-1)^r * x^(2r+1) / (2r+1)
+            Func<int, double> arctanFunc = r => Math.Pow(-1, r) * Math.Pow(argument, 2 * r + 1) / (2 * r + 1);
+            return GetFunctionPowerSeries(arctanFunc, 0, lastIndex);
+        }
+
+        public static IEnumerable<double> GetFunctionPowerSeries(Func<int, double> function, int firstIndex, int lastIndex)
+        {
+            return Enumerable.Range(firstIndex, lastIndex).Select(function);
         }
     }
 }
