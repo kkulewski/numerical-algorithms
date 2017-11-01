@@ -15,14 +15,14 @@ namespace Matrix
             _matrix = matrix;
         }
 
-        public int Cols => _matrix.GetLength(0);
+        public int Rows => _matrix.GetLength(0);
 
-        public int Rows => _matrix.GetLength(1);
+        public int Cols => _matrix.GetLength(1);
 
-        public T this[int col, int row]
+        public T this[int row, int col]
         {
-            get => _matrix[col, row];
-            set => _matrix[col, row] = value;
+            get => _matrix[row, col];
+            set => _matrix[row, col] = value;
         }
 
         public static MyMatrix<T> operator +(MyMatrix<T> a, MyMatrix<T> b)
@@ -30,10 +30,10 @@ namespace Matrix
             if(a.Rows != b.Rows || a.Cols != b.Cols)
                 throw new ArgumentException("Matrix sizes are not equal.");
 
-            var output = new T[a.Cols, a.Rows];
-            for (var i = 0; i < a.Cols; i++)
+            var output = new T[a.Rows, a.Cols];
+            for (var i = 0; i < a.Rows; i++)
             {
-                for (var j = 0; j < a.Rows; j++)
+                for (var j = 0; j < a.Cols; j++)
                 {
                     output[i, j] = (dynamic)a[i, j] + (dynamic)b[i, j];
                 }
