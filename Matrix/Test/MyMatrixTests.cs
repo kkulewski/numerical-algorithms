@@ -104,5 +104,35 @@ namespace Test
             Assert.Equal(49, c[1, 0]);
             Assert.Equal(64, c[1, 1]);
         }
+
+        [Fact]
+        public void NonSquare3X3M3X2MatricesMultiplicatedCorrectly()
+        {
+            var a = new MyMatrix<int>(new[,]
+            {
+                {1, 2, 3 },
+                {4, 5, 6 },
+                {1, 2, 4 }
+            });
+
+            var b = new MyMatrix<int>(new[,]
+            {
+                {1, 2 },
+                {3, 4 },
+                {5, 6 }
+            });
+
+            var c = a * b;
+
+            // [1 2 3] * [1 2] = [22 28]
+            // [4 5 6] * [3 4] = [49 64]
+            // [1 2 4] * [5 6] = [27 70]
+            Assert.Equal(22, c[0, 0]);
+            Assert.Equal(28, c[0, 1]);
+            Assert.Equal(49, c[1, 0]);
+            Assert.Equal(64, c[1, 1]);
+            Assert.Equal(27, c[2, 0]);
+            Assert.Equal(34, c[2, 1]);
+        }
     }
 }
