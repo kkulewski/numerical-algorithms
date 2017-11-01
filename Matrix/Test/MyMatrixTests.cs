@@ -134,5 +134,27 @@ namespace Test
             Assert.Equal(27, c[2, 0]);
             Assert.Equal(34, c[2, 1]);
         }
+
+        [Fact]
+        public void FractionMatriceMultiplication()
+        {
+            var a = new MyMatrix<Fraction>(new[,]
+            {
+                { new Fraction(1, 2), new Fraction(1, 3), }
+            });
+
+            var b = new MyMatrix<Fraction>(new[,]
+            {
+                {new Fraction(1, 4) },
+                {new Fraction(1, 2), }
+            });
+
+            var c = a * b;
+
+            // [1/2 1/3] * [1/4] = [1/8 + 1/6 =  6/48 + 8/48 = 14/48 = 7/24]
+            //           * [1/2] =
+            Assert.Equal(7, c[0, 0].Numerator);
+            Assert.Equal(24, c[0, 0].Denominator);
+        }
     }
 }
