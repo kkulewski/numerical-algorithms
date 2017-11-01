@@ -25,9 +25,21 @@ namespace Matrix
             set => _matrix[col, row] = value;
         }
 
-        public static T operator +(MyMatrix<T> a, MyMatrix<T> b)
+        public static MyMatrix<T> operator +(MyMatrix<T> a, MyMatrix<T> b)
         {
-            throw new NotImplementedException();
+            if(a.Rows != b.Rows || a.Cols != b.Cols)
+                throw new ArgumentException("Matrix sizes are not equal.");
+
+            var output = new T[a.Cols, a.Rows];
+            for (var i = 0; i < a.Cols; i++)
+            {
+                for (var j = 0; j < a.Rows; j++)
+                {
+                    output[i, j] = (dynamic)a[i, j] + (dynamic)b[i, j];
+                }
+            }
+
+            return new MyMatrix<T>(output);
         }
 
         public static T operator *(MyMatrix<T> a, MyMatrix<T> b)
