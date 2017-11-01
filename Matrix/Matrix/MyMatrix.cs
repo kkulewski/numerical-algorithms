@@ -44,13 +44,13 @@ namespace Matrix
 
         public static MyMatrix<T> operator *(MyMatrix<T> a, MyMatrix<T> b)
         {
-            if (a.Rows != b.Rows || a.Cols != b.Cols)
+            if (a.Cols != b.Rows)
                 throw new ArgumentException("Matrix sizes are not equal.");
 
-            var output = new T[a.Rows, a.Cols];
+            var output = new T[a.Rows, b.Cols];
             for (var row = 0; row < a.Rows; row++)
             {
-                for (var col = 0; col < a.Cols; col++)
+                for (var col = 0; col < b.Cols; col++)
                 {
                     dynamic sum = 0;
                     for (var k = 0; k < a.Cols; k++)
