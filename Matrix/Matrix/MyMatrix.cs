@@ -19,6 +19,12 @@ namespace Matrix
 
         public int Rows => _matrix.GetLength(1);
 
+        public T this[int col, int row]
+        {
+            get => _matrix[col, row];
+            set => _matrix[col, row] = value;
+        }
+
         public static T operator +(MyMatrix<T> a, MyMatrix<T> b)
         {
             throw new NotImplementedException();
