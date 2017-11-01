@@ -3,10 +3,16 @@ using System.Numerics;
 
 namespace Matrix
 {
-    public struct Fraction
+    public class Fraction
     {
         public BigInteger Numerator { get; set; }
         public BigInteger Denominator { get; set; }
+
+        public Fraction()
+        {
+            Numerator = 0;
+            Denominator = 1;
+        }
 
         public Fraction(BigInteger numerator, BigInteger denominator)
         {
