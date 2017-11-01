@@ -5,8 +5,8 @@ namespace Matrix
 {
     public struct Fraction
     {
-        private BigInteger _numerator;
-        private BigInteger _denominator;
+        public BigInteger _numerator;
+        public BigInteger _denominator;
 
         public Fraction(BigInteger numerator, BigInteger denominator)
         {
@@ -15,6 +15,14 @@ namespace Matrix
 
             _numerator = numerator;
             _denominator = denominator;
+            Simplify();
+        }
+
+        public void Simplify()
+        {
+            var gcd = GreatestCommonDivisor(_numerator, _denominator);
+            _numerator /= gcd;
+            _denominator /= gcd;
         }
 
         public BigInteger GreatestCommonDivisor(BigInteger a, BigInteger b)
