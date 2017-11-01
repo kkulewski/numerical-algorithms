@@ -54,6 +54,11 @@ namespace Matrix
             return new Fraction(-a.Numerator, a.Denominator);
         }
 
+        public static Fraction operator -(Fraction a, Fraction b)
+        {
+            return a + -b;
+        }
+
         public static BigInteger GreatestCommonDivisor(BigInteger a, BigInteger b)
         {
             while (b != 0)
