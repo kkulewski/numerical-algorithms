@@ -31,6 +31,14 @@ namespace Matrix
             }
         }
 
+        public static Fraction operator *(Fraction a, Fraction b)
+        {
+            var result = new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
+            result.Simplify();
+
+            return result;
+        }
+
         public BigInteger GreatestCommonDivisor(BigInteger a, BigInteger b)
         {
             while (b != 0)
