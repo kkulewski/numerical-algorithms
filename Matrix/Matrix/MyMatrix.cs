@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Matrix
 {
-    public class MyMatrix<T>
+    public class MyMatrix<T> where T: new()
     {
         private readonly T[,] _matrix;
 
@@ -52,7 +48,7 @@ namespace Matrix
             {
                 for (var col = 0; col < b.Cols; col++)
                 {
-                    dynamic sum = 0;
+                    var sum = new T();
                     for (var k = 0; k < a.Cols; k++)
                     {
                         sum += (dynamic) a[row, k] * (dynamic) b[k, col];
