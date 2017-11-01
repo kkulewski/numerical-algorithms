@@ -5,24 +5,30 @@ namespace Matrix
 {
     public struct Fraction
     {
-        public BigInteger _numerator;
-        public BigInteger _denominator;
+        public BigInteger Numerator { get; set; }
+        public BigInteger Denominator { get; set; }
 
         public Fraction(BigInteger numerator, BigInteger denominator)
         {
             if(denominator == 0)
                 throw new ArgumentException("Denominator cannot be equal to 0!");
 
-            _numerator = numerator;
-            _denominator = denominator;
+            Numerator = numerator;
+            Denominator = denominator;
             Simplify();
         }
 
         public void Simplify()
         {
-            var gcd = GreatestCommonDivisor(_numerator, _denominator);
-            _numerator /= gcd;
-            _denominator /= gcd;
+            var gcd = GreatestCommonDivisor(Numerator, Denominator);
+            Numerator /= gcd;
+            Denominator /= gcd;
+
+            if (Denominator < 0)
+            {
+                Denominator *= -1;
+                Numerator *= -1;
+            }
         }
 
         public BigInteger GreatestCommonDivisor(BigInteger a, BigInteger b)
