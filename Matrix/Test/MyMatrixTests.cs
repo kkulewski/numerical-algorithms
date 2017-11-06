@@ -156,5 +156,28 @@ namespace Test
             Assert.Equal(7, c[0, 0].Numerator);
             Assert.Equal(24, c[0, 0].Denominator);
         }
+
+        [Fact]
+        public void IntMatrixWithVectorMultiplication()
+        {
+            var a = new MyMatrix<int>(new[,]
+            {
+                {1, 2 },
+                {3, 4 }
+            });
+
+            var b = new MyMatrix<int>(new [,]
+            {
+                {2 },
+                {4 }
+            });
+
+            var c = a * b;
+
+            // [1 2] * [2] = [10]
+            // [3 4] * [4] = [22]
+            Assert.Equal(10, c[0, 0]);
+            Assert.Equal(22, c[1, 0]);
+        }
     }
 }
