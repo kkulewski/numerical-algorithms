@@ -248,5 +248,40 @@ namespace Test
             Assert.Equal(-1.0, m[2, 2]);
             Assert.Equal(1.0, v[2]);
         }
+
+        [Fact]
+        public void MatrixGaussianReductionCoefficentDouble()
+        {
+            var m = new MyMatrix<double>(new[,]
+            {
+                {1.0, 2.0, 3.0 },
+                {4.0, 5.0, 6.0 },
+                {7.0, 8.0, 8.0 }
+            });
+
+            var v = new[] { 1.0, 2.0, 4.0 };
+
+            MyMatrix<double>.GaussReduction(m, v);
+
+            // [1  2  3 | 1 ] = [1  0  0 | -1.33 ]
+            // [0 -3 -6 |-2 ] = [0 -3  0 |    -8 ]
+            // [0  0 -1 | 1 ] = [0  0 -1 |     1 ]
+            MyMatrix<double>.GaussReductionCoefficents(m, v);
+
+            Assert.Equal(1.0, m[0, 0]);
+            Assert.Equal(0.0, m[0, 1]);
+            Assert.Equal(0.0, m[0, 2]);
+            Assert.InRange(v[0], -1.4, -1.3);
+
+            Assert.Equal(0.0, m[1, 0]);
+            Assert.Equal(-3.0, m[1, 1]);
+            Assert.Equal(0.0, m[1, 2]);
+            Assert.Equal(-8.0, v[1]);
+
+            Assert.Equal(0.0, m[2, 0]);
+            Assert.Equal(0.0, m[2, 1]);
+            Assert.Equal(-1.0, m[2, 2]);
+            Assert.Equal(1.0, v[2]);
+        }
     }
 }
