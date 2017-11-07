@@ -109,5 +109,14 @@ namespace Matrix
                 }
             }
         }
+
+        public static void GaussReductionIdentityMatrix(MyMatrix<T> m, T[] v)
+        {
+            for (int i = 0; i < m.Cols; i++)
+            {
+                v[i] = v[i] / (dynamic) m[i, i];
+                m[i, i] = m[i, i] / (dynamic) m[i, i];
+            }
+        }
     }
 }
