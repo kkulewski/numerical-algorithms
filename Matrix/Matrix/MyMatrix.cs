@@ -60,5 +60,35 @@ namespace Matrix
 
             return new MyMatrix<T>(output);
         }
+
+        public static MyMatrix<T> GaussReduction(MyMatrix<T> m, T[] v)
+        {
+            // select row used to reset rows below it
+            for (int i = 0; i < m.Cols-1; i++)
+            {
+                // loop on each row below selected row
+                for (int j = i+1; j < m.Cols; j++)
+                {
+                    // if current row has leading num is not 0
+                    if (m[j, i] != (dynamic) new T())
+                    {
+                        // get scalar for current row
+                        var scalar = m[j, i] / (dynamic) m[i, i];
+
+                        // substract selected row (multiplied by scalar) from current row
+                        for (int k = 0; k < m.Cols; k++)
+                        {
+                            // substract each column
+                            m[j, k] -= m[i, k] * scalar;
+                        }
+
+                        // substract selected vector row (multiplied by scalar) from current row
+                        v[j] -= v[i] * scalar;
+                    }
+                }
+            }
+            
+            return m;
+        }
     }
 }
