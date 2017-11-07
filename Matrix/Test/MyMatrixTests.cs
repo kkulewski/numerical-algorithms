@@ -179,5 +179,42 @@ namespace Test
             Assert.Equal(10, c[0, 0]);
             Assert.Equal(22, c[1, 0]);
         }
+
+        [Fact]
+        public void MatrixGaussianReduction()
+        {
+            var m = new MyMatrix<int>(new[,]
+            {
+                {1, 2, 3 },
+                {4, 5, 6 },
+                {7, 8, 8 }
+            });
+
+            var v = new[] { 1, 2, 4 };
+
+            // [1 2 3 | 1 ] = [1  2  3 | 1 ]
+            // [4 5 6 | 2 ] = [0 -3 -6 |-2 ]
+            // [7 8 9 | 4 ] = [0  0 -1 | 1 ]
+            MyMatrix<int>.GaussReduction(m, v);
+            
+            // [1 2 3 | 1 ] = [1  2  3 | 1 ]
+            Assert.Equal(1, m[0, 0]);
+            Assert.Equal(2, m[0, 1]);
+            Assert.Equal(3, m[0, 2]);
+            Assert.Equal(1, v[0]);
+
+            // [4 5 6 | 2 ] = [0 -3 -6 |-2 ]
+            Assert.Equal(0, m[1, 0]);
+            Assert.Equal(-3, m[1, 1]);
+            Assert.Equal(-6, m[1, 2]);
+            Assert.Equal(-2, v[1]);
+
+            // [7 8 9 | 4 ] = [0  0 -1 | 1 ]
+            Assert.Equal(0, m[2, 0]);
+            Assert.Equal(0, m[2, 1]);
+            Assert.Equal(-1, m[2, 2]);
+            Assert.Equal(1, v[2]);
+
+        }
     }
 }
