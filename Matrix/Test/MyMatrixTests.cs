@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 using Matrix;
 
 namespace Test
@@ -318,6 +319,29 @@ namespace Test
             Assert.Equal(0.0, m[2, 1]);
             Assert.Equal(1.0, m[2, 2]);
             Assert.Equal(-1.0, v[2]);
+        }
+
+        [Fact]
+        public void MatrixGaussianReductionWithLeading0In2Row()
+        {
+            var m = new MyMatrix<int>(new[,]
+            {
+                {1, 2, 3 },
+                {4, 8, 6 },
+                {7, 8, 8 }
+            });
+
+            var v = new[] { 1, 2, 4 };
+
+            // [1 2 3 | 1 ] = x
+            // [4 8 6 | 2 ] = x
+            // [7 8 9 | 4 ] = x
+
+            // [1  2    3 |  1 ]
+            // [0  0   -6 | -2 ] <-- leading zero in 2nd row, 2nd column
+            // [0 -6  -12 | -3 ]
+
+            Assert.Throws<ArgumentException>(() => MyMatrix<int>.GaussReduction(m, v));
         }
     }
 }
