@@ -88,5 +88,26 @@ namespace Matrix
                 }
             }
         }
+
+        public static void GaussReductionCoefficents(MyMatrix<T> m, T[] v)
+        {
+            for (int i = m.Cols-1; i >= 1; i--)
+            {
+                for (int j = i - 1; j >= 0; j--)
+                {
+                    if (m[j, i] != (dynamic) new T())
+                    {
+                        var scalar = m[j, i] / (dynamic) m[i, i];
+
+                        for (int k = 0; k < m.Cols; k++)
+                        {
+                            m[j, k] -= m[i, k] * scalar;
+                        }
+
+                        v[j] -= v[i] * scalar;
+                    }
+                }
+            }
+        }
     }
 }
