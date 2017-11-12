@@ -66,10 +66,13 @@ namespace Matrix
             // select row used to reset rows below it
             for (int i = 0; i < m.Cols-1; i++)
             {
+                if (m[i, i] == (dynamic)new T())
+                    throw new ArgumentException("Matrix diagonal contains zero!");
+
                 // loop on each row below selected row
                 for (int j = i+1; j < m.Cols; j++)
                 {
-                    // if current row has leading num is not 0
+                    // if current row leading num is not 0
                     if (m[j, i] != (dynamic) new T())
                     {
                         // get scalar for current row
