@@ -61,7 +61,7 @@ namespace Matrix
             return new MyMatrix<T>(output);
         }
 
-        public static void GaussReduceWithNoPivot(MyMatrix<T> m, T[] v)
+        public static void ReduceLeftBottomTriangle(MyMatrix<T> m, T[] v)
         {
             // select row that will be used to reduce rows below it
             for (var i = 0; i < m.Cols - 1; i++)
