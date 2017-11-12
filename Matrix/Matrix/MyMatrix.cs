@@ -63,14 +63,14 @@ namespace Matrix
 
         public static void GaussReduceWithNoPivot(MyMatrix<T> m, T[] v)
         {
-            // select row used to reset rows below it
-            for (int i = 0; i < m.Cols-1; i++)
+            // select row that will be used to reduce rows below it
+            for (var i = 0; i < m.Cols-1; i++)
             {
                 if (m[i, i] == (dynamic)new T())
                     throw new ArgumentException("Matrix diagonal contains zero!");
 
                 // loop on each row below selected row
-                for (int j = i+1; j < m.Cols; j++)
+                for (var j = i+1; j < m.Cols; j++)
                 {
                     // if current row leading num is not 0
                     if (m[j, i] != (dynamic) new T())
@@ -79,7 +79,7 @@ namespace Matrix
                         var scalar = m[j, i] / (dynamic) m[i, i];
 
                         // substract selected row (multiplied by scalar) from current row
-                        for (int k = 0; k < m.Cols; k++)
+                        for (var k = 0; k < m.Cols; k++)
                         {
                             // substract each column
                             m[j, k] -= m[i, k] * scalar;
@@ -94,19 +94,29 @@ namespace Matrix
 
         public static void GetCoefficentsMatrix(MyMatrix<T> m, T[] v)
         {
-            for (int i = m.Cols-1; i >= 1; i--)
+            // select last row that will be used to reduce rows above it
+            for (var i = m.Rows - 1; i >= 1; i--)
             {
-                for (int j = i - 1; j >= 0; j--)
+                if (m[i, i] == (dynamic)new T())
+                    throw new ArgumentException("Matrix diagonal contains zero!");
+
+                // loop on each row above selected row
+                for (var j = i - 1; j >= 0; j--)
                 {
+                    // if current row is not reduced (is != 0)
                     if (m[j, i] != (dynamic) new T())
                     {
+                        // get scalar for current row
                         var scalar = m[j, i] / (dynamic) m[i, i];
 
-                        for (int k = 0; k < m.Cols; k++)
+                        // substract selected row (multiplied by scalar) from current row
+                        for (var k = 0; k < m.Cols; k++)
                         {
+                            // substract each column
                             m[j, k] -= m[i, k] * scalar;
                         }
 
+                        // substract selected vector row (multiplied by scalar) from current row
                         v[j] -= v[i] * scalar;
                     }
                 }
@@ -115,7 +125,7 @@ namespace Matrix
 
         public static void GetIdentityMatrix(MyMatrix<T> m, T[] v)
         {
-            for (int i = 0; i < m.Cols; i++)
+            for (var i = 0; i < m.Cols; i++)
             {
                 v[i] = v[i] / (dynamic) m[i, i];
                 m[i, i] = m[i, i] / (dynamic) m[i, i];
