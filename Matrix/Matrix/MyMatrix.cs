@@ -61,7 +61,7 @@ namespace Matrix
             return new MyMatrix<T>(output);
         }
 
-        public static void GaussReduction(MyMatrix<T> m, T[] v)
+        public static void GaussReduceWithNoPivot(MyMatrix<T> m, T[] v)
         {
             // select row used to reset rows below it
             for (int i = 0; i < m.Cols-1; i++)
@@ -92,7 +92,7 @@ namespace Matrix
             }
         }
 
-        public static void GaussReductionCoefficents(MyMatrix<T> m, T[] v)
+        public static void GetCoefficentsMatrix(MyMatrix<T> m, T[] v)
         {
             for (int i = m.Cols-1; i >= 1; i--)
             {
@@ -113,7 +113,7 @@ namespace Matrix
             }
         }
 
-        public static void GaussReductionIdentityMatrix(MyMatrix<T> m, T[] v)
+        public static void GetIdentityMatrix(MyMatrix<T> m, T[] v)
         {
             for (int i = 0; i < m.Cols; i++)
             {
