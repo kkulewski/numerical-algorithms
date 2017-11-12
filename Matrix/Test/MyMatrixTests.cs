@@ -6,6 +6,8 @@ namespace Test
 {
     public class MyMatrixTests
     {
+        private double doubleMargin = 0.001;
+
         [Fact]
         public void Adds_Int_SquareMatrices()
         {
@@ -233,21 +235,21 @@ namespace Test
             // [4 5 6 | 2 ] = [0 -3 -6 |-2 ]
             // [7 8 9 | 4 ] = [0  0 -1 | 1 ]
             MyMatrix<double>.GaussReduceWithNoPivot(m, v);
+            
+            Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
+            Assert.InRange(m[0, 1], 2 - doubleMargin, 2 + doubleMargin);
+            Assert.InRange(m[0, 2], 3 - doubleMargin, 3 + doubleMargin);
+            Assert.InRange(v[0], 1 - doubleMargin, 1 + doubleMargin);
+            
+            Assert.InRange(m[1, 0], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[1, 1], -3 - doubleMargin, -3 + doubleMargin);
+            Assert.InRange(m[1, 2], -6 - doubleMargin, -6 + doubleMargin);
+            Assert.InRange(v[1], -2 - doubleMargin, -2 + doubleMargin);
 
-            Assert.Equal(1.0, m[0, 0]);
-            Assert.Equal(2.0, m[0, 1]);
-            Assert.Equal(3.0, m[0, 2]);
-            Assert.Equal(1.0, v[0]);
-            
-            Assert.Equal(0.0, m[1, 0]);
-            Assert.Equal(-3.0, m[1, 1]);
-            Assert.Equal(-6.0, m[1, 2]);
-            Assert.Equal(-2.0, v[1]);
-            
-            Assert.Equal(0.0, m[2, 0]);
-            Assert.Equal(0.0, m[2, 1]);
-            Assert.Equal(-1.0, m[2, 2]);
-            Assert.Equal(1.0, v[2]);
+            Assert.InRange(m[2, 0], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[2, 1], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[2, 2], -1 - doubleMargin, -1 + doubleMargin);
+            Assert.InRange(v[2], 1 - doubleMargin, 1 + doubleMargin);
         }
 
         [Fact]
@@ -269,20 +271,20 @@ namespace Test
             // [0  0 -1 | 1 ] = [0  0 -1 |     1 ]
             MyMatrix<double>.GetCoefficentsMatrix(m, v);
 
-            Assert.Equal(1.0, m[0, 0]);
-            Assert.Equal(0.0, m[0, 1]);
-            Assert.Equal(0.0, m[0, 2]);
-            Assert.InRange(v[0], -1.4, -1.3);
+            Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
+            Assert.InRange(m[0, 1], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[0, 2], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(v[0], -1.334, -1.333); // 1.(3)
 
-            Assert.Equal(0.0, m[1, 0]);
-            Assert.Equal(-3.0, m[1, 1]);
-            Assert.Equal(0.0, m[1, 2]);
-            Assert.Equal(-8.0, v[1]);
+            Assert.InRange(m[1, 0], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[1, 1], -3 - doubleMargin, -3 + doubleMargin);
+            Assert.InRange(m[1, 2], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(v[1], -8 - doubleMargin, -8 + doubleMargin);
 
-            Assert.Equal(0.0, m[2, 0]);
-            Assert.Equal(0.0, m[2, 1]);
-            Assert.Equal(-1.0, m[2, 2]);
-            Assert.Equal(1.0, v[2]);
+            Assert.InRange(m[2, 0], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[2, 1], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[2, 2], -1 - doubleMargin, -1 + doubleMargin);
+            Assert.InRange(v[2], 1 - doubleMargin, 1 + doubleMargin);
         }
 
         [Fact]
@@ -304,21 +306,21 @@ namespace Test
             // [0 -3  0 |    -8 ] = [0 1 0 |  2.66 ]
             // [0  0 -1 |     1 ] = [0 0 1 | -1.00 ]
             MyMatrix<double>.GetIdentityMatrix(m, v);
+            
+            Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
+            Assert.InRange(m[0, 1], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[0, 2], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(v[0], -1.334, -1.333); // -1.(3)
 
-            Assert.Equal(1.0, m[0, 0]);
-            Assert.Equal(0.0, m[0, 1]);
-            Assert.Equal(0.0, m[0, 2]);
-            Assert.InRange(v[0], -1.4, -1.3);
+            Assert.InRange(m[1, 0], 0 - doubleMargin, 0.001);
+            Assert.InRange(m[1, 1], 1 - doubleMargin, 1.001);
+            Assert.InRange(m[1, 2], 0 - doubleMargin, 0.001);
+            Assert.InRange(v[1], 2.666, 2.667); // 2.(6)
 
-            Assert.Equal(0.0, m[1, 0]);
-            Assert.Equal(1.0, m[1, 1]);
-            Assert.Equal(0.0, m[1, 2]);
-            Assert.InRange(v[1], 2.6, 2.7);
-
-            Assert.Equal(0.0, m[2, 0]);
-            Assert.Equal(0.0, m[2, 1]);
-            Assert.Equal(1.0, m[2, 2]);
-            Assert.Equal(-1.0, v[2]);
+            Assert.InRange(m[2, 0], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[2, 1], 0 - doubleMargin, 0 + doubleMargin);
+            Assert.InRange(m[2, 2], 1 - doubleMargin, 1 + doubleMargin);
+            Assert.InRange(v[2], -1 - doubleMargin, -1 + doubleMargin);
         }
 
 
