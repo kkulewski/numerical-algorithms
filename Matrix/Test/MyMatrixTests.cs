@@ -7,7 +7,7 @@ namespace Test
     public class MyMatrixTests
     {
         [Fact]
-        public void SquareMatricesAreAddedCorrectly()
+        public void Adds_Int_SquareMatrices()
         {
             var a = new MyMatrix<int>(new[,]
             {
@@ -32,7 +32,7 @@ namespace Test
         }
 
         [Fact]
-        public void SquareMatricesMultiplicatedCorrectly()
+        public void Multiplicates_Int_SquareMatrices()
         {
             var a = new MyMatrix<int>(new[,]
             {
@@ -57,7 +57,7 @@ namespace Test
         }
 
         [Fact]
-        public void NonSquare1X3M3X1MatricesMultiplicatedCorrectly()
+        public void Multiplicates_Int_Vectors()
         {
             var a = new MyMatrix<int>(new[,]
             {
@@ -80,7 +80,7 @@ namespace Test
         }
 
         [Fact]
-        public void NonSquare2X3M3X2MatricesMultiplicatedCorrectly()
+        public void Multiplicates_Int_2x3_And_3x2_Matrices()
         {
             var a = new MyMatrix<int>(new[,]
             {
@@ -107,7 +107,7 @@ namespace Test
         }
 
         [Fact]
-        public void NonSquare3X3M3X2MatricesMultiplicatedCorrectly()
+        public void Multiplicates_Int_3x3_And_3x2_Matrices()
         {
             var a = new MyMatrix<int>(new[,]
             {
@@ -137,7 +137,7 @@ namespace Test
         }
 
         [Fact]
-        public void FractionMatriceMultiplication()
+        public void Multiplicates_Fraction_Vectors()
         {
             var a = new MyMatrix<Fraction>(new[,]
             {
@@ -159,7 +159,7 @@ namespace Test
         }
 
         [Fact]
-        public void IntMatrixWithVectorMultiplication()
+        public void Multiplicates_Int_Matrix_With_Vector()
         {
             var a = new MyMatrix<int>(new[,]
             {
@@ -182,7 +182,7 @@ namespace Test
         }
 
         [Fact]
-        public void MatrixGaussianReduction()
+        public void Reduces_Int_Matrix()
         {
             var m = new MyMatrix<int>(new[,]
             {
@@ -196,7 +196,7 @@ namespace Test
             // [1 2 3 | 1 ] = [1  2  3 | 1 ]
             // [4 5 6 | 2 ] = [0 -3 -6 |-2 ]
             // [7 8 9 | 4 ] = [0  0 -1 | 1 ]
-            MyMatrix<int>.GaussReduction(m, v);
+            MyMatrix<int>.GaussReduceWithNoPivot(m, v);
             
             // [1 2 3 | 1 ] = [1  2  3 | 1 ]
             Assert.Equal(1, m[0, 0]);
@@ -218,7 +218,7 @@ namespace Test
         }
 
         [Fact]
-        public void MatrixGaussianReductionDouble()
+        public void Reduces_Double_Matrix()
         {
             var m = new MyMatrix<double>(new[,]
             {
@@ -232,7 +232,7 @@ namespace Test
             // [1 2 3 | 1 ] = [1  2  3 | 1 ]
             // [4 5 6 | 2 ] = [0 -3 -6 |-2 ]
             // [7 8 9 | 4 ] = [0  0 -1 | 1 ]
-            MyMatrix<double>.GaussReduction(m, v);
+            MyMatrix<double>.GaussReduceWithNoPivot(m, v);
 
             Assert.Equal(1.0, m[0, 0]);
             Assert.Equal(2.0, m[0, 1]);
@@ -251,7 +251,7 @@ namespace Test
         }
 
         [Fact]
-        public void MatrixGaussianReductionCoefficentDouble()
+        public void Returns_CoefficentsMatrix_Of_Double_SquareMatrix()
         {
             var m = new MyMatrix<double>(new[,]
             {
@@ -262,12 +262,12 @@ namespace Test
 
             var v = new[] { 1.0, 2.0, 4.0 };
 
-            MyMatrix<double>.GaussReduction(m, v);
+            MyMatrix<double>.GaussReduceWithNoPivot(m, v);
 
             // [1  2  3 | 1 ] = [1  0  0 | -1.33 ]
             // [0 -3 -6 |-2 ] = [0 -3  0 |    -8 ]
             // [0  0 -1 | 1 ] = [0  0 -1 |     1 ]
-            MyMatrix<double>.GaussReductionCoefficents(m, v);
+            MyMatrix<double>.GetCoefficentsMatrix(m, v);
 
             Assert.Equal(1.0, m[0, 0]);
             Assert.Equal(0.0, m[0, 1]);
@@ -286,7 +286,7 @@ namespace Test
         }
 
         [Fact]
-        public void MatrixGaussianReductionCoefficentIdentityDouble()
+        public void Returns_IdentityMatrix_Of_Double_SquareMatrix()
         {
             var m = new MyMatrix<double>(new[,]
             {
@@ -297,13 +297,13 @@ namespace Test
 
             var v = new[] { 1.0, 2.0, 4.0 };
 
-            MyMatrix<double>.GaussReduction(m, v);
-            MyMatrix<double>.GaussReductionCoefficents(m, v);
+            MyMatrix<double>.GaussReduceWithNoPivot(m, v);
+            MyMatrix<double>.GetCoefficentsMatrix(m, v);
 
             // [1  0  0 | -1.33 ] = [1 0 0 | -1.33 ]
             // [0 -3  0 |    -8 ] = [0 1 0 |  2.66 ]
             // [0  0 -1 |     1 ] = [0 0 1 | -1.00 ]
-            MyMatrix<double>.GaussReductionIdentityMatrix(m, v);
+            MyMatrix<double>.GetIdentityMatrix(m, v);
 
             Assert.Equal(1.0, m[0, 0]);
             Assert.Equal(0.0, m[0, 1]);
@@ -323,7 +323,7 @@ namespace Test
 
 
         [Fact]
-        public void ThrowsOn_MatrixGaussianReduction_When_Diagonal_ContainsZero()
+        public void ThrowsOn_GaussReduceWithNoPivot_When_Diagonal_ContainsZero()
         {
             var m = new MyMatrix<int>(new[,]
             {
@@ -342,7 +342,7 @@ namespace Test
             // [0  0   -6 | -2 ] <-- leading zero in 2nd row, 2nd column
             // [0 -6  -12 | -3 ]
 
-            Assert.Throws<ArgumentException>(() => MyMatrix<int>.GaussReduction(m, v));
+            Assert.Throws<ArgumentException>(() => MyMatrix<int>.GaussReduceWithNoPivot(m, v));
         }
     }
 }
