@@ -77,7 +77,7 @@ namespace Matrix
             }
         }
 
-        public static void GetCoefficentsMatrix(MyMatrix<T> m, T[] v)
+        public static void ReduceRightTopTriangle(MyMatrix<T> m, T[] v)
         {
             // select last row that will be used to reduce rows above it
             for (var i = m.Cols - 1; i >= 1; i--)
