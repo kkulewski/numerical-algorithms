@@ -184,7 +184,7 @@ namespace Test
         }
 
         [Fact]
-        public void Reduces_Int_Matrix()
+        public void Reduces_LeftBottomTriangle_of_Int_Matrix()
         {
             var m = new MyMatrix<int>(new[,]
             {
@@ -198,7 +198,7 @@ namespace Test
             // [1 2 3 | 1 ] = [1  2  3 | 1 ]
             // [4 5 6 | 2 ] = [0 -3 -6 |-2 ]
             // [7 8 9 | 4 ] = [0  0 -1 | 1 ]
-            MyMatrix<int>.GaussReduceWithNoPivot(m, v);
+            MyMatrix<int>.ReduceLeftBottomTriangle(m, v);
             
             // [1 2 3 | 1 ] = [1  2  3 | 1 ]
             Assert.Equal(1, m[0, 0]);
@@ -220,7 +220,7 @@ namespace Test
         }
 
         [Fact]
-        public void Reduces_Double_Matrix()
+        public void Reduces_LeftBottomTriangle_Of_Double_Matrix()
         {
             var m = new MyMatrix<double>(new[,]
             {
@@ -234,7 +234,7 @@ namespace Test
             // [1 2 3 | 1 ] = [1  2  3 | 1 ]
             // [4 5 6 | 2 ] = [0 -3 -6 |-2 ]
             // [7 8 9 | 4 ] = [0  0 -1 | 1 ]
-            MyMatrix<double>.GaussReduceWithNoPivot(m, v);
+            MyMatrix<double>.ReduceLeftBottomTriangle(m, v);
             
             Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
             Assert.InRange(m[0, 1], 2 - doubleMargin, 2 + doubleMargin);
@@ -253,7 +253,7 @@ namespace Test
         }
 
         [Fact]
-        public void Returns_CoefficentsMatrix_Of_Double_SquareMatrix()
+        public void Reduces_LeftBottomTriangle_And_RightTopTriangle_Of_Double_SquareMatrix()
         {
             var m = new MyMatrix<double>(new[,]
             {
@@ -264,12 +264,12 @@ namespace Test
 
             var v = new[] { 1.0, 2.0, 4.0 };
 
-            MyMatrix<double>.GaussReduceWithNoPivot(m, v);
+            MyMatrix<double>.ReduceLeftBottomTriangle(m, v);
 
             // [1  2  3 | 1 ] = [1  0  0 | -1.33 ]
             // [0 -3 -6 |-2 ] = [0 -3  0 |    -8 ]
             // [0  0 -1 | 1 ] = [0  0 -1 |     1 ]
-            MyMatrix<double>.GetCoefficentsMatrix(m, v);
+            MyMatrix<double>.ReduceRightTopTriangle(m, v);
 
             Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
             Assert.InRange(m[0, 1], 0 - doubleMargin, 0 + doubleMargin);
@@ -299,8 +299,8 @@ namespace Test
 
             var v = new[] { 1.0, 2.0, 4.0 };
 
-            MyMatrix<double>.GaussReduceWithNoPivot(m, v);
-            MyMatrix<double>.GetCoefficentsMatrix(m, v);
+            MyMatrix<double>.ReduceLeftBottomTriangle(m, v);
+            MyMatrix<double>.ReduceRightTopTriangle(m, v);
 
             // [1  0  0 | -1.33 ] = [1 0 0 | -1.33 ]
             // [0 -3  0 |    -8 ] = [0 1 0 |  2.66 ]
@@ -344,7 +344,7 @@ namespace Test
             // [0  0   -6 | -2 ] <-- leading zero in 2nd row, 2nd column
             // [0 -6  -12 | -3 ]
 
-            Assert.Throws<ArgumentException>(() => MyMatrix<int>.GaussReduceWithNoPivot(m, v));
+            Assert.Throws<ArgumentException>(() => MyMatrix<int>.ReduceLeftBottomTriangle(m, v));
         }
     }
 }
