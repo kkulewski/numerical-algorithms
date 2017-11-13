@@ -113,7 +113,7 @@ namespace Matrix
             v[j] -= v[i] * scalar;
         }
 
-        public void GetIdentityMatrix(T[] v)
+        public void ToIdentityMatrix(T[] v)
         {
             for (var i = 0; i < Cols; i++)
             {

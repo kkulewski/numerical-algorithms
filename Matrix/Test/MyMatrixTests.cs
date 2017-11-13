@@ -302,10 +302,11 @@ namespace Test
             m.ReduceLeftBottomTriangle(v);
             m.ReduceRightTopTriangle(v);
 
+            // after left bottom + right top triangle reduction:
             // [1  0  0 | -1.33 ] = [1 0 0 | -1.33 ]
             // [0 -3  0 |    -8 ] = [0 1 0 |  2.66 ]
             // [0  0 -1 |     1 ] = [0 0 1 | -1.00 ]
-            m.GetIdentityMatrix(v);
+            m.ToIdentityMatrix(v);
             
             Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
             Assert.InRange(m[0, 1], 0 - doubleMargin, 0 + doubleMargin);
