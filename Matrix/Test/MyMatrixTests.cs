@@ -386,5 +386,20 @@ namespace Test
             Assert.InRange(m[2, 0], 5 - doubleMargin, 5 + doubleMargin);
             Assert.InRange(m[2, 1], 6 - doubleMargin, 6 + doubleMargin);
         }
+
+        [Fact]
+        public void FindsMax_InColumns_Of_Double_Matrix()
+        {
+            var m = new MyMatrix<double>(new[,]
+            {
+                {1.0, 2.0},
+                {3.0, 4.0},
+                {2.0, 6.0},
+                {3.5, 4.5}
+            });
+
+            Assert.Equal(3, m.FindMaxInColumn(0));
+            Assert.Equal(2, m.FindMaxInColumn(1));
+        }
     }
 }

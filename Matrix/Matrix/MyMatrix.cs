@@ -105,6 +105,25 @@ namespace Matrix
             }
         }
 
+        public int FindMaxInColumn(int selected)
+        {
+            // set selected row as current max
+            var currentMaxRowIndex = selected;
+            var currentMax = this[selected, selected];
+
+            // check each row below selected row
+            for(var i = selected; i < this.Rows; i++)
+            {
+                if (this[i, selected] > (dynamic) currentMax)
+                {
+                    currentMax = this[i, selected];
+                    currentMaxRowIndex = i;
+                }
+            }
+
+            return currentMaxRowIndex;
+        }
+
         public void GaussianReductionNoPivot(T[] vector)
         {
             ReduceLeftBottomTriangle(vector);
