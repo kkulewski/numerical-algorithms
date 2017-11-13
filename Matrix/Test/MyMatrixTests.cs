@@ -366,5 +366,25 @@ namespace Test
             Assert.InRange(v[1], 2.666, 2.667); // 2.(6)
             Assert.InRange(v[2], -1 - doubleMargin, -1 + doubleMargin); // -1.0
         }
+
+        [Fact]
+        public void SwapsRow_Of_Double_Matrix()
+        {
+            var m = new MyMatrix<double>(new[,]
+            {
+                {1.0, 2.0 },
+                {3.0, 4.0 },
+                {5.0, 6.0 }
+            });
+
+            m.SwapRow(0, 1);
+
+            Assert.InRange(m[0, 0], 3 - doubleMargin, 3 + doubleMargin);
+            Assert.InRange(m[0, 1], 4 - doubleMargin, 4 + doubleMargin);
+            Assert.InRange(m[1, 0], 1 - doubleMargin, 1 + doubleMargin);
+            Assert.InRange(m[1, 1], 2 - doubleMargin, 2 + doubleMargin);
+            Assert.InRange(m[2, 0], 5 - doubleMargin, 5 + doubleMargin);
+            Assert.InRange(m[2, 1], 6 - doubleMargin, 6 + doubleMargin);
+        }
     }
 }
