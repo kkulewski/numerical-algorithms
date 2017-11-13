@@ -95,6 +95,16 @@ namespace Matrix
             return new MyMatrix<T>(output);
         }
 
+        public void SwapRow(int index1, int index2)
+        {
+            for (var i = 0; i < Cols; i++)
+            {
+                var temp = this[index2, i];
+                this[index2, i] = this[index1, i];
+                this[index1, i] = temp;
+            }
+        }
+
         public void GaussianReductionNoPivot(T[] vector)
         {
             ReduceLeftBottomTriangle(vector);
