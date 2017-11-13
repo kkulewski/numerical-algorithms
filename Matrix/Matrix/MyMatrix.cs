@@ -124,6 +124,13 @@ namespace Matrix
             return currentMaxRowIndex;
         }
         
+        public void GaussianReductionNoPivot(T[] vector)
+        {
+            ReduceLeftBottomTriangle(vector);
+            ReduceRightTopTriangle(vector);
+            ToIdentityMatrix(vector);
+        }
+
         public void GaussianReductionPartialPivot(T[] vector)
         {
             ReduceLeftBottomTrianglePartialPivot(vector);
@@ -131,12 +138,28 @@ namespace Matrix
             ToIdentityMatrix(vector);
         }
 
-        public void ReduceLeftBottomTrianglePartialPivot(T[] vector)
+        public void ReduceLeftBottomTriangle(T[] vector)
         {
             // select row that will be used to reduce rows below it
             for (var selected = 0; selected < Rows - 1; selected++)
             {
                 if (this[selected, selected] == (dynamic) new T())
+                    throw new ArgumentException("Matrix diagonal contains zero!");
+
+                // loop on each row below selected row
+                for (var current = selected + 1; current < Rows; current++)
+                {
+                    ReduceRow(vector, selected, current);
+                }
+            }
+        }
+
+        public void ReduceLeftBottomTrianglePartialPivot(T[] vector)
+        {
+            // select row that will be used to reduce rows below it
+            for (var selected = 0; selected < Rows - 1; selected++)
+            {
+                if (this[selected, selected] == (dynamic)new T())
                     throw new ArgumentException("Matrix diagonal contains zero!");
 
                 var maxRow = FindMaxInColumn(selected);
@@ -151,29 +174,6 @@ namespace Matrix
                     // swap matrix rows
                     SwapRow(selected, maxRow);
                 }
-
-                // loop on each row below selected row
-                for (var current = selected + 1; current < Rows; current++)
-                {
-                    ReduceRow(vector, selected, current);
-                }
-            }
-        }
-
-        public void GaussianReductionNoPivot(T[] vector)
-        {
-            ReduceLeftBottomTriangle(vector);
-            ReduceRightTopTriangle(vector);
-            ToIdentityMatrix(vector);
-        }
-
-        public void ReduceLeftBottomTriangle(T[] vector)
-        {
-            // select row that will be used to reduce rows below it
-            for (var selected = 0; selected < Rows - 1; selected++)
-            {
-                if (this[selected, selected] == (dynamic) new T())
-                    throw new ArgumentException("Matrix diagonal contains zero!");
 
                 // loop on each row below selected row
                 for (var current = selected + 1; current < Rows; current++)
