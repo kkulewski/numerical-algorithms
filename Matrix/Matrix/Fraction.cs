@@ -24,6 +24,11 @@ namespace Matrix
             Simplify();
         }
 
+        public override string ToString()
+        {
+            return $"[{Numerator}/{Denominator}]";
+        }
+
         public void Simplify()
         {
             var gcd = GreatestCommonDivisor(Numerator, Denominator);
