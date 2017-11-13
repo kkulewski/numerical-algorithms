@@ -198,7 +198,7 @@ namespace Test
             // [1 2 3 | 1 ] = [1  2  3 | 1 ]
             // [4 5 6 | 2 ] = [0 -3 -6 |-2 ]
             // [7 8 9 | 4 ] = [0  0 -1 | 1 ]
-            MyMatrix<int>.ReduceLeftBottomTriangle(m, v);
+            m.ReduceLeftBottomTriangle(v);
             
             // [1 2 3 | 1 ] = [1  2  3 | 1 ]
             Assert.Equal(1, m[0, 0]);
@@ -234,7 +234,7 @@ namespace Test
             // [1 2 3 | 1 ] = [1  2  3 | 1 ]
             // [4 5 6 | 2 ] = [0 -3 -6 |-2 ]
             // [7 8 9 | 4 ] = [0  0 -1 | 1 ]
-            MyMatrix<double>.ReduceLeftBottomTriangle(m, v);
+            m.ReduceLeftBottomTriangle(v);
             
             Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
             Assert.InRange(m[0, 1], 2 - doubleMargin, 2 + doubleMargin);
@@ -264,12 +264,12 @@ namespace Test
 
             var v = new[] { 1.0, 2.0, 4.0 };
 
-            MyMatrix<double>.ReduceLeftBottomTriangle(m, v);
+            m.ReduceLeftBottomTriangle(v);
 
             // [1  2  3 | 1 ] = [1  0  0 | -1.33 ]
             // [0 -3 -6 |-2 ] = [0 -3  0 |    -8 ]
             // [0  0 -1 | 1 ] = [0  0 -1 |     1 ]
-            MyMatrix<double>.ReduceRightTopTriangle(m, v);
+            m.ReduceRightTopTriangle(v);
 
             Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
             Assert.InRange(m[0, 1], 0 - doubleMargin, 0 + doubleMargin);
@@ -299,13 +299,13 @@ namespace Test
 
             var v = new[] { 1.0, 2.0, 4.0 };
 
-            MyMatrix<double>.ReduceLeftBottomTriangle(m, v);
-            MyMatrix<double>.ReduceRightTopTriangle(m, v);
+            m.ReduceLeftBottomTriangle(v);
+            m.ReduceRightTopTriangle(v);
 
             // [1  0  0 | -1.33 ] = [1 0 0 | -1.33 ]
             // [0 -3  0 |    -8 ] = [0 1 0 |  2.66 ]
             // [0  0 -1 |     1 ] = [0 0 1 | -1.00 ]
-            MyMatrix<double>.GetIdentityMatrix(m, v);
+            m.GetIdentityMatrix(v);
             
             Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
             Assert.InRange(m[0, 1], 0 - doubleMargin, 0 + doubleMargin);
@@ -344,7 +344,7 @@ namespace Test
             // [0  0   -6 | -2 ] <-- leading zero in 2nd row, 2nd column
             // [0 -6  -12 | -3 ]
 
-            Assert.Throws<ArgumentException>(() => MyMatrix<int>.ReduceLeftBottomTriangle(m, v));
+            Assert.Throws<ArgumentException>(() => m.ReduceLeftBottomTriangle(v));
         }
     }
 }
