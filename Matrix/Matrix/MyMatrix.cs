@@ -61,6 +61,13 @@ namespace Matrix
             return new MyMatrix<T>(output);
         }
 
+        public void GaussianReductionNoPivot(T[] vector)
+        {
+            ReduceLeftBottomTriangle(vector);
+            ReduceRightTopTriangle(vector);
+            ToIdentityMatrix(vector);
+        }
+
         public void ReduceLeftBottomTriangle(T[] vector)
         {
             // select row that will be used to reduce rows below it

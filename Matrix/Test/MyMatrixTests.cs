@@ -266,6 +266,7 @@ namespace Test
 
             m.ReduceLeftBottomTriangle(v);
 
+            // after left bottom triangle reduction:
             // [1  2  3 | 1 ] = [1  0  0 | -1.33 ]
             // [0 -3 -6 |-2 ] = [0 -3  0 |    -8 ]
             // [0  0 -1 | 1 ] = [0  0 -1 |     1 ]
@@ -345,7 +346,25 @@ namespace Test
             // [0  0   -6 | -2 ] <-- leading zero in 2nd row, 2nd column
             // [0 -6  -12 | -3 ]
 
-            Assert.Throws<ArgumentException>(() => m.ReduceLeftBottomTriangle(v));
+            Assert.Throws<ArgumentException>(() => m.GaussianReductionNoPivot(v));
+        }
+
+        [Fact]
+        public void SolvesEquation_Using_GaussianReductionNoPivot()
+        {
+            var m = new MyMatrix<double>(new[,]
+            {
+                {1.0, 2.0, 3.0 },
+                {4.0, 5.0, 6.0 },
+                {7.0, 8.0, 8.0 }
+            });
+
+            var v = new[] { 1.0, 2.0, 4.0 };
+
+            m.GaussianReductionNoPivot(v);
+            Assert.InRange(v[0], -1.334, -1.333); // -1.(3)
+            Assert.InRange(v[1], 2.666, 2.667); // 2.(6)
+            Assert.InRange(v[2], -1 - doubleMargin, -1 + doubleMargin); // -1.0
         }
     }
 }
