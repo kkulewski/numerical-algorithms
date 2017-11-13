@@ -401,5 +401,24 @@ namespace Test
             Assert.Equal(3, m.FindMaxInColumn(0));
             Assert.Equal(2, m.FindMaxInColumn(1));
         }
+
+
+        [Fact]
+        public void SolvesEquation_Using_GaussianReductionPartialPivot()
+        {
+            var m = new MyMatrix<double>(new[,]
+            {
+                {1.0, 2.0, 3.0 },
+                {4.0, 5.0, 6.0 },
+                {7.0, 8.0, 8.0 }
+            });
+
+            var v = new[] { 1.0, 2.0, 4.0 };
+
+            m.GaussianReductionPartialPivot(v);
+            Assert.InRange(v[0], -1.334, -1.333); // -1.(3)
+            Assert.InRange(v[1], 2.666, 2.667); // 2.(6)
+            Assert.InRange(v[2], -1 - doubleMargin, -1 + doubleMargin); // -1.0
+        }
     }
 }

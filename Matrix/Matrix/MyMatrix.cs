@@ -123,6 +123,42 @@ namespace Matrix
 
             return currentMaxRowIndex;
         }
+        
+        public void GaussianReductionPartialPivot(T[] vector)
+        {
+            ReduceLeftBottomTrianglePartialPivot(vector);
+            ReduceRightTopTriangle(vector);
+            ToIdentityMatrix(vector);
+        }
+
+        public void ReduceLeftBottomTrianglePartialPivot(T[] vector)
+        {
+            // select row that will be used to reduce rows below it
+            for (var selected = 0; selected < Rows - 1; selected++)
+            {
+                if (this[selected, selected] == (dynamic) new T())
+                    throw new ArgumentException("Matrix diagonal contains zero!");
+
+                var maxRow = FindMaxInColumn(selected);
+                // if its not the biggest element in current column
+                if (selected != maxRow)
+                {
+                    // swap vector rows
+                    var temp = vector[selected];
+                    vector[selected] = vector[maxRow];
+                    vector[maxRow] = temp;
+
+                    // swap matrix rows
+                    SwapRow(selected, maxRow);
+                }
+
+                // loop on each row below selected row
+                for (var current = selected + 1; current < Rows; current++)
+                {
+                    ReduceRow(vector, selected, current);
+                }
+            }
+        }
 
         public void GaussianReductionNoPivot(T[] vector)
         {
