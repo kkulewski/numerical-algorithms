@@ -143,8 +143,7 @@ namespace Matrix
             // select row that will be used to reduce rows below it
             for (var selected = 0; selected < Rows - 1; selected++)
             {
-                if (this[selected, selected] == (dynamic) new T())
-                    throw new ArgumentException("Matrix diagonal contains zero!");
+                EnsureNoLeadingZero(selected);
 
                 // loop on each row below selected row
                 for (var current = selected + 1; current < Rows; current++)
@@ -159,8 +158,7 @@ namespace Matrix
             // select row that will be used to reduce rows below it
             for (var selected = 0; selected < Rows - 1; selected++)
             {
-                if (this[selected, selected] == (dynamic)new T())
-                    throw new ArgumentException("Matrix diagonal contains zero!");
+                EnsureNoLeadingZero(selected);
 
                 var maxRow = FindMaxInColumn(selected);
                 // if its not the biggest element in current column
@@ -188,8 +186,7 @@ namespace Matrix
             // select last row that will be used to reduce rows above it
             for (var selected = Rows - 1; selected >= 1; selected--)
             {
-                if (this[selected, selected] == (dynamic) new T())
-                    throw new ArgumentException("Matrix diagonal contains zero!");
+                EnsureNoLeadingZero(selected);
 
                 // loop on each row above selected row
                 for (var current = selected - 1; current >= 0; current--)
@@ -197,6 +194,12 @@ namespace Matrix
                     ReduceRow(vector, selected, current);
                 }
             }
+        }
+
+        private void EnsureNoLeadingZero(int selected)
+        {
+            if (this[selected, selected] == (dynamic)new T())
+                throw new ArgumentException("Matrix diagonal contains zero! (leading zero detected)");
         }
 
         private void ReduceRow(T[] vector, int selected, int current)
