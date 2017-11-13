@@ -11,6 +11,40 @@ namespace Matrix
             _matrix = matrix;
         }
 
+        public MyMatrix(int rows, int cols)
+        {
+            var random = new Random();
+            var matrix = new T[rows, cols];
+            for (var i = 0; i < rows; i++)
+            {
+                for (var j = 0; j < cols; j++)
+                {
+                    if (matrix is int[,])
+                    {
+                        matrix[i, j] = (dynamic)random.Next();
+                    }
+                    else if (matrix is double[,])
+                    {
+                        matrix[i, j] = (dynamic) random.NextDouble();
+                    }
+                    else if (matrix is float[,])
+                    {
+                        matrix[i, j] = (dynamic) (float) random.NextDouble();
+                    }
+                    else if (matrix is Fraction[,])
+                    {
+                        matrix[i, j] = (dynamic) new Fraction(random.Next(), random.Next(1, int.MaxValue));
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Invalid type!");
+                    }
+                }
+            }
+
+            _matrix = matrix;
+        }
+
         public int Rows => _matrix.GetLength(0);
 
         public int Cols => _matrix.GetLength(1);
