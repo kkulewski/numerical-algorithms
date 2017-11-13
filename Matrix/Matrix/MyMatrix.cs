@@ -61,61 +61,61 @@ namespace Matrix
             return new MyMatrix<T>(output);
         }
 
-        public void ReduceLeftBottomTriangle(T[] v)
+        public void ReduceLeftBottomTriangle(T[] vector)
         {
             // select row that will be used to reduce rows below it
-            for (var i = 0; i < Cols - 1; i++)
+            for (var selected = 0; selected < Rows - 1; selected++)
             {
-                if (this[i, i] == (dynamic) new T())
+                if (this[selected, selected] == (dynamic) new T())
                     throw new ArgumentException("Matrix diagonal contains zero!");
 
                 // loop on each row below selected row
-                for (var j = i + 1; j < Rows; j++)
+                for (var current = selected + 1; current < Rows; current++)
                 {
-                    ReduceRow(v, i, j);
+                    ReduceRow(vector, selected, current);
                 }
             }
         }
 
-        public void ReduceRightTopTriangle(T[] v)
+        public void ReduceRightTopTriangle(T[] vector)
         {
             // select last row that will be used to reduce rows above it
-            for (var i = Cols - 1; i >= 1; i--)
+            for (var selected = Rows - 1; selected >= 1; selected--)
             {
-                if (this[i, i] == (dynamic) new T())
+                if (this[selected, selected] == (dynamic) new T())
                     throw new ArgumentException("Matrix diagonal contains zero!");
 
                 // loop on each row above selected row
-                for (var j = i - 1; j >= 0; j--)
+                for (var current = selected - 1; current >= 0; current--)
                 {
-                    ReduceRow(v, i, j);
+                    ReduceRow(vector, selected, current);
                 }
             }
         }
 
-        private void ReduceRow(T[] v, int i, int j)
+        private void ReduceRow(T[] vector, int selected, int current)
         {
             // if current row is already reduced (leading 0) => return
-            if (this[j, i] == (dynamic) new T())
+            if (this[current, selected] == (dynamic) new T())
                 return;
 
             // get scalar for current row
-            var scalar = this[j, i] / (dynamic) this[i, i];
+            var scalar = this[current, selected] / (dynamic) this[selected, selected];
 
             // substract selected row (multiplied by scalar) from current row
-            for (var k = 0; k < Cols; k++)
+            for (var col = 0; col < Cols; col++)
             {
                 // substract each column
-                this[j, k] -= this[i, k] * scalar;
+                this[current, col] -= this[selected, col] * scalar;
             }
 
             // substract selected vector row (multiplied by scalar) from current row
-            v[j] -= v[i] * scalar;
+            vector[current] -= vector[selected] * scalar;
         }
 
         public void ToIdentityMatrix(T[] v)
         {
-            for (var i = 0; i < Cols; i++)
+            for (var i = 0; i < Rows; i++)
             {
                 v[i] = v[i] / (dynamic) this[i, i];
                 this[i, i] = this[i, i] / (dynamic) this[i, i];
