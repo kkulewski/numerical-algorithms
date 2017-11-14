@@ -143,7 +143,7 @@ namespace Matrix
             {
                 for (var j = selected; j < Cols; j++)
                 {
-                    if (this[i, j] > (dynamic) currentMax)
+                    if (this[i, j] > (dynamic) currentMax || this[i, j] < -(dynamic)currentMax)
                     {
                         currentMax = this[i, j];
                         currentMaxIndex = new Tuple<int, int>(i, j);
