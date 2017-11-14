@@ -159,25 +159,29 @@ namespace Matrix
             for (var selected = 0; selected < Rows - 1; selected++)
             {
                 EnsureNoLeadingZero(selected);
-
-                var maxRow = FindMaxInColumn(selected);
-                // if its not the biggest element in current column
-                if (selected != maxRow)
-                {
-                    // swap vector rows
-                    var temp = vector[selected];
-                    vector[selected] = vector[maxRow];
-                    vector[maxRow] = temp;
-
-                    // swap matrix rows
-                    SwapRow(selected, maxRow);
-                }
+                ChoosePartialPivot(vector, selected);
 
                 // loop on each row below selected row
                 for (var current = selected + 1; current < Rows; current++)
                 {
                     ReduceRow(vector, selected, current);
                 }
+            }
+        }
+
+        public void ChoosePartialPivot(T[] vector, int selected)
+        {
+            var maxRow = FindMaxInColumn(selected);
+            // if its not the biggest element in current column
+            if (selected != maxRow)
+            {
+                // swap vector rows
+                var temp = vector[selected];
+                vector[selected] = vector[maxRow];
+                vector[maxRow] = temp;
+
+                // swap matrix rows
+                SwapRow(selected, maxRow);
             }
         }
 
