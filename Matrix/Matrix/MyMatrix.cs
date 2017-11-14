@@ -105,6 +105,16 @@ namespace Matrix
             }
         }
 
+        public void SwapColumn(int index1, int index2)
+        {
+            for (var i = 0; i < Cols; i++)
+            {
+                var temp = this[i, index2];
+                this[i, index2] = this[i, index1];
+                this[i, index1] = temp;
+            }
+        }
+
         public int FindMaxInColumn(int selected)
         {
             // set selected row as current max

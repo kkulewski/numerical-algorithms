@@ -388,6 +388,29 @@ namespace Test
         }
 
         [Fact]
+        public void SwapsColumn_Of_Double_Matrix()
+        {
+            var m = new MyMatrix<double>(new[,]
+            {
+                {1.0, 2.0, 3.0},
+                {4.0, 5.0, 6.0},
+                {7.0, 8.0, 9.0}
+            });
+
+            m.SwapColumn(1, 2);
+
+            Assert.InRange(m[0, 0], 1 - doubleMargin, 1 + doubleMargin);
+            Assert.InRange(m[0, 1], 3 - doubleMargin, 3 + doubleMargin);
+            Assert.InRange(m[0, 2], 2 - doubleMargin, 2 + doubleMargin);
+            Assert.InRange(m[1, 0], 4 - doubleMargin, 4 + doubleMargin);
+            Assert.InRange(m[1, 1], 6 - doubleMargin, 6 + doubleMargin);
+            Assert.InRange(m[1, 2], 5 - doubleMargin, 5 + doubleMargin);
+            Assert.InRange(m[2, 0], 7 - doubleMargin, 7 + doubleMargin);
+            Assert.InRange(m[2, 1], 9 - doubleMargin, 9 + doubleMargin);
+            Assert.InRange(m[2, 2], 8 - doubleMargin, 8 + doubleMargin);
+        }
+
+        [Fact]
         public void FindsMax_InColumns_Of_Double_Matrix()
         {
             var m = new MyMatrix<double>(new[,]
