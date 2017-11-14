@@ -177,12 +177,15 @@ namespace Matrix
 
             ReduceLeftBottomTriangleFullPivot(vector, columnOrder);
             ReduceRightTopTriangle(vector);
-
             ToIdentityMatrix(vector);
 
             // reorder colums back
+            var orderedVector = new T[Cols];
             for (var i = 0; i < Cols; i++)
-                SwapColumn(i, columnOrder[i]);
+                orderedVector[columnOrder[i]] = vector[i];
+
+            for (var i = 0; i < Cols; i++)
+                vector[i] = orderedVector[i];
         }
 
         public void ReduceLeftBottomTriangle(T[] vector)
