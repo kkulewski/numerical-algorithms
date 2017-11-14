@@ -122,7 +122,7 @@ namespace Matrix
             var currentMax = this[selected, selected];
 
             // check each row below selected row
-            for(var i = selected; i < this.Rows; i++)
+            for(var i = selected; i < Rows; i++)
             {
                 if (this[i, selected] > (dynamic) currentMax)
                 {
@@ -134,14 +134,14 @@ namespace Matrix
             return currentMaxRowIndex;
         }
 
-        public Tuple<int, int> FindMax()
+        public Tuple<int, int> FindMax(int selected)
         {
-            var currentMaxIndex = new Tuple<int, int>(0, 0);
-            var currentMax = this[0, 0];
+            var currentMaxIndex = new Tuple<int, int>(selected, selected);
+            var currentMax = this[selected, selected];
 
-            for (var i = 0; i < this.Rows; i++)
+            for (var i = selected; i < Rows; i++)
             {
-                for (var j = 0; j < this.Cols; j++)
+                for (var j = selected; j < Cols; j++)
                 {
                     if (this[i, j] > (dynamic) currentMax)
                     {

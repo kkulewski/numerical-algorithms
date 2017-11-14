@@ -252,7 +252,7 @@ namespace Test
                 {3.5, 4.5, 5.5}
             });
 
-            var maxIndex = m.FindMax();
+            var maxIndex = m.FindMax(0);
             Assert.Equal(2, maxIndex.Item1);
             Assert.Equal(1, maxIndex.Item2);
         }
