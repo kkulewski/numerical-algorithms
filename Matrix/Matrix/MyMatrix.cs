@@ -123,6 +123,26 @@ namespace Matrix
 
             return currentMaxRowIndex;
         }
+
+        public Tuple<int, int> FindMax()
+        {
+            var currentMaxIndex = new Tuple<int, int>(0, 0);
+            var currentMax = this[0, 0];
+
+            for (var i = 0; i < this.Rows; i++)
+            {
+                for (var j = 0; j < this.Cols; j++)
+                {
+                    if (this[i, j] > (dynamic) currentMax)
+                    {
+                        currentMax = this[i, j];
+                        currentMaxIndex = new Tuple<int, int>(i, j);
+                    }
+                }
+            }
+
+            return currentMaxIndex;
+        }
         
         public void GaussianReductionNoPivot(T[] vector)
         {
