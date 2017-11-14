@@ -243,7 +243,7 @@ namespace Matrix
                 var max = FindMax(selected);
                 // swap columns
                 var tempOrd = columnOrder[selected];
-                columnOrder[selected] = max.Item2;
+                columnOrder[selected] = columnOrder[max.Item2];
                 columnOrder[max.Item2] = tempOrd;
                 SwapColumn(selected, max.Item2);
 
