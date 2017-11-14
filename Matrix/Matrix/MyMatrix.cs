@@ -168,6 +168,23 @@ namespace Matrix
             ToIdentityMatrix(vector);
         }
 
+        public void GaussianReductionFullPivot(T[] vector)
+        {
+            // initial column order
+            var columnOrder = new int[Cols];
+            for (var i = 0; i < Cols; i++)
+                columnOrder[i] = i;
+
+            ReduceLeftBottomTriangleFullPivot(vector, columnOrder);
+            ReduceRightTopTriangle(vector);
+
+            ToIdentityMatrix(vector);
+
+            // reorder colums back
+            for (var i = 0; i < Cols; i++)
+                SwapColumn(i, columnOrder[i]);
+        }
+
         public void ReduceLeftBottomTriangle(T[] vector)
         {
             // select row that will be used to reduce rows below it
@@ -212,6 +229,32 @@ namespace Matrix
 
                 // swap matrix rows
                 SwapRow(selected, maxRow);
+            }
+        }
+        
+        public void ReduceLeftBottomTriangleFullPivot(T[] vector, int[] columnOrder)
+        {
+            // select row that will be used to reduce rows below it
+            for (var selected = 0; selected < Rows - 1; selected++)
+            {
+                var max = FindMax(selected);
+                // swap columns
+                var tempOrd = columnOrder[selected];
+                columnOrder[selected] = max.Item2;
+                columnOrder[max.Item2] = tempOrd;
+                SwapColumn(selected, max.Item2);
+
+                // swap row + vector
+                var temp = vector[selected];
+                vector[selected] = vector[max.Item1];
+                vector[max.Item1] = temp;
+                SwapRow(selected, max.Item1);
+
+                // loop on each row below selected row
+                for (var current = selected + 1; current < Rows; current++)
+                {
+                    ReduceRow(vector, selected, current);
+                }
             }
         }
 
