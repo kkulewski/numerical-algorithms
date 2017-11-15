@@ -4,11 +4,11 @@ namespace Matrix
 {
     public class MyMatrix<T> where T: new()
     {
-        private readonly T[,] _matrix;
+        public T[,] Matrix { get; }
 
         public MyMatrix(T[,] matrix)
         {
-            _matrix = matrix;
+            Matrix = matrix;
         }
 
         public MyMatrix(int rows, int cols)
@@ -42,17 +42,17 @@ namespace Matrix
                 }
             }
 
-            _matrix = matrix;
+            Matrix = matrix;
         }
 
-        public int Rows => _matrix.GetLength(0);
+        public int Rows => Matrix.GetLength(0);
 
-        public int Cols => _matrix.GetLength(1);
+        public int Cols => Matrix.GetLength(1);
 
         public T this[int row, int col]
         {
-            get => _matrix[row, col];
-            set => _matrix[row, col] = value;
+            get => Matrix[row, col];
+            set => Matrix[row, col] = value;
         }
 
         public static MyMatrix<T> operator +(MyMatrix<T> a, MyMatrix<T> b)
