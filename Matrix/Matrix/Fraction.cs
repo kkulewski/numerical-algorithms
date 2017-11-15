@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace Matrix
@@ -108,6 +109,22 @@ namespace Matrix
                 return 0;
 
             return left.Numerator * right.Denominator > right.Numerator * left.Denominator ? 1 : -1;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var fraction = obj as Fraction;
+            return fraction != null &&
+                   Numerator.Equals(fraction.Numerator) &&
+                   Denominator.Equals(fraction.Denominator);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1534900553;
+            hashCode = hashCode * -1521134295 + EqualityComparer<BigInteger>.Default.GetHashCode(Numerator);
+            hashCode = hashCode * -1521134295 + EqualityComparer<BigInteger>.Default.GetHashCode(Denominator);
+            return hashCode;
         }
     }
 }
