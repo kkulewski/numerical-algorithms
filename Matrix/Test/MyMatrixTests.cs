@@ -510,17 +510,8 @@ namespace Test
         [Fact]
         public void SolvesEquation_UsingGaussianReductionNoPivot_WithFraction()
         {
-            var matrix = new[,]
-            {
-                {new Fraction(3, 2), new Fraction(2, 7)},
-                {new Fraction(1, 4), new Fraction(1,2)}
-            };
-            var m = new MyMatrix<Fraction>(matrix);
-
-            var v = new[]
-            {
-                new Fraction(1, 5), new Fraction(3, 5)
-            };
+            var m = GetFraction2X2Matrix();
+            var v = GetFraction2X2Vector();
 
             // [3/2, 2/7] = [1/5]
             // [1/4, 1/2] = [3/5]
@@ -540,6 +531,24 @@ namespace Test
             Assert.Equal(19, v[0].Denominator);
             Assert.Equal(119, v[1].Numerator);
             Assert.Equal(95, v[1].Denominator);
+        }
+
+        private MyMatrix<Fraction> GetFraction2X2Matrix()
+        {
+            var matrix = new[,]
+            {
+                {new Fraction(3, 2), new Fraction(2, 7)},
+                {new Fraction(1, 4), new Fraction(1,2)}
+            };
+            return new MyMatrix<Fraction>(matrix);
+        }
+
+        private Fraction[] GetFraction2X2Vector()
+        {
+            return new[]
+            {
+                new Fraction(1, 5), new Fraction(3, 5)
+            };
         }
     }
 }
