@@ -508,7 +508,7 @@ namespace Test
         }
 
         [Fact]
-        public void SolvesEquation_UsingGaussianReductionNoPivot_WithFraction()
+        public void SolvesEquation_Using_GaussianReductionNoPivot_With_Fraction()
         {
             var m = GetFraction2X2Matrix();
             var v = GetFraction2X2Vector();
@@ -534,7 +534,7 @@ namespace Test
         }
 
         [Fact]
-        public void SolvesEquation_UsingGaussianReductionPartialPivot_WithFraction()
+        public void SolvesEquation_Using_GaussianReductionPartialPivot_With_Fraction()
         {
             var m = GetFraction2X2Matrix();
             var v = GetFraction2X2Vector();
@@ -548,7 +548,7 @@ namespace Test
         }
 
         [Fact]
-        public void SolvesEquation_UsingGaussianReductionPartialFull_WithFraction()
+        public void SolvesEquation_Using_GaussianReductionFullPivot_With_Fraction()
         {
             var m = GetFraction2X2Matrix();
             var v = GetFraction2X2Vector();
