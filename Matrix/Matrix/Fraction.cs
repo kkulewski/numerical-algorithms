@@ -81,5 +81,33 @@ namespace Matrix
 
             return a;
         }
+
+        public static bool operator ==(Fraction left, Fraction right)
+        {
+            return Compare(left, right) == 0;
+        }
+
+        public static bool operator !=(Fraction left, Fraction right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator <(Fraction left, Fraction right)
+        {
+            return Compare(left, right) < 0;
+        }
+
+        public static bool operator >(Fraction left, Fraction right)
+        {
+            return Compare(left, right) > 0;
+        }
+
+        public static int Compare(Fraction left, Fraction right)
+        {
+            if (left.Numerator * right.Denominator == right.Numerator * left.Denominator)
+                return 0;
+
+            return left.Numerator * right.Denominator > right.Numerator * left.Denominator ? 1 : -1;
+        }
     }
 }
