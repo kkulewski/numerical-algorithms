@@ -27,7 +27,13 @@ namespace Matrix
 
         public override string ToString()
         {
-            return $"[{Numerator}/{Denominator}]";
+            return $"{(double) this}";
+        }
+
+        public static explicit operator double(Fraction fraction)
+        {
+            fraction.Simplify();
+            return (double) fraction.Numerator / (double) fraction.Denominator;
         }
 
         public void Simplify()
