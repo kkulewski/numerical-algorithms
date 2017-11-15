@@ -13,17 +13,30 @@ namespace Matrix
 
         public void WriteFractionMatrix(int matrixSize, string fileName)
         {
-            var m = new MyMatrix<Fraction>(matrixSize, matrixSize);
-            File.WriteAllText(fileName, MyMatrixWriter.GetFormattedMatrix(m));
+            var matrix = new MyMatrix<Fraction>(matrixSize, matrixSize);
+            var formattedMatrix = MyMatrixWriter.GetFormattedMatrix(matrix);
+
+            WriteToFile(fileName, formattedMatrix, matrixSize);
         }
 
         public void WriteFractionVector(int matrixSize, string fileName)
         {
-            var v = new Fraction[matrixSize];
+            var vector = new Fraction[matrixSize];
             for (var i = 0; i < matrixSize; i++)
-                v[i] = new Fraction(_random.Next(), _random.Next(1, int.MaxValue));
+                vector[i] = new Fraction(_random.Next(), _random.Next(1, int.MaxValue));
+            var formattedVector = MyMatrixWriter.GetFormattedVector(vector);
 
-            File.WriteAllText(fileName, MyMatrixWriter.GetFormattedVector(v));
+            WriteToFile(fileName, formattedVector, matrixSize);
+        }
+
+        private void WriteToFile(string fileName, string text, int matrixSize)
+        {
+            // append matrix size
+            var sb = new StringBuilder();
+            sb.AppendLine(matrixSize.ToString());
+            sb.AppendLine(text);
+
+            File.WriteAllText(fileName, sb.ToString());
         }
     }
 }
