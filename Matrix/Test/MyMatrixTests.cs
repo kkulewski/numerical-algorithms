@@ -533,6 +533,20 @@ namespace Test
             Assert.Equal(95, v[1].Denominator);
         }
 
+        [Fact]
+        public void SolvesEquation_UsingGaussianReductionPartialPivot_WithFraction()
+        {
+            var m = GetFraction2X2Matrix();
+            var v = GetFraction2X2Vector();
+
+            m.GaussianReductionPartialPivot(v);
+
+            Assert.Equal(-2, v[0].Numerator);
+            Assert.Equal(19, v[0].Denominator);
+            Assert.Equal(119, v[1].Numerator);
+            Assert.Equal(95, v[1].Denominator);
+        }
+
         private MyMatrix<Fraction> GetFraction2X2Matrix()
         {
             var matrix = new[,]
