@@ -40,5 +40,16 @@ namespace Test
             Assert.Equal(2, f3.Denominator);
 
         }
+
+        [Fact]
+        public void Simplifies_Fraction_On_Addition()
+        {
+            var f1 = new Fraction(1, 6);
+            var f2 = new Fraction(3, 6);
+            var f3 = f1 + f2;
+
+            Assert.Equal(2, f3.Numerator);
+            Assert.Equal(3, f3.Denominator);
+        }
     }
 }
