@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Numerics;
 using System.Text;
 
 namespace Matrix
@@ -127,6 +128,29 @@ namespace Matrix
             return values;
         }
 
+        public MyMatrix<Fraction> LoadFractionMatrix(string fileName)
+        {
+            var matrixFile = File.ReadAllLines(fileName);
+            var matrixSize = int.Parse(matrixFile[0]);
+            var innerMatrix = new Fraction[matrixSize, matrixSize];
+
+            for (var i = 0; i < matrixSize; i++)
+            {
+                var line = matrixFile[i + 1].Replace("[", "").Replace("]", "");
+                var values = line.Split(';');
+
+                for (var j = 0; j < matrixSize; j++)
+                {
+                    var fraction = values[j].Split('/');
+                    var numerator = BigInteger.Parse(fraction[0]);
+                    var denominator = BigInteger.Parse(fraction[1]);
+                    innerMatrix[i, j] = new Fraction(numerator, denominator);
+                }
+            }
+
+            return new MyMatrix<Fraction>(innerMatrix);
+        }
+
         public MyMatrix<double> LoadDoubleMatrix(string fileName)
         {
             var matrixFile = File.ReadAllLines(fileName);
@@ -165,6 +189,26 @@ namespace Matrix
             }
 
             return new MyMatrix<float>(innerMatrix);
+        }
+
+        public Fraction[] LoadFractionVector(string fileName)
+        {
+            var matrixFile = File.ReadAllLines(fileName);
+            var matrixSize = int.Parse(matrixFile[0]);
+            var vector = new Fraction[matrixSize];
+
+            var line = matrixFile[1].Replace("[", "").Replace("]", "");
+            var values = line.Split(';');
+
+            for (var j = 0; j < matrixSize; j++)
+            {
+                var fraction = values[j].Split('/');
+                var numerator = BigInteger.Parse(fraction[0]);
+                var denominator = BigInteger.Parse(fraction[1]);
+                vector[j] = new Fraction(numerator, denominator);
+            }
+
+            return vector;
         }
 
         public double[] LoadDoubleVector(string fileName)
