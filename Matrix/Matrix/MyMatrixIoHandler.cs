@@ -61,9 +61,12 @@ namespace Matrix
             {
                 for (var j = 0; j < matrixSize; j++)
                 {
-                    var numerator = _random.Next(100);
-                    var denominator = _random.Next(1, 100);
-                    fractionValues[i, j] = new Fraction(numerator, denominator);
+                    var numerator = _random.Next(10);
+                    var denominator = _random.Next(1, 10);
+                    if(numerator > denominator)
+                        fractionValues[i, j] = new Fraction(denominator, numerator);
+                    else
+                        fractionValues[i, j] = new Fraction(numerator, denominator);
                 }
             }
 
@@ -75,9 +78,12 @@ namespace Matrix
             var fractionVector = new Fraction[matrixSize];
             for (var j = 0; j < matrixSize; j++)
             {
-                var numerator = _random.Next(100);
-                var denominator = _random.Next(1, 100);
-                fractionVector[j] = new Fraction(numerator, denominator);
+                var numerator = _random.Next(10);
+                var denominator = _random.Next(1, 10);
+                if (numerator > denominator)
+                    fractionVector[j] = new Fraction(denominator, numerator);
+                else
+                    fractionVector[j] = new Fraction(numerator, denominator);
             }
 
             return fractionVector;
