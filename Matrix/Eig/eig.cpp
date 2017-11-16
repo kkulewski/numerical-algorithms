@@ -1,53 +1,15 @@
+
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include "Eigen/Dense"
+
 using namespace Eigen;
 using namespace std;
 
+MatrixXd loadMatrix(const char* fileName);
+VectorXd loadVector(const char* fileName);
+void saveMatrix(char* fileName, int size, int duration, string result);
 
-MatrixXd loadMatrix(const char* fileName)
-{
-    ifstream file(fileName);
-    int size;
-    file >> size;
-
-    MatrixXd matrix(size, size);
-    for(int i = 0; i < size; i++)
-    {
-        for(int j = 0; j < size; j++)
-        {
-            file >> matrix(i, j);
-        }
-    }
-
-    return matrix;
-}
-
-VectorXd loadVector(const char* fileName)
-{
-    ifstream file(fileName);
-    int size;
-    file >> size;
-
-    VectorXd vector(size);
-    for(int i = 0; i < size; i++)
-    {
-        file >> vector(i);
-    }
-
-    return vector;
-}
-
-void writeToFile(char* fileName, int size, int time, string result)
-{
-    ofstream file(fileName);
-    file << size;
-    file << "\n";
-    file << time;
-    file << "\n";
-    file << result;
-}
 
 int main()
 {
@@ -81,9 +43,10 @@ int main()
     stringstream fPartialResult; 
 
     dPartialResult << dPartial.format(ResultFormat);
-    writeToFile("eigen_double_result_partial.txt", matrixSize, 0, dPartialResult.str());
     fPartialResult << fPartial.format(ResultFormat);
-    writeToFile("eigen_float_result_partial.txt", matrixSize, 0, fPartialResult.str());
+
+    saveMatrix("eigen_double_result_partial.txt", matrixSize, 0, dPartialResult.str());
+    saveMatrix("eigen_float_result_partial.txt", matrixSize, 0, fPartialResult.str());
 
 
     // ****************************************************************************************
@@ -100,8 +63,9 @@ int main()
 
     dFullResult << dFull.format(ResultFormat);
     fFullResult << fFull.format(ResultFormat);
-    writeToFile("eigen_double_result_full.txt", matrixSize, 0, dPartialResult.str());
-    writeToFile("eigen_float_result_full.txt", matrixSize, 0, fPartialResult.str());
+
+    saveMatrix("eigen_double_result_full.txt", matrixSize, 0, dPartialResult.str());
+    saveMatrix("eigen_float_result_full.txt", matrixSize, 0, fPartialResult.str());
 
 
     // ****************************************************************************************
@@ -118,8 +82,9 @@ int main()
 
     dAXResult << dAX.format(ResultFormat);
     fAXResult << fAX.format(ResultFormat);
-    writeToFile("eigen_double_result_ax.txt", matrixSize, 0, dAXResult.str());
-    writeToFile("eigen_float_result_ax.txt", matrixSize, 0, fAXResult.str());
+    
+    saveMatrix("eigen_double_result_ax.txt", matrixSize, 0, dAXResult.str());
+    saveMatrix("eigen_float_result_ax.txt", matrixSize, 0, fAXResult.str());
 
 
     // ****************************************************************************************
@@ -136,8 +101,9 @@ int main()
 
     dABCXResult << dABCX.format(ResultFormat);
     fABCXResult << fABCX.format(ResultFormat);
-    writeToFile("eigen_double_result_abcx.txt", matrixSize, 0, dABCXResult.str());
-    writeToFile("eigen_float_result_abcx.txt", matrixSize, 0, fABCXResult.str());
+
+    saveMatrix("eigen_double_result_abcx.txt", matrixSize, 0, dABCXResult.str());
+    saveMatrix("eigen_float_result_abcx.txt", matrixSize, 0, fABCXResult.str());
 
 
     // ****************************************************************************************
@@ -154,6 +120,59 @@ int main()
 
     dABCResult << dABC.format(ResultFormat);
     fABCResult << fABC.format(ResultFormat);
-    writeToFile("eigen_double_result_abc.txt", matrixSize, 0, dABCResult.str());
-    writeToFile("eigen_float_result_abc.txt", matrixSize, 0, fABCResult.str());
+
+    saveMatrix("eigen_double_result_abc.txt", matrixSize, 0, dABCResult.str());
+    saveMatrix("eigen_float_result_abc.txt", matrixSize, 0, fABCResult.str());
+
+    return 0;
+}
+
+
+// ****************************************************************************************
+// IO operations
+// ****************************************************************************************
+
+MatrixXd loadMatrix(const char* fileName)
+{
+    ifstream file(fileName);
+    int size;
+    file >> size;
+
+    MatrixXd matrix(size, size);
+    for(int i = 0; i < size; i++)
+    {
+        for(int j = 0; j < size; j++)
+        {
+            file >> matrix(i, j);
+        }
+    }
+
+    return matrix;
+}
+
+
+VectorXd loadVector(const char* fileName)
+{
+    ifstream file(fileName);
+    int size;
+    file >> size;
+
+    VectorXd vector(size);
+    for(int i = 0; i < size; i++)
+    {
+        file >> vector(i);
+    }
+
+    return vector;
+}
+
+
+void saveMatrix(char* fileName, int size, int duration, string result)
+{
+    ofstream file(fileName);
+    file << size;
+    file << "\n";
+    file << duration;
+    file << "\n";
+    file << result;
 }
