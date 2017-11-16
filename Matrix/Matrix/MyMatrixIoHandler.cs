@@ -22,6 +22,18 @@ namespace Matrix
             File.WriteAllText(fileName, sb.ToString());
         }
 
+        public void WriteMatrixToFile<T>(MyMatrix<T> matrix, string fileName) where T : new()
+        {
+            var formattedMatrix = MyMatrixFormatter.GetFormattedMatrix(matrix);
+            WriteToFile(fileName, formattedMatrix, matrix.Rows);
+        }
+
+        public void WriteVectorToFile<T>(T[] vector, string fileName) where T : new()
+        {
+            var formattedMatrix = MyMatrixFormatter.GetFormattedVector(vector);
+            WriteToFile(fileName, formattedMatrix, vector.Length);
+        }
+
         public MyMatrix<Fraction> GenerateRandomFractionMatrix(int matrixSize)
         {
             var fractionValues = new Fraction[matrixSize, matrixSize];
@@ -101,42 +113,6 @@ namespace Matrix
             }
 
             return values;
-        }
-
-        public void WriteDoubleMatrix(int matrixSize, string fileName)
-        {
-            var matrix = new MyMatrix<double>(matrixSize, matrixSize);
-            var formattedMatrix = MyMatrixFormatter.GetFormattedMatrix(matrix);
-
-            WriteToFile(fileName, formattedMatrix, matrixSize);
-        }
-
-        public void WriteFloatMatrix(int matrixSize, string fileName)
-        {
-            var matrix = new MyMatrix<float>(matrixSize, matrixSize);
-            var formattedMatrix = MyMatrixFormatter.GetFormattedMatrix(matrix);
-
-            WriteToFile(fileName, formattedMatrix, matrixSize);
-        }
-
-        public void WriteDoubleVector(int matrixSize, string fileName)
-        {
-            var vector = new double[matrixSize];
-            for (var i = 0; i < matrixSize; i++)
-                vector[i] = _random.NextDouble();
-            var formattedVector = MyMatrixFormatter.GetFormattedVector(vector);
-
-            WriteToFile(fileName, formattedVector, matrixSize);
-        }
-
-        public void WriteFloatVector(int matrixSize, string fileName)
-        {
-            var vector = new float[matrixSize];
-            for (var i = 0; i < matrixSize; i++)
-                vector[i] = (float) _random.NextDouble();
-            var formattedVector = MyMatrixFormatter.GetFormattedVector(vector);
-
-            WriteToFile(fileName, formattedVector, matrixSize);
         }
 
         public MyMatrix<double> LoadDoubleMatrix(string fileName)
