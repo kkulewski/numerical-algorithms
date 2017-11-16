@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Matrix
 {
-    public class MatrixIoHandler
+    public class MyMatrixIoHandler
     {
         private readonly Random _random = new Random();
         
@@ -24,7 +21,7 @@ namespace Matrix
         public void WriteDoubleMatrix(int matrixSize, string fileName)
         {
             var matrix = new MyMatrix<double>(matrixSize, matrixSize);
-            var formattedMatrix = MyMatrixWriter.GetFormattedMatrix(matrix);
+            var formattedMatrix = MyMatrixFormatter.GetFormattedMatrix(matrix);
 
             WriteToFile(fileName, formattedMatrix, matrixSize);
         }
@@ -34,7 +31,7 @@ namespace Matrix
             var vector = new double[matrixSize];
             for (var i = 0; i < matrixSize; i++)
                 vector[i] = _random.NextDouble();
-            var formattedVector = MyMatrixWriter.GetFormattedVector(vector);
+            var formattedVector = MyMatrixFormatter.GetFormattedVector(vector);
 
             WriteToFile(fileName, formattedVector, matrixSize);
         }
