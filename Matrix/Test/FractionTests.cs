@@ -28,5 +28,17 @@ namespace Test
             Assert.Equal(6, f3.Numerator);
             Assert.Equal(1, f3.Denominator);
         }
+
+        [Fact]
+        public void Simplifies_Fraction_On_Multiply()
+        {
+            var f1 = new Fraction(2, 3);
+            var f2 = new Fraction(3, 4);
+            var f3 = f1 * f2;
+
+            Assert.Equal(1, f3.Numerator);
+            Assert.Equal(2, f3.Denominator);
+
+        }
     }
 }
