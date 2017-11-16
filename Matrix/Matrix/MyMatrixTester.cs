@@ -16,11 +16,13 @@ namespace Matrix
 
         private readonly int _matrixSize;
         private readonly MyMatrixIoHandler _handler;
+        private readonly Stopwatch _stopwatch;
 
         public MyMatrixTester(int matrixSize)
         {
             _matrixSize = matrixSize;
             _handler = new MyMatrixIoHandler();
+            _stopwatch = new Stopwatch();
         }
 
         public void WriteMatrices()
@@ -58,17 +60,15 @@ namespace Matrix
 
         public void MatrixMulVectorTest()
         {
-            var stopwatch = new Stopwatch();
-
             // fraction A * X
             var frA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
             var frX = _handler.LoadFractionVector(PrefixFraction + FileX);
 
-            stopwatch.Reset();
-            stopwatch.Start();
+            _stopwatch.Reset();
+            _stopwatch.Start();
             var frResult = frA * frX;
-            stopwatch.Stop();
-            var time = stopwatch.Elapsed;
+            _stopwatch.Stop();
+            var time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultAx,
                 MyMatrixFormatter.GetFormattedMatrix(frResult), 
@@ -79,11 +79,11 @@ namespace Matrix
             var fA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
             var fX = _handler.LoadFloatVector(PrefixFloat + FileX);
 
-            stopwatch.Reset();
-            stopwatch.Start();
+            _stopwatch.Reset();
+            _stopwatch.Start();
             var fResult = fA * fX;
-            stopwatch.Stop();
-            time = stopwatch.Elapsed;
+            _stopwatch.Stop();
+            time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultAx,
                 MyMatrixFormatter.GetFormattedMatrix(fResult),
@@ -95,11 +95,11 @@ namespace Matrix
             var dA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
             var dX = _handler.LoadDoubleVector(PrefixDouble + FileX);
 
-            stopwatch.Reset();
-            stopwatch.Start();
+            _stopwatch.Reset();
+            _stopwatch.Start();
             var dResult = dA * dX;
-            stopwatch.Stop();
-            time = stopwatch.Elapsed;
+            _stopwatch.Stop();
+            time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultAx,
                 MyMatrixFormatter.GetFormattedMatrix(dResult),
