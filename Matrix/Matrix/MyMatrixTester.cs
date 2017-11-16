@@ -105,7 +105,7 @@ namespace Matrix
             _stopwatch.Stop();
             time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
-                PrefixDouble + ResultPartialPivot,
+                PrefixDouble + ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
                 _matrixSize,
                 time);
@@ -134,7 +134,7 @@ namespace Matrix
 
             _stopwatch.Reset();
             _stopwatch.Start();
-            fA.GaussianReductionNoPivot(fX);
+            fA.GaussianReductionPartialPivot(fX);
             _stopwatch.Stop();
             time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
