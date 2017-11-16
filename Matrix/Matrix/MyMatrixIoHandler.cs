@@ -7,10 +7,6 @@ namespace Matrix
 {
     public class MyMatrixIoHandler
     {
-        public const string PrefixFraction = "fraction_";
-        public const string PrefixDouble = "double_";
-        public const string PrefixFloat = "float_";
-        
         private readonly Random _random = new Random();
         
         private void WriteToFile(string fileName, string text, int matrixSize)

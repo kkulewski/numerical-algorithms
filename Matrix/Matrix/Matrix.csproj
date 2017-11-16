@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fraction.cs" />
+    <Compile Include="MyMatrixTester.cs" />
     <Compile Include="MyMatrix.cs" />
     <Compile Include="MyMatrixFormatter.cs" />
     <Compile Include="Program.cs" />
