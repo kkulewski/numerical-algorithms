@@ -10,25 +10,7 @@ namespace Matrix
     public class Tester
     {
         private readonly Random _random = new Random();
-
-        public void WriteFractionMatrix(int matrixSize, string fileName)
-        {
-            var matrix = new MyMatrix<Fraction>(matrixSize, matrixSize);
-            var formattedMatrix = MyMatrixWriter.GetFormattedMatrix(matrix);
-
-            WriteToFile(fileName, formattedMatrix, matrixSize);
-        }
-
-        public void WriteFractionVector(int matrixSize, string fileName)
-        {
-            var vector = new Fraction[matrixSize];
-            for (var i = 0; i < matrixSize; i++)
-                vector[i] = new Fraction(_random.Next(), _random.Next(1, int.MaxValue));
-            var formattedVector = MyMatrixWriter.GetFormattedVector(vector);
-
-            WriteToFile(fileName, formattedVector, matrixSize);
-        }
-
+        
         private void WriteToFile(string fileName, string text, int matrixSize)
         {
             // append matrix size
@@ -37,6 +19,61 @@ namespace Matrix
             sb.AppendLine(text);
 
             File.WriteAllText(fileName, sb.ToString());
+        }
+
+        public void WriteDoubleMatrix(int matrixSize, string fileName)
+        {
+            var matrix = new MyMatrix<double>(matrixSize, matrixSize);
+            var formattedMatrix = MyMatrixWriter.GetFormattedMatrix(matrix);
+
+            WriteToFile(fileName, formattedMatrix, matrixSize);
+        }
+
+        public void WriteDoubleVector(int matrixSize, string fileName)
+        {
+            var vector = new double[matrixSize];
+            for (var i = 0; i < matrixSize; i++)
+                vector[i] = _random.NextDouble();
+            var formattedVector = MyMatrixWriter.GetFormattedVector(vector);
+
+            WriteToFile(fileName, formattedVector, matrixSize);
+        }
+
+        public MyMatrix<double> LoadDoubleMatrix(string fileName)
+        {
+            var matrixFile = File.ReadAllLines(fileName);
+            var matrixSize = int.Parse(matrixFile[0]);
+            var innerMatrix = new double[matrixSize, matrixSize];
+
+            for (var i = 0; i < matrixSize; i++)
+            {
+                var line = matrixFile[i + 1].Replace("[", "").Replace("]", "");
+                var values = line.Split(';');
+
+                for (var j = 0; j < matrixSize; j++)
+                {
+                    innerMatrix[i, j] = double.Parse(values[j]);
+                }
+            }
+
+            return new MyMatrix<double>(innerMatrix);
+        }
+
+        public double[] LoadDoubleVector(string fileName)
+        {
+            var matrixFile = File.ReadAllLines(fileName);
+            var matrixSize = int.Parse(matrixFile[0]);
+            var vector = new double[matrixSize];
+
+            var line = matrixFile[1].Replace("[", "").Replace("]", "");
+            var values = line.Split(';');
+
+            for (var j = 0; j < matrixSize; j++)
+            {
+                vector[j] = double.Parse(values[j]);
+            }
+
+            return vector;
         }
     }
 }
