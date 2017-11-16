@@ -149,8 +149,8 @@ namespace Matrix
 
             for (var i = 0; i < matrixSize; i++)
             {
-                var line = matrixFile[i + 1].Replace("[", "").Replace("]", "");
-                var values = line.Split(';');
+                var line = matrixFile[i + 1];
+                var values = line.Split(' ');
 
                 for (var j = 0; j < matrixSize; j++)
                 {
@@ -172,8 +172,8 @@ namespace Matrix
 
             for (var i = 0; i < matrixSize; i++)
             {
-                var line = matrixFile[i + 1].Replace("[", "").Replace("]", "");
-                var values = line.Split(';');
+                var line = matrixFile[i + 1];
+                var values = line.Split(' ');
 
                 for (var j = 0; j < matrixSize; j++)
                 {
@@ -192,8 +192,8 @@ namespace Matrix
 
             for (var i = 0; i < matrixSize; i++)
             {
-                var line = matrixFile[i + 1].Replace("[", "").Replace("]", "");
-                var values = line.Split(';');
+                var line = matrixFile[i + 1];
+                var values = line.Split(' ');
 
                 for (var j = 0; j < matrixSize; j++)
                 {
@@ -210,8 +210,8 @@ namespace Matrix
             var matrixSize = int.Parse(matrixFile[0]);
             var vector = new Fraction[matrixSize];
 
-            var line = matrixFile[1].Replace("[", "").Replace("]", "");
-            var values = line.Split(';');
+            var line = matrixFile[1];
+            var values = line.Split(' ');
 
             for (var j = 0; j < matrixSize; j++)
             {
@@ -230,8 +230,8 @@ namespace Matrix
             var matrixSize = int.Parse(matrixFile[0]);
             var vector = new double[matrixSize];
 
-            var line = matrixFile[1].Replace("[", "").Replace("]", "");
-            var values = line.Split(';');
+            var line = matrixFile[1];
+            var values = line.Split(' ');
 
             for (var j = 0; j < matrixSize; j++)
             {
@@ -247,8 +247,8 @@ namespace Matrix
             var matrixSize = int.Parse(matrixFile[0]);
             var vector = new float[matrixSize];
 
-            var line = matrixFile[1].Replace("[", "").Replace("]", "");
-            var values = line.Split(';');
+            var line = matrixFile[1];
+            var values = line.Split(' ');
 
             for (var j = 0; j < matrixSize; j++)
             {
