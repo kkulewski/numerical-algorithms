@@ -2,7 +2,7 @@
 
 namespace Matrix
 {
-    public static class MyMatrixWriter
+    public static class MyMatrixFormatter
     {
         public static string GetFormattedMatrix<T>(MyMatrix<T> matrix) where T : new()
         {
