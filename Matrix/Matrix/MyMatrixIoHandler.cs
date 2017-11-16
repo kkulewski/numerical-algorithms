@@ -34,6 +34,18 @@ namespace Matrix
             WriteToFile(fileName, formattedMatrix, vector.Length);
         }
 
+        public void WriteFractionMatrixToFile(MyMatrix<Fraction> matrix, string fileName)
+        {
+            var formattedMatrix = MyMatrixFormatter.GetFormattedFractionMatrix(matrix);
+            WriteToFile(fileName, formattedMatrix, matrix.Rows);
+        }
+
+        public void WriteFractionVectorToFile(Fraction[] vector, string fileName)
+        {
+            var formattedMatrix = MyMatrixFormatter.GetFormattedFractionVector(vector);
+            WriteToFile(fileName, formattedMatrix, vector.Length);
+        }
+
         public MyMatrix<Fraction> GenerateRandomFractionMatrix(int matrixSize)
         {
             var fractionValues = new Fraction[matrixSize, matrixSize];

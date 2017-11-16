@@ -38,5 +38,44 @@ namespace Matrix
             sb.Append("]");
             return sb.ToString();
         }
+
+        public static string GetFormattedFractionMatrix(MyMatrix<Fraction> matrix)
+        {
+            var sb = new StringBuilder();
+            for (var i = 0; i < matrix.Rows; i++)
+            {
+                sb.Append("[");
+                for (var j = 0; j < matrix.Cols; j++)
+                {
+                    sb.Append(matrix[i, j].Numerator);
+                    sb.Append("/");
+                    sb.Append(matrix[i, j].Denominator);
+                    if (j < matrix.Cols - 1)
+                        sb.Append(";");
+                }
+
+                sb.Append("]");
+                if (i < matrix.Rows - 1)
+                    sb.AppendLine();
+            }
+            return sb.ToString();
+        }
+
+        public static string GetFormattedFractionVector(Fraction[] vector)
+        {
+            var sb = new StringBuilder();
+            sb.Append("[");
+            for (var i = 0; i < vector.Length; i++)
+            {
+                sb.Append(vector[i].Numerator);
+                sb.Append("/");
+                sb.Append(vector[i].Denominator);
+                if (i < vector.Length - 1)
+                    sb.Append(";");
+            }
+
+            sb.Append("]");
+            return sb.ToString();
+        }
     }
 }
