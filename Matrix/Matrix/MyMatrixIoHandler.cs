@@ -25,7 +25,6 @@ namespace Matrix
         public MyMatrix<Fraction> GenerateRandomFractionMatrix(int matrixSize)
         {
             var fractionValues = new Fraction[matrixSize, matrixSize];
-
             for (var i = 0; i < matrixSize; i++)
             {
                 for (var j = 0; j < matrixSize; j++)
@@ -37,6 +36,19 @@ namespace Matrix
             }
 
             return new MyMatrix<Fraction>(fractionValues);
+        }
+
+        public Fraction[] GenerateRandomFractionVector(int matrixSize)
+        {
+            var fractionVector = new Fraction[matrixSize];
+            for (var j = 0; j < matrixSize; j++)
+            {
+                var numerator = _random.Next();
+                var denominator = _random.Next(1, int.MaxValue);
+                fractionVector[j] = new Fraction(numerator, denominator);
+            }
+
+            return fractionVector;
         }
 
         public MyMatrix<double> DoubleMatrixFromFractionMatrix(MyMatrix<Fraction> m)
@@ -54,6 +66,17 @@ namespace Matrix
             return new MyMatrix<double>(values);
         }
 
+        public double[] DoubleVectorFromFractionVector(Fraction[] vector)
+        {
+            var values = new double[vector.Length];
+            for (var j = 0; j < vector.Length; j++)
+            {
+                values[j] = (double) vector[j].Numerator / (double) vector[j].Denominator;
+            }
+
+            return values;
+        }
+
         public MyMatrix<float> FloatMatrixFromFractionMatrix(MyMatrix<Fraction> m)
         {
             var values = new float[m.Rows, m.Cols];
@@ -67,6 +90,17 @@ namespace Matrix
             }
 
             return new MyMatrix<float>(values);
+        }
+
+        public float[] FloatVectorFromFractionVector(Fraction[] vector)
+        {
+            var values = new float[vector.Length];
+            for (var j = 0; j < vector.Length; j++)
+            {
+                values[j] = (float) vector[j].Numerator / (float) vector[j].Denominator;
+            }
+
+            return values;
         }
 
         public void WriteDoubleMatrix(int matrixSize, string fileName)
