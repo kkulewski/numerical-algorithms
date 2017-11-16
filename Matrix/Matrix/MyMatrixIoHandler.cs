@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Matrix
 {
-    public class Tester
+    public class MatrixIoHandler
     {
         private readonly Random _random = new Random();
         
