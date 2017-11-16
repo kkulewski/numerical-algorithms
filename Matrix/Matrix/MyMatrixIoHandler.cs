@@ -26,11 +26,29 @@ namespace Matrix
             WriteToFile(fileName, formattedMatrix, matrixSize);
         }
 
+        public void WriteFloatMatrix(int matrixSize, string fileName)
+        {
+            var matrix = new MyMatrix<float>(matrixSize, matrixSize);
+            var formattedMatrix = MyMatrixFormatter.GetFormattedMatrix(matrix);
+
+            WriteToFile(fileName, formattedMatrix, matrixSize);
+        }
+
         public void WriteDoubleVector(int matrixSize, string fileName)
         {
             var vector = new double[matrixSize];
             for (var i = 0; i < matrixSize; i++)
                 vector[i] = _random.NextDouble();
+            var formattedVector = MyMatrixFormatter.GetFormattedVector(vector);
+
+            WriteToFile(fileName, formattedVector, matrixSize);
+        }
+
+        public void WriteFloatVector(int matrixSize, string fileName)
+        {
+            var vector = new float[matrixSize];
+            for (var i = 0; i < matrixSize; i++)
+                vector[i] = (float) _random.NextDouble();
             var formattedVector = MyMatrixFormatter.GetFormattedVector(vector);
 
             WriteToFile(fileName, formattedVector, matrixSize);
@@ -56,6 +74,26 @@ namespace Matrix
             return new MyMatrix<double>(innerMatrix);
         }
 
+        public MyMatrix<float> LoadFloatMatrix(string fileName)
+        {
+            var matrixFile = File.ReadAllLines(fileName);
+            var matrixSize = int.Parse(matrixFile[0]);
+            var innerMatrix = new float[matrixSize, matrixSize];
+
+            for (var i = 0; i < matrixSize; i++)
+            {
+                var line = matrixFile[i + 1].Replace("[", "").Replace("]", "");
+                var values = line.Split(';');
+
+                for (var j = 0; j < matrixSize; j++)
+                {
+                    innerMatrix[i, j] = float.Parse(values[j]);
+                }
+            }
+
+            return new MyMatrix<float>(innerMatrix);
+        }
+
         public double[] LoadDoubleVector(string fileName)
         {
             var matrixFile = File.ReadAllLines(fileName);
@@ -68,6 +106,23 @@ namespace Matrix
             for (var j = 0; j < matrixSize; j++)
             {
                 vector[j] = double.Parse(values[j]);
+            }
+
+            return vector;
+        }
+
+        public float[] LoadFloatVector(string fileName)
+        {
+            var matrixFile = File.ReadAllLines(fileName);
+            var matrixSize = int.Parse(matrixFile[0]);
+            var vector = new float[matrixSize];
+
+            var line = matrixFile[1].Replace("[", "").Replace("]", "");
+            var values = line.Split(';');
+
+            for (var j = 0; j < matrixSize; j++)
+            {
+                vector[j] = float.Parse(values[j]);
             }
 
             return vector;
