@@ -19,6 +19,17 @@ namespace Matrix
             File.WriteAllText(fileName, sb.ToString());
         }
 
+        public void WriteToFileWithTimespan(string fileName, string text, int matrixSize, TimeSpan timespan)
+        {
+            // append matrix size
+            var sb = new StringBuilder();
+            sb.AppendLine(timespan.Milliseconds.ToString());
+            sb.AppendLine(matrixSize.ToString());
+            sb.AppendLine(text);
+
+            File.WriteAllText(fileName, sb.ToString());
+        }
+
         public void WriteMatrixToFile<T>(MyMatrix<T> matrix, string fileName) where T : new()
         {
             var formattedMatrix = MyMatrixFormatter.GetFormattedMatrix(matrix);
@@ -50,8 +61,8 @@ namespace Matrix
             {
                 for (var j = 0; j < matrixSize; j++)
                 {
-                    var numerator = _random.Next();
-                    var denominator = _random.Next(1, int.MaxValue);
+                    var numerator = _random.Next(100);
+                    var denominator = _random.Next(1, 100);
                     fractionValues[i, j] = new Fraction(numerator, denominator);
                 }
             }
@@ -64,8 +75,8 @@ namespace Matrix
             var fractionVector = new Fraction[matrixSize];
             for (var j = 0; j < matrixSize; j++)
             {
-                var numerator = _random.Next();
-                var denominator = _random.Next(1, int.MaxValue);
+                var numerator = _random.Next(100);
+                var denominator = _random.Next(1, 100);
                 fractionVector[j] = new Fraction(numerator, denominator);
             }
 
