@@ -1,4 +1,7 @@
-﻿namespace Matrix
+﻿using System;
+using System.Diagnostics;
+
+namespace Matrix
 {
     public class MyMatrixTester
     {
@@ -6,6 +9,7 @@
         public const string FileB = "b.txt";
         public const string FileC = "c.txt";
         public const string FileX = "x.txt";
+        public const string ResultAx = "result_ax.txt";
         public const string PrefixFraction = "fraction_";
         public const string PrefixDouble = "double_";
         public const string PrefixFloat = "float_";
@@ -31,7 +35,6 @@
             _handler.WriteFractionMatrixToFile(frC, PrefixFraction + FileC);
             _handler.WriteFractionVectorToFile(frX, PrefixFraction + FileX);
 
-
             // prepare float A, B, C matrix + X vector & save
             var fA = _handler.FloatMatrixFromFractionMatrix(frA);
             var fB = _handler.FloatMatrixFromFractionMatrix(frB);
@@ -51,6 +54,57 @@
             _handler.WriteMatrixToFile(dB, PrefixDouble + FileB);
             _handler.WriteMatrixToFile(dC, PrefixDouble + FileC);
             _handler.WriteVectorToFile(dX, PrefixDouble + FileX);
+        }
+
+        public void MatrixMulVectorTest()
+        {
+            var stopwatch = new Stopwatch();
+
+            // fraction A * X
+            var frA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
+            var frX = _handler.LoadFractionVector(PrefixFraction + FileX);
+
+            stopwatch.Reset();
+            stopwatch.Start();
+            var frResult = frA * frX;
+            stopwatch.Stop();
+            var time = stopwatch.Elapsed;
+            _handler.WriteToFileWithTimespan(
+                PrefixFraction + ResultAx,
+                MyMatrixFormatter.GetFormattedMatrix(frResult), 
+                _matrixSize, 
+                time);
+
+            // float A * X
+            var fA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
+            var fX = _handler.LoadFloatVector(PrefixFloat + FileX);
+
+            stopwatch.Reset();
+            stopwatch.Start();
+            var fResult = fA * fX;
+            stopwatch.Stop();
+            time = stopwatch.Elapsed;
+            _handler.WriteToFileWithTimespan(
+                PrefixFloat + ResultAx,
+                MyMatrixFormatter.GetFormattedMatrix(fResult),
+                _matrixSize,
+                time);
+
+
+            // double A * X
+            var dA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
+            var dX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+
+            stopwatch.Reset();
+            stopwatch.Start();
+            var dResult = dA * dX;
+            stopwatch.Stop();
+            time = stopwatch.Elapsed;
+            _handler.WriteToFileWithTimespan(
+                PrefixDouble + ResultAx,
+                MyMatrixFormatter.GetFormattedMatrix(dResult),
+                _matrixSize,
+                time);
         }
     }
 }
