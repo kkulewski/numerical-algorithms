@@ -6,6 +6,10 @@ namespace Matrix
 {
     public class MyMatrixIoHandler
     {
+        public const string PrefixFraction = "fraction_";
+        public const string PrefixDouble = "double_";
+        public const string PrefixFloat = "float_";
+        
         private readonly Random _random = new Random();
         
         private void WriteToFile(string fileName, string text, int matrixSize)
@@ -16,6 +20,53 @@ namespace Matrix
             sb.AppendLine(text);
 
             File.WriteAllText(fileName, sb.ToString());
+        }
+
+        public MyMatrix<Fraction> GenerateRandomFractionMatrix(int matrixSize)
+        {
+            var fractionValues = new Fraction[matrixSize, matrixSize];
+
+            for (var i = 0; i < matrixSize; i++)
+            {
+                for (var j = 0; j < matrixSize; j++)
+                {
+                    var numerator = _random.Next();
+                    var denominator = _random.Next(1, int.MaxValue);
+                    fractionValues[i, j] = new Fraction(numerator, denominator);
+                }
+            }
+
+            return new MyMatrix<Fraction>(fractionValues);
+        }
+
+        public MyMatrix<double> DoubleMatrixFromFractionMatrix(MyMatrix<Fraction> m)
+        {
+            var values = new double[m.Rows, m.Cols];
+            for (var i = 0; i < m.Rows; i++)
+            {
+                for (var j = 0; j < m.Cols; j++)
+                {
+                    values[i, j] = (double) m.Matrix[i, j].Numerator /
+                                   (double) m.Matrix[i, j].Denominator;
+                }
+            }
+
+            return new MyMatrix<double>(values);
+        }
+
+        public MyMatrix<float> FloatMatrixFromFractionMatrix(MyMatrix<Fraction> m)
+        {
+            var values = new float[m.Rows, m.Cols];
+            for (var i = 0; i < m.Rows; i++)
+            {
+                for (var j = 0; j < m.Cols; j++)
+                {
+                    values[i, j] = (float) m.Matrix[i, j].Numerator /
+                                   (float) m.Matrix[i, j].Denominator;
+                }
+            }
+
+            return new MyMatrix<float>(values);
         }
 
         public void WriteDoubleMatrix(int matrixSize, string fileName)
