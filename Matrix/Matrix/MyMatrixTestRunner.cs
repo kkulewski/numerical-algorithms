@@ -5,23 +5,6 @@ namespace Matrix
 {
     public class MyMatrixTestRunner
     {
-        public const string PrefixFraction = "fraction_";
-        public const string PrefixDouble = "double_";
-        public const string PrefixFloat = "float_";
-
-        public const string FileA = "a.txt";
-        public const string FileB = "b.txt";
-        public const string FileC = "c.txt";
-        public const string FileX = "x.txt";
-
-        public const string ResultAx = "result_ax.txt";
-        public const string ResultAbcx = "result_abcx.txt";
-        public const string ResultAbc = "result_abc.txt";
-
-        public const string ResultNoPivot = "result_gauss_no_pivot.txt";
-        public const string ResultPartialPivot = "result_gauss_partial_pivot.txt";
-        public const string ResultFullPivot = "result_gauss_full_pivot.txt";
-
         private readonly MyMatrixIoHandler _handler;
         private readonly Stopwatch _stopwatch;
         private TimeSpan _time;
@@ -79,51 +62,51 @@ namespace Matrix
             var frB = _handler.GenerateRandomFractionMatrix(matrixSize);
             var frC = _handler.GenerateRandomFractionMatrix(matrixSize);
             var frX = _handler.GenerateRandomFractionVector(matrixSize);
-            _handler.WriteFractionMatrixToFile(frA, PrefixFraction + FileA);
-            _handler.WriteFractionMatrixToFile(frB, PrefixFraction + FileB);
-            _handler.WriteFractionMatrixToFile(frC, PrefixFraction + FileC);
-            _handler.WriteFractionVectorToFile(frX, PrefixFraction + FileX);
+            _handler.WriteFractionMatrixToFile(frA, IO.PrefixFraction + IO.FileA);
+            _handler.WriteFractionMatrixToFile(frB, IO.PrefixFraction + IO.FileB);
+            _handler.WriteFractionMatrixToFile(frC, IO.PrefixFraction + IO.FileC);
+            _handler.WriteFractionVectorToFile(frX, IO.PrefixFraction + IO.FileX);
 
             // prepare float A, B, C matrix + X vector & save
             var fA = _handler.FloatMatrixFromFractionMatrix(frA);
             var fB = _handler.FloatMatrixFromFractionMatrix(frB);
             var fC = _handler.FloatMatrixFromFractionMatrix(frC);
             var fX = _handler.FloatVectorFromFractionVector(frX);
-            _handler.WriteMatrixToFile(fA, PrefixFloat + FileA);
-            _handler.WriteMatrixToFile(fB, PrefixFloat + FileC);
-            _handler.WriteMatrixToFile(fC, PrefixFloat + FileB);
-            _handler.WriteVectorToFile(fX, PrefixFloat + FileX);
+            _handler.WriteMatrixToFile(fA, IO.PrefixFloat + IO.FileA);
+            _handler.WriteMatrixToFile(fB, IO.PrefixFloat + IO.FileC);
+            _handler.WriteMatrixToFile(fC, IO.PrefixFloat + IO.FileB);
+            _handler.WriteVectorToFile(fX, IO.PrefixFloat + IO.FileX);
 
             // prepare double A, B, C matrix + X vector & save
             var dA = _handler.DoubleMatrixFromFractionMatrix(frA);
             var dB = _handler.DoubleMatrixFromFractionMatrix(frB);
             var dC = _handler.DoubleMatrixFromFractionMatrix(frC);
             var dX = _handler.DoubleVectorFromFractionVector(frX);
-            _handler.WriteMatrixToFile(dA, PrefixDouble + FileA);
-            _handler.WriteMatrixToFile(dB, PrefixDouble + FileB);
-            _handler.WriteMatrixToFile(dC, PrefixDouble + FileC);
-            _handler.WriteVectorToFile(dX, PrefixDouble + FileX);
+            _handler.WriteMatrixToFile(dA, IO.PrefixDouble + IO.FileA);
+            _handler.WriteMatrixToFile(dB, IO.PrefixDouble + IO.FileB);
+            _handler.WriteMatrixToFile(dC, IO.PrefixDouble + IO.FileC);
+            _handler.WriteVectorToFile(dX, IO.PrefixDouble + IO.FileX);
         }
 
         public void LoadMatrices()
         {
             // fraction
-            _sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA, false).Item1;
-            _sfrB = _handler.LoadFractionMatrix(PrefixFraction + FileB, false).Item1;
-            _sfrC = _handler.LoadFractionMatrix(PrefixFraction + FileC, false).Item1;
-            _sfrX = _handler.LoadFractionVector(PrefixFraction + FileX, false).Item1;
+            _sfrA = _handler.LoadFractionMatrix(IO.PrefixFraction + IO.FileA, false).Item1;
+            _sfrB = _handler.LoadFractionMatrix(IO.PrefixFraction + IO.FileB, false).Item1;
+            _sfrC = _handler.LoadFractionMatrix(IO.PrefixFraction + IO.FileC, false).Item1;
+            _sfrX = _handler.LoadFractionVector(IO.PrefixFraction + IO.FileX, false).Item1;
 
             // float
-            _sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA, false).Item1;
-            _sfB = _handler.LoadFloatMatrix(PrefixFloat + FileB, false).Item1;
-            _sfC = _handler.LoadFloatMatrix(PrefixFloat + FileC, false).Item1;
-            _sfX = _handler.LoadFloatVector(PrefixFloat + FileX, false).Item1;
+            _sfA = _handler.LoadFloatMatrix(IO.PrefixFloat + IO.FileA, false).Item1;
+            _sfB = _handler.LoadFloatMatrix(IO.PrefixFloat + IO.FileB, false).Item1;
+            _sfC = _handler.LoadFloatMatrix(IO.PrefixFloat + IO.FileC, false).Item1;
+            _sfX = _handler.LoadFloatVector(IO.PrefixFloat + IO.FileX, false).Item1;
 
             // double
-            _sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA, false).Item1;
-            _sdB = _handler.LoadDoubleMatrix(PrefixDouble + FileB, false).Item1;
-            _sdC = _handler.LoadDoubleMatrix(PrefixDouble + FileC, false).Item1;
-            _sdX = _handler.LoadDoubleVector(PrefixDouble + FileX, false).Item1;
+            _sdA = _handler.LoadDoubleMatrix(IO.PrefixDouble + IO.FileA, false).Item1;
+            _sdB = _handler.LoadDoubleMatrix(IO.PrefixDouble + IO.FileB, false).Item1;
+            _sdC = _handler.LoadDoubleMatrix(IO.PrefixDouble + IO.FileC, false).Item1;
+            _sdX = _handler.LoadDoubleVector(IO.PrefixDouble + IO.FileX, false).Item1;
         }
 
         public void MatrixGaussianReductionNoPivotTest(int testCount)
@@ -147,7 +130,7 @@ namespace Matrix
             }
             
             _handler.WriteToFileWithTimespan(
-                PrefixFraction + ResultNoPivot,
+                IO.PrefixFraction + IO.ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(frX),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -172,7 +155,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFloat + ResultNoPivot,
+                IO.PrefixFloat + IO.ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(fX),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -197,7 +180,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixDouble + ResultNoPivot,
+                IO.PrefixDouble + IO.ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -224,7 +207,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFraction + ResultPartialPivot,
+                IO.PrefixFraction + IO.ResultPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(frX),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -249,7 +232,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFloat + ResultPartialPivot,
+                IO.PrefixFloat + IO.ResultPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(fX),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -274,7 +257,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixDouble + ResultPartialPivot,
+                IO.PrefixDouble + IO.ResultPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -301,7 +284,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFraction + ResultFullPivot,
+                IO.PrefixFraction + IO.ResultFullPivot,
                 MyMatrixFormatter.GetFormattedVector(frX),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -326,7 +309,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFloat + ResultFullPivot,
+                IO.PrefixFloat + IO.ResultFullPivot,
                 MyMatrixFormatter.GetFormattedVector(fX),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -351,7 +334,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixDouble + ResultFullPivot,
+                IO.PrefixDouble + IO.ResultFullPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -378,7 +361,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFraction + ResultAx,
+                IO.PrefixFraction + IO.ResultAx,
                 MyMatrixFormatter.GetFormattedVector(frResult),
                 CurrentMatrixSize, 
                 _time.TotalMilliseconds / testCount);
@@ -403,7 +386,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFloat + ResultAx,
+                IO.PrefixFloat + IO.ResultAx,
                 MyMatrixFormatter.GetFormattedVector(fResult),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -428,7 +411,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixDouble + ResultAx,
+                IO.PrefixDouble + IO.ResultAx,
                 MyMatrixFormatter.GetFormattedVector(dResult),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -457,7 +440,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFraction + ResultAbcx,
+                IO.PrefixFraction + IO.ResultAbcx,
                 MyMatrixFormatter.GetFormattedVector(frResult),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -484,7 +467,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFloat + ResultAbcx,
+                IO.PrefixFloat + IO.ResultAbcx,
                 MyMatrixFormatter.GetFormattedVector(fResult),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -511,7 +494,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixDouble + ResultAbcx,
+                IO.PrefixDouble + IO.ResultAbcx,
                 MyMatrixFormatter.GetFormattedVector(dResult),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -539,7 +522,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFraction + ResultAbc,
+                IO.PrefixFraction + IO.ResultAbc,
                 MyMatrixFormatter.GetFormattedMatrix(frResult),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -565,7 +548,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixFloat + ResultAbc,
+                IO.PrefixFloat + IO.ResultAbc,
                 MyMatrixFormatter.GetFormattedMatrix(fResult),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -590,7 +573,7 @@ namespace Matrix
             }
 
             _handler.WriteToFileWithTimespan(
-                PrefixDouble + ResultAbc,
+                IO.PrefixDouble + IO.ResultAbc,
                 MyMatrixFormatter.GetFormattedMatrix(dResult),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
