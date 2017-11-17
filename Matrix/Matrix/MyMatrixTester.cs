@@ -222,7 +222,7 @@ namespace Matrix
             var time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultAx,
-                MyMatrixFormatter.GetFormattedMatrix(frResult), 
+                MyMatrixFormatter.GetFormattedVector(frResult), 
                 _matrixSize, 
                 time);
 
@@ -237,7 +237,7 @@ namespace Matrix
             time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultAx,
-                MyMatrixFormatter.GetFormattedMatrix(fResult),
+                MyMatrixFormatter.GetFormattedVector(fResult),
                 _matrixSize,
                 time);
 
@@ -253,7 +253,7 @@ namespace Matrix
             time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultAx,
-                MyMatrixFormatter.GetFormattedMatrix(dResult),
+                MyMatrixFormatter.GetFormattedVector(dResult),
                 _matrixSize,
                 time);
         }
@@ -273,7 +273,7 @@ namespace Matrix
             var time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultAbcx,
-                MyMatrixFormatter.GetFormattedMatrix(frResult),
+                MyMatrixFormatter.GetFormattedVector(frResult),
                 _matrixSize,
                 time);
 
@@ -290,7 +290,7 @@ namespace Matrix
             time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultAbcx,
-                MyMatrixFormatter.GetFormattedMatrix(fResult),
+                MyMatrixFormatter.GetFormattedVector(fResult),
                 _matrixSize,
                 time);
 
@@ -308,7 +308,7 @@ namespace Matrix
             time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultAbcx,
-                MyMatrixFormatter.GetFormattedMatrix(dResult),
+                MyMatrixFormatter.GetFormattedVector(dResult),
                 _matrixSize,
                 time);
         }

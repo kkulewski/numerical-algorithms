@@ -95,27 +95,24 @@ namespace Matrix
             return new MyMatrix<T>(output);
         }
 
-        public static MyMatrix<T> operator *(MyMatrix<T> a, T[] b)
+        public static T[] operator *(MyMatrix<T> a, T[] b)
         {
             if (a.Cols != b.Length)
                 throw new ArgumentException("Matrix sizes are not equal.");
 
-            var output = new T[a.Rows, b.Length];
+            var output = new T[a.Rows];
+            for (var row = 0; row < a.Rows; row++)
+                output[row] = new T();
+
             for (var row = 0; row < a.Rows; row++)
             {
                 for (var col = 0; col < b.Length; col++)
                 {
-                    var sum = new T();
-                    for (var k = 0; k < a.Cols; k++)
-                    {
-                        sum += (dynamic)a[row, k] * (dynamic) b[col];
-                    }
-
-                    output[row, col] = sum;
+                    output[row] += (dynamic) a[row, col] * (dynamic) b[col];
                 }
             }
 
-            return new MyMatrix<T>(output);
+            return output;
         }
 
         public void SwapRow(int index1, int index2)

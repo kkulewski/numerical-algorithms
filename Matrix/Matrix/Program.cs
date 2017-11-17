@@ -17,7 +17,7 @@ namespace Matrix
                 return;
             }
 
-            var tester = new MyMatrixTester(100);
+            var tester = new MyMatrixTester(50);
             switch (args[0])
             {
                 case "-p":
