@@ -26,6 +26,7 @@ namespace Matrix
         private readonly Stopwatch _stopwatch;
         private TimeSpan _time;
 
+        private int CurrentMatrixSize => _sfrA.Rows;
 
         private MyMatrix<Fraction> _sfrA;
         private Fraction[,] SfrA => (Fraction[,]) _sfrA.Matrix.Clone();
@@ -131,14 +132,12 @@ namespace Matrix
             // fraction
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var frA = new MyMatrix<Fraction>(SfrA);
-            var frX = (Fraction[]) SfrX.Clone();
+            var frX = SfrX;
 
             for (var i = 0; i < testCount; i++)
             {
-                frA = new MyMatrix<Fraction>(SfrA);
-                frX = (Fraction[]) SfrX.Clone();
+                var frA = new MyMatrix<Fraction>(SfrA);
+                frX = SfrX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -150,7 +149,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(frX),
-                frA.Rows * frA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -158,14 +157,12 @@ namespace Matrix
             // float
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var fA = new MyMatrix<float>(SfA);
-            var fX = (float[]) SfX.Clone();
+            var fX = SfX;
 
             for (var i = 0; i < testCount; i++)
             {
-                fA = new MyMatrix<float>(SfA);
-                fX = (float[]) SfX.Clone();
+                var fA = new MyMatrix<float>(SfA);
+                fX = SfX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -177,7 +174,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(fX),
-                fA.Rows * fA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -185,14 +182,12 @@ namespace Matrix
             // double
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var dA = new MyMatrix<double>(SdA);
-            var dX = (double[]) SdX.Clone();
+            var dX = SdX;
 
             for (var i = 0; i < testCount; i++)
             {
-                dA = new MyMatrix<double>(SdA);
-                dX = (double[]) SdX.Clone();
+                var dA = new MyMatrix<double>(SdA);
+                dX = SdX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -204,7 +199,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
-                dA.Rows * dA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
         }
 
@@ -214,14 +209,12 @@ namespace Matrix
             // fraction
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var frA = new MyMatrix<Fraction>(SfrA);
-            var frX = (Fraction[])SfrX.Clone();
+            var frX = SfrX;
 
             for (var i = 0; i < testCount; i++)
             {
-                frA = new MyMatrix<Fraction>(SfrA);
-                frX = (Fraction[])SfrX.Clone();
+                var frA = new MyMatrix<Fraction>(SfrA);
+                frX = SfrX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -233,7 +226,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(frX),
-                frA.Rows * frA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -241,14 +234,12 @@ namespace Matrix
             // float
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var fA = new MyMatrix<float>(SfA);
-            var fX = (float[])SfX.Clone();
+            var fX = SfX;
 
             for (var i = 0; i < testCount; i++)
             {
-                fA = new MyMatrix<float>(SfA);
-                fX = (float[])SfX.Clone();
+                var fA = new MyMatrix<float>(SfA);
+                fX = SfX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -260,7 +251,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(fX),
-                fA.Rows * fA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -268,14 +259,12 @@ namespace Matrix
             // double
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var dA = new MyMatrix<double>(SdA);
-            var dX = (double[])SdX.Clone();
+            var dX = SdX;
 
             for (var i = 0; i < testCount; i++)
             {
-                dA = new MyMatrix<double>(SdA);
-                dX = (double[])SdX.Clone();
+                var dA = new MyMatrix<double>(SdA);
+                dX = SdX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -287,7 +276,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
-                dA.Rows * dA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
         }
 
@@ -297,14 +286,12 @@ namespace Matrix
             // fraction
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var frA = new MyMatrix<Fraction>(SfrA);
-            var frX = (Fraction[])SfrX.Clone();
+            var frX = SfrX;
 
             for (var i = 0; i < testCount; i++)
             {
-                frA = new MyMatrix<Fraction>(SfrA);
-                frX = (Fraction[])SfrX.Clone();
+                var frA = new MyMatrix<Fraction>(SfrA);
+                frX = SfrX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -316,7 +303,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultFullPivot,
                 MyMatrixFormatter.GetFormattedVector(frX),
-                frA.Rows * frA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -324,14 +311,12 @@ namespace Matrix
             // float
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var fA = new MyMatrix<float>(SfA);
-            var fX = (float[])SfX.Clone();
+            var fX = SfX;
 
             for (var i = 0; i < testCount; i++)
             {
-                fA = new MyMatrix<float>(SfA);
-                fX = (float[])SfX.Clone();
+                var fA = new MyMatrix<float>(SfA);
+                fX = SfX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -343,7 +328,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultFullPivot,
                 MyMatrixFormatter.GetFormattedVector(fX),
-                fA.Rows * fA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -351,14 +336,12 @@ namespace Matrix
             // double
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var dA = new MyMatrix<double>(SdA);
-            var dX = (double[])SdX.Clone();
+            var dX = SdX;
 
             for (var i = 0; i < testCount; i++)
             {
-                dA = new MyMatrix<double>(SdA);
-                dX = (double[])SdX.Clone();
+                var dA = new MyMatrix<double>(SdA);
+                dX = SdX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -370,7 +353,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultFullPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
-                dA.Rows * dA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
         }
 
@@ -380,15 +363,12 @@ namespace Matrix
             // fraction
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var frA = new MyMatrix<Fraction>(SfrA);
-            var frX = (Fraction[])SfrX.Clone();
             var frResult = new Fraction[0];
 
             for (var i = 0; i < testCount; i++)
             {
-                frA = new MyMatrix<Fraction>(SfrA);
-                frX = (Fraction[])SfrX.Clone();
+                var frA = new MyMatrix<Fraction>(SfrA);
+                var frX = SfrX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -400,7 +380,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultAx,
                 MyMatrixFormatter.GetFormattedVector(frResult),
-                frA.Rows * frA.Cols, 
+                CurrentMatrixSize, 
                 _time.TotalMilliseconds / testCount);
 
 
@@ -408,15 +388,12 @@ namespace Matrix
             // float
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var fA = new MyMatrix<float>(SfA);
-            var fX = (float[])SfX.Clone();
             var fResult = new float[0];
 
             for (var i = 0; i < testCount; i++)
             {
-                fA = new MyMatrix<float>(SfA);
-                fX = (float[])SfX.Clone();
+                var fA = new MyMatrix<float>(SfA);
+                var fX = SfX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -428,7 +405,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultAx,
                 MyMatrixFormatter.GetFormattedVector(fResult),
-                fA.Rows * fA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -436,15 +413,12 @@ namespace Matrix
             // double
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var dA = new MyMatrix<double>(SdA);
-            var dX = (double[])SdX.Clone();
             var dResult = new double[0];
 
             for (var i = 0; i < testCount; i++)
             {
-                dA = new MyMatrix<double>(SdA);
-                dX = (double[]) SdX.Clone();
+                var dA = new MyMatrix<double>(SdA);
+                var dX = SdX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -456,7 +430,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultAx,
                 MyMatrixFormatter.GetFormattedVector(dResult),
-                dA.Rows * dA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
         }
 
@@ -466,19 +440,14 @@ namespace Matrix
             // fraction
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var frA = new MyMatrix<Fraction>(SfrA);
-            var frB = new MyMatrix<Fraction>(SfrB);
-            var frC = new MyMatrix<Fraction>(SfrC);
-            var frX = (Fraction[])SfrX.Clone();
             var frResult = new Fraction[0];
 
             for (var i = 0; i < testCount; i++)
             {
-                frA = new MyMatrix<Fraction>(SfrA);
-                frB = new MyMatrix<Fraction>(SfrB);
-                frC = new MyMatrix<Fraction>(SfrC);
-                frX = (Fraction[]) SfrX.Clone();
+                var frA = new MyMatrix<Fraction>(SfrA);
+                var frB = new MyMatrix<Fraction>(SfrB);
+                var frC = new MyMatrix<Fraction>(SfrC);
+                var frX = SfrX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -490,7 +459,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultAbcx,
                 MyMatrixFormatter.GetFormattedVector(frResult),
-                frA.Rows * frA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -498,19 +467,14 @@ namespace Matrix
             // float
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var fA = new MyMatrix<float>(SfA);
-            var fB = new MyMatrix<float>(SfB);
-            var fC = new MyMatrix<float>(SfC);
-            var fX = (float[]) SfX.Clone();
             var fResult = new float[0];
 
             for (var i = 0; i < testCount; i++)
             {
-                fA = new MyMatrix<float>(SfA);
-                fB = new MyMatrix<float>(SfB);
-                fC = new MyMatrix<float>(SfC);
-                fX = (float[]) SfX.Clone();
+                var fA = new MyMatrix<float>(SfA);
+                var fB = new MyMatrix<float>(SfB);
+                var fC = new MyMatrix<float>(SfC);
+                var fX = SfX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -522,7 +486,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultAbcx,
                 MyMatrixFormatter.GetFormattedVector(fResult),
-                fA.Rows * fA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -530,19 +494,14 @@ namespace Matrix
             // double
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var dA = new MyMatrix<double>(SdA);
-            var dB = new MyMatrix<double>(SdB);
-            var dC = new MyMatrix<double>(SdC);
-            var dX = (double[]) SdX.Clone();
             var dResult = new double[0];
 
             for (var i = 0; i < testCount; i++)
             {
-                dA = new MyMatrix<double>(SdA);
-                dB = new MyMatrix<double>(SdB);
-                dC = new MyMatrix<double>(SdC);
-                dX = (double[]) SdX.Clone();
+                var dA = new MyMatrix<double>(SdA);
+                var dB = new MyMatrix<double>(SdB);
+                var dC = new MyMatrix<double>(SdC);
+                var dX = SdX;
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -554,7 +513,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultAbcx,
                 MyMatrixFormatter.GetFormattedVector(dResult),
-                dA.Rows * dA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
         }
 
@@ -564,17 +523,13 @@ namespace Matrix
             // fraction
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var frA = new MyMatrix<Fraction>(SfrA);
-            var frB = new MyMatrix<Fraction>(SfrB);
-            var frC = new MyMatrix<Fraction>(SfrC);
             var frResult = new MyMatrix<Fraction>(1, 1);
 
             for (var i = 0; i < testCount; i++)
             {
-                frA = new MyMatrix<Fraction>(SfrA);
-                frB = new MyMatrix<Fraction>(SfrB);
-                frC = new MyMatrix<Fraction>(SfrC);
+                var frA = new MyMatrix<Fraction>(SfrA);
+                var frB = new MyMatrix<Fraction>(SfrB);
+                var frC = new MyMatrix<Fraction>(SfrC);
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -586,7 +541,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultAbc,
                 MyMatrixFormatter.GetFormattedMatrix(frResult),
-                frA.Rows * frA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
 
@@ -594,17 +549,13 @@ namespace Matrix
             // float
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var fA = new MyMatrix<float>(SfA);
-            var fB = new MyMatrix<float>(SfB);
-            var fC = new MyMatrix<float>(SfC);
-            var fResult = new MyMatrix<float>(1, 1);
+            var fResult = new MyMatrix<float>(0, 0);
 
             for (var i = 0; i < testCount; i++)
             {
-                fA = new MyMatrix<float>(SfA);
-                fB = new MyMatrix<float>(SfB);
-                fC = new MyMatrix<float>(SfC);
+                var fA = new MyMatrix<float>(SfA);
+                var fB = new MyMatrix<float>(SfB);
+                var fC = new MyMatrix<float>(SfC);
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -616,24 +567,20 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultAbc,
                 MyMatrixFormatter.GetFormattedMatrix(fResult),
-                fA.Rows * fA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
 
             // ---------------------------------------------------------
             // double
             // ---------------------------------------------------------
             _time = new TimeSpan();
-
-            var dA = new MyMatrix<double>(SdA);
-            var dB = new MyMatrix<double>(SdB);
-            var dC = new MyMatrix<double>(SdC);
-            var dResult = new MyMatrix<double>(1, 1);
+            var dResult = new MyMatrix<double>(0, 0);
 
             for (var i = 0; i < testCount; i++)
             {
-                dA = new MyMatrix<double>(SdA);
-                dB = new MyMatrix<double>(SdB);
-                dC = new MyMatrix<double>(SdC);
+                var dA = new MyMatrix<double>(SdA);
+                var dB = new MyMatrix<double>(SdB);
+                var dC = new MyMatrix<double>(SdC);
 
                 _stopwatch.Reset();
                 _stopwatch.Start();
@@ -645,7 +592,7 @@ namespace Matrix
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultAbc,
                 MyMatrixFormatter.GetFormattedMatrix(dResult),
-                dA.Rows * dA.Cols,
+                CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
         }
     }
