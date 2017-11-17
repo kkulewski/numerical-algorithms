@@ -26,6 +26,24 @@ namespace Matrix
 
             var ed = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixDouble + IO.ResultPartialPivot, true);
             var ef = _handler.LoadFloatVector(IO.PrefixEigen + IO.PrefixFloat + IO.ResultPartialPivot, true);
+
+
+            // COMPARE NORMS
+            var dNorm = VectorNorm(d.Item1, fr.Item1);
+            var fNorm = VectorNorm(f.Item1, fr.Item1);
+            var edNorm = VectorNorm(ed.Item1, fr.Item1);
+            var efNorm = VectorNorm(ef.Item1, fr.Item1);
+
+            Console.WriteLine("csharp double norm: " + dNorm);
+            Console.WriteLine("cshrp  float  norm: " + fNorm);
+            Console.WriteLine("eigen  double norm: " + edNorm);
+            Console.WriteLine("eigen  float  norm: " + efNorm);
+
+            // COMPARE DURATION
+            Console.WriteLine("csharp double time: " + d.Item2);
+            Console.WriteLine("cshrp  float  time: " + f.Item2);
+            Console.WriteLine("eigen  double time: " + ed.Item2);
+            Console.WriteLine("eigen  float  time: " + ef.Item2);
         }
 
         private static double VectorNorm<T1, T2>(T1[] vector, T2[] refVector)
