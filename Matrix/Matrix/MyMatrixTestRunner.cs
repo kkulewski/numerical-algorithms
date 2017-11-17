@@ -1,32 +1,39 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Matrix
 {
     public class MyMatrixTestRunner
     {
-        public const string FileA = "a.txt";
-        public const string FileB = "b.txt";
-        public const string FileC = "c.txt";
-        public const string FileX = "x.txt";
-        public const string ResultAx = "result_ax.txt";
-        public const string ResultAbcx = "result_abcx.txt";
-        public const string ResultAbc = "result_abc.txt";
-        public const string ResultNoPivot = "result_gauss_no_pivot.txt";
-        public const string ResultPartialPivot = "result_gauss_partial_pivot.txt";
-        public const string ResultFullPivot = "result_gauss_full_pivot.txt";
         public const string PrefixFraction = "fraction_";
         public const string PrefixDouble = "double_";
         public const string PrefixFloat = "float_";
 
+        public const string FileA = "a.txt";
+        public const string FileB = "b.txt";
+        public const string FileC = "c.txt";
+        public const string FileX = "x.txt";
+
+        public const string ResultAx = "result_ax.txt";
+        public const string ResultAbcx = "result_abcx.txt";
+        public const string ResultAbc = "result_abc.txt";
+
+        public const string ResultNoPivot = "result_gauss_no_pivot.txt";
+        public const string ResultPartialPivot = "result_gauss_partial_pivot.txt";
+        public const string ResultFullPivot = "result_gauss_full_pivot.txt";
+
         private readonly int _matrixSize;
         private readonly MyMatrixIoHandler _handler;
         private readonly Stopwatch _stopwatch;
+        private readonly int _testCount;
 
-        public MyMatrixTestRunner(int matrixSize)
+        public MyMatrixTestRunner(int matrixSize, int testCount)
         {
             _matrixSize = matrixSize;
             _handler = new MyMatrixIoHandler();
             _stopwatch = new Stopwatch();
+            _testCount = testCount;
         }
 
         public void WriteMatrices()
@@ -64,149 +71,269 @@ namespace Matrix
 
         public void MatrixGaussianReductionNoPivotTest()
         {
-            // fraction
-            var frA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            var frX = _handler.LoadFractionVector(PrefixFraction + FileX);
+            TimeSpan time;
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            frA.GaussianReductionNoPivot(frX);
-            _stopwatch.Stop();
-            var time = _stopwatch.Elapsed;
+            // ---------------------------------------------------------
+            // fraction
+            // ---------------------------------------------------------
+            time = new TimeSpan();
+
+            var sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
+            var sfrX = _handler.LoadFractionVector(PrefixFraction + FileX);
+
+            var frA = new MyMatrix<Fraction>(sfrA.Matrix);
+            var frX = (Fraction[]) sfrX.Clone();
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                frA = new MyMatrix<Fraction>(sfrA.Matrix);
+                frX = (Fraction[]) sfrX.Clone();
+
+                _stopwatch.Reset();
+                frA.GaussianReductionNoPivot(frX);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+            
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(frX),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
+            // ---------------------------------------------------------
             // float
-            var fA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            var fX = _handler.LoadFloatVector(PrefixFloat + FileX);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            fA.GaussianReductionNoPivot(fX);
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
+            var sfX = _handler.LoadFloatVector(PrefixFloat + FileX);
+
+            var fA = new MyMatrix<float>(sfA.Matrix);
+            var fX = (float[]) sfX.Clone();
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                fA = new MyMatrix<float>(sfA.Matrix);
+                fX = (float[]) sfX.Clone();
+
+                _stopwatch.Reset();
+                fA.GaussianReductionNoPivot(fX);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(fX),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
-
+            // ---------------------------------------------------------
             // double
-            var dA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            var dX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            dA.GaussianReductionNoPivot(dX);
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
+            var sdX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+
+            var dA = new MyMatrix<double>(sdA.Matrix);
+            var dX = (double[]) sdX.Clone();
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                dA = new MyMatrix<double>(sdA.Matrix);
+                dX = (double[]) sdX.Clone();
+
+                _stopwatch.Reset();
+                dA.GaussianReductionNoPivot(dX);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultNoPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
         }
 
         public void MatrixGaussianReductionPartialPivotTest()
         {
-            // fraction
-            var frA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            var frX = _handler.LoadFractionVector(PrefixFraction + FileX);
+            TimeSpan time;
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            frA.GaussianReductionPartialPivot(frX);
-            _stopwatch.Stop();
-            var time = _stopwatch.Elapsed;
+            // ---------------------------------------------------------
+            // fraction
+            // ---------------------------------------------------------
+            time = new TimeSpan();
+
+            var sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
+            var sfrX = _handler.LoadFractionVector(PrefixFraction + FileX);
+
+            var frA = new MyMatrix<Fraction>(sfrA.Matrix);
+            var frX = (Fraction[])sfrX.Clone();
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                frA = new MyMatrix<Fraction>(sfrA.Matrix);
+                frX = (Fraction[])sfrX.Clone();
+
+                _stopwatch.Reset();
+                frA.GaussianReductionPartialPivot(frX);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(frX),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
+            // ---------------------------------------------------------
             // float
-            var fA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            var fX = _handler.LoadFloatVector(PrefixFloat + FileX);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            fA.GaussianReductionPartialPivot(fX);
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
+            var sfX = _handler.LoadFloatVector(PrefixFloat + FileX);
+
+            var fA = new MyMatrix<float>(sfA.Matrix);
+            var fX = (float[])sfX.Clone();
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                fA = new MyMatrix<float>(sfA.Matrix);
+                fX = (float[])sfX.Clone();
+
+                _stopwatch.Reset();
+                fA.GaussianReductionPartialPivot(fX);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(fX),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
-
+            // ---------------------------------------------------------
             // double
-            var dA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            var dX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            dA.GaussianReductionPartialPivot(dX);
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
+            var sdX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+
+            var dA = new MyMatrix<double>(sdA.Matrix);
+            var dX = (double[])sdX.Clone();
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                dA = new MyMatrix<double>(sdA.Matrix);
+                dX = (double[])sdX.Clone();
+
+                _stopwatch.Reset();
+                dA.GaussianReductionPartialPivot(dX);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
         }
 
         public void MatrixGaussianReductionFullPivotTest()
         {
-            // fraction
-            var frA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            var frX = _handler.LoadFractionVector(PrefixFraction + FileX);
+            TimeSpan time;
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            frA.GaussianReductionFullPivot(frX);
-            _stopwatch.Stop();
-            var time = _stopwatch.Elapsed;
+            // ---------------------------------------------------------
+            // fraction
+            // ---------------------------------------------------------
+            time = new TimeSpan();
+
+            var sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
+            var sfrX = _handler.LoadFractionVector(PrefixFraction + FileX);
+
+            var frA = new MyMatrix<Fraction>(sfrA.Matrix);
+            var frX = (Fraction[])sfrX.Clone();
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                frA = new MyMatrix<Fraction>(sfrA.Matrix);
+                frX = (Fraction[])sfrX.Clone();
+
+                _stopwatch.Reset();
+                frA.GaussianReductionFullPivot(frX);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultFullPivot,
                 MyMatrixFormatter.GetFormattedVector(frX),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
+            // ---------------------------------------------------------
             // float
-            var fA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            var fX = _handler.LoadFloatVector(PrefixFloat + FileX);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            fA.GaussianReductionFullPivot(fX);
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
+            var sfX = _handler.LoadFloatVector(PrefixFloat + FileX);
+
+            var fA = new MyMatrix<float>(sfA.Matrix);
+            var fX = (float[])sfX.Clone();
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                fA = new MyMatrix<float>(sfA.Matrix);
+                fX = (float[])sfX.Clone();
+
+                _stopwatch.Reset();
+                fA.GaussianReductionFullPivot(fX);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultFullPivot,
                 MyMatrixFormatter.GetFormattedVector(fX),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
-
+            // ---------------------------------------------------------
             // double
-            var dA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            var dX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            dA.GaussianReductionFullPivot(dX);
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
+            var sdX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+
+            var dA = new MyMatrix<double>(sdA.Matrix);
+            var dX = (double[])sdX.Clone();
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                dA = new MyMatrix<double>(sdA.Matrix);
+                dX = (double[])sdX.Clone();
+
+                _stopwatch.Reset();
+                dA.GaussianReductionFullPivot(dX);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultFullPivot,
                 MyMatrixFormatter.GetFormattedVector(dX),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
         }
 
         public void MatrixMulVectorTest()
