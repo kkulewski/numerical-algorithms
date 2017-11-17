@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Fraction.cs" />
     <Compile Include="IO.cs" />
+    <Compile Include="MyMatrixTestAnalyzer.cs" />
     <Compile Include="MyMatrixTestRunner.cs" />
     <Compile Include="MyMatrix.cs" />
     <Compile Include="MyMatrixFormatter.cs" />

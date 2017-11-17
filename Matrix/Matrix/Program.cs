@@ -32,6 +32,9 @@ namespace Matrix
                     break;
 
                 case "-c":
+                    var ta = new MyMatrixTestAnalyzer();
+                    ta.CompareGaussNoPivot();
+                    ta.CompareGaussPartialPivot();
                     break;
 
                 default:
