@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Matrix
 {
@@ -12,13 +8,47 @@ namespace Matrix
     {
         static void Main(string[] args)
         {
-            CultureInfo ci = new CultureInfo("en-US");
-            Thread.CurrentThread.CurrentCulture = ci;
-            Thread.CurrentThread.CurrentUICulture = ci;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
-            var tester = new MyMatrixTester(3);
+            if (args.Length != 1)
+            {
+                DisplayHelp();
+                return;
+            }
+
+            var tester = new MyMatrixTester(100);
+            switch (args[0])
+            {
+                case "-p":
+                    PrepareMatrices(tester);
+                    PerformMatrixOperations(tester);
+                    break;
+
+                case "-c":
+                    CompareOutput(tester);
+                    break;
+
+                default:
+                    DisplayHelp();
+                    break;
+            }
+        }
+
+        public static void DisplayHelp()
+        {
+            Console.WriteLine("Invalid option!");
+            Console.WriteLine("-p prepare matrices + perform operations");
+            Console.WriteLine("-c compare output");
+        }
+
+        public static void PrepareMatrices(MyMatrixTester tester)
+        {
             tester.WriteMatrices();
-            
+        }
+
+        public static void PerformMatrixOperations(MyMatrixTester tester)
+        {
             tester.MatrixMulVectorTest();
             tester.MatrixAddMatrixMulVectorTest();
             tester.MatrixMulMatrixTest();
@@ -33,6 +63,11 @@ namespace Matrix
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public static void CompareOutput(MyMatrixTester tester)
+        {
+            
         }
     }
 }
