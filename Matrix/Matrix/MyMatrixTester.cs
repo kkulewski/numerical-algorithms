@@ -355,7 +355,7 @@ namespace Matrix
 
             _stopwatch.Reset();
             _stopwatch.Start();
-            var dResult = dA * (dB + dC);
+            var dResult = dA * (dB * dC);
             _stopwatch.Stop();
             time = _stopwatch.Elapsed;
             _handler.WriteToFileWithTimespan(
