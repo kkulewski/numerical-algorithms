@@ -23,7 +23,7 @@ namespace Matrix
         {
             // append matrix size
             var sb = new StringBuilder();
-            sb.AppendLine(timespan.Milliseconds.ToString());
+            sb.AppendLine(((double)timespan.Milliseconds).ToString());
             sb.AppendLine(matrixSize.ToString());
             sb.AppendLine(text);
 
