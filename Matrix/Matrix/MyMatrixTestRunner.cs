@@ -2,7 +2,7 @@
 
 namespace Matrix
 {
-    public class MyMatrixTester
+    public class MyMatrixTestRunner
     {
         public const string FileA = "a.txt";
         public const string FileB = "b.txt";
@@ -22,7 +22,7 @@ namespace Matrix
         private readonly MyMatrixIoHandler _handler;
         private readonly Stopwatch _stopwatch;
 
-        public MyMatrixTester(int matrixSize)
+        public MyMatrixTestRunner(int matrixSize)
         {
             _matrixSize = matrixSize;
             _handler = new MyMatrixIoHandler();

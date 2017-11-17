@@ -17,7 +17,7 @@ namespace Matrix
                 return;
             }
 
-            var tester = new MyMatrixTester(50);
+            var tester = new MyMatrixTestRunner(50);
             switch (args[0])
             {
                 case "-p":
@@ -42,22 +42,22 @@ namespace Matrix
             Console.WriteLine("-c compare output");
         }
 
-        public static void PrepareMatrices(MyMatrixTester tester)
+        public static void PrepareMatrices(MyMatrixTestRunner tr)
         {
-            tester.WriteMatrices();
+            tr.WriteMatrices();
         }
 
-        public static void PerformMatrixOperations(MyMatrixTester tester)
+        public static void PerformMatrixOperations(MyMatrixTestRunner tr)
         {
-            tester.MatrixMulVectorTest();
-            tester.MatrixAddMatrixMulVectorTest();
-            tester.MatrixMulMatrixTest();
+            tr.MatrixMulVectorTest();
+            tr.MatrixAddMatrixMulVectorTest();
+            tr.MatrixMulMatrixTest();
 
             try
             {
-                tester.MatrixGaussianReductionNoPivotTest();
-                tester.MatrixGaussianReductionPartialPivotTest();
-                tester.MatrixGaussianReductionFullPivotTest();
+                tr.MatrixGaussianReductionNoPivotTest();
+                tr.MatrixGaussianReductionPartialPivotTest();
+                tr.MatrixGaussianReductionFullPivotTest();
             }
             catch (ArgumentException e)
             {
@@ -65,7 +65,7 @@ namespace Matrix
             }
         }
 
-        public static void CompareOutput(MyMatrixTester tester)
+        public static void CompareOutput(MyMatrixTestRunner tester)
         {
             
         }
