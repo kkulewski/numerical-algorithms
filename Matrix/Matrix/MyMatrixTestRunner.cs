@@ -108,22 +108,22 @@ namespace Matrix
         public void LoadMatrices()
         {
             // fraction
-            _sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            _sfrB = _handler.LoadFractionMatrix(PrefixFraction + FileB);
-            _sfrC = _handler.LoadFractionMatrix(PrefixFraction + FileC);
-            _sfrX = _handler.LoadFractionVector(PrefixFraction + FileX);
+            _sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA, false).Item1;
+            _sfrB = _handler.LoadFractionMatrix(PrefixFraction + FileB, false).Item1;
+            _sfrC = _handler.LoadFractionMatrix(PrefixFraction + FileC, false).Item1;
+            _sfrX = _handler.LoadFractionVector(PrefixFraction + FileX, false).Item1;
 
             // float
-            _sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            _sfB = _handler.LoadFloatMatrix(PrefixFloat + FileB);
-            _sfC = _handler.LoadFloatMatrix(PrefixFloat + FileC);
-            _sfX = _handler.LoadFloatVector(PrefixFloat + FileX);
+            _sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA, false).Item1;
+            _sfB = _handler.LoadFloatMatrix(PrefixFloat + FileB, false).Item1;
+            _sfC = _handler.LoadFloatMatrix(PrefixFloat + FileC, false).Item1;
+            _sfX = _handler.LoadFloatVector(PrefixFloat + FileX, false).Item1;
 
             // double
-            _sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            _sdB = _handler.LoadDoubleMatrix(PrefixDouble + FileB);
-            _sdC = _handler.LoadDoubleMatrix(PrefixDouble + FileC);
-            _sdX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+            _sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA, false).Item1;
+            _sdB = _handler.LoadDoubleMatrix(PrefixDouble + FileB, false).Item1;
+            _sdC = _handler.LoadDoubleMatrix(PrefixDouble + FileC, false).Item1;
+            _sdX = _handler.LoadDoubleVector(PrefixDouble + FileX, false).Item1;
         }
 
         public void MatrixGaussianReductionNoPivotTest(int testCount)

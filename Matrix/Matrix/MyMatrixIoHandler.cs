@@ -141,15 +141,17 @@ namespace Matrix
             return values;
         }
 
-        public MyMatrix<Fraction> LoadFractionMatrix(string fileName)
+        public Tuple<MyMatrix<Fraction>, double> LoadFractionMatrix(string fileName, bool withTime)
         {
+            var lineOffset = withTime ? 1 : 0;
             var matrixFile = File.ReadAllLines(fileName);
-            var matrixSize = int.Parse(matrixFile[0]);
+            var matrixSize = int.Parse(matrixFile[0 + lineOffset]);
+            var time = double.Parse(matrixFile[0]);
             var innerMatrix = new Fraction[matrixSize, matrixSize];
 
             for (var i = 0; i < matrixSize; i++)
             {
-                var line = matrixFile[i + 1];
+                var line = matrixFile[i + lineOffset + 1];
                 var values = line.Split(' ');
 
                 for (var j = 0; j < matrixSize; j++)
@@ -161,18 +163,20 @@ namespace Matrix
                 }
             }
 
-            return new MyMatrix<Fraction>(innerMatrix);
+            return new Tuple<MyMatrix<Fraction>, double>(new MyMatrix<Fraction>(innerMatrix), time);
         }
 
-        public MyMatrix<double> LoadDoubleMatrix(string fileName)
+        public Tuple<MyMatrix<double>, double> LoadDoubleMatrix(string fileName, bool withTime)
         {
+            var lineOffset = withTime ? 1 : 0;
             var matrixFile = File.ReadAllLines(fileName);
-            var matrixSize = int.Parse(matrixFile[0]);
+            var matrixSize = int.Parse(matrixFile[0 + lineOffset]);
+            var time = double.Parse(matrixFile[0]);
             var innerMatrix = new double[matrixSize, matrixSize];
 
             for (var i = 0; i < matrixSize; i++)
             {
-                var line = matrixFile[i + 1];
+                var line = matrixFile[i + lineOffset + 1];
                 var values = line.Split(' ');
 
                 for (var j = 0; j < matrixSize; j++)
@@ -181,18 +185,20 @@ namespace Matrix
                 }
             }
 
-            return new MyMatrix<double>(innerMatrix);
+            return new Tuple<MyMatrix<double>, double>(new MyMatrix<double>(innerMatrix), time);
         }
 
-        public MyMatrix<float> LoadFloatMatrix(string fileName)
+        public Tuple<MyMatrix<float>, double> LoadFloatMatrix(string fileName, bool withTime)
         {
+            var lineOffset = withTime ? 1 : 0;
             var matrixFile = File.ReadAllLines(fileName);
-            var matrixSize = int.Parse(matrixFile[0]);
+            var matrixSize = int.Parse(matrixFile[0 + lineOffset]);
+            var time = double.Parse(matrixFile[0]);
             var innerMatrix = new float[matrixSize, matrixSize];
 
             for (var i = 0; i < matrixSize; i++)
             {
-                var line = matrixFile[i + 1];
+                var line = matrixFile[i + lineOffset + 1];
                 var values = line.Split(' ');
 
                 for (var j = 0; j < matrixSize; j++)
@@ -201,16 +207,18 @@ namespace Matrix
                 }
             }
 
-            return new MyMatrix<float>(innerMatrix);
+            return new Tuple<MyMatrix<float>, double>(new MyMatrix<float>(innerMatrix), time);
         }
 
-        public Fraction[] LoadFractionVector(string fileName)
+        public Tuple<Fraction[], double> LoadFractionVector(string fileName, bool withTime)
         {
+            var lineOffset = withTime ? 1 : 0;
             var matrixFile = File.ReadAllLines(fileName);
-            var matrixSize = int.Parse(matrixFile[0]);
+            var matrixSize = int.Parse(matrixFile[0 + lineOffset]);
+            var time = double.Parse(matrixFile[0]);
             var vector = new Fraction[matrixSize];
 
-            var line = matrixFile[1];
+            var line = matrixFile[1 + lineOffset];
             var values = line.Split(' ');
 
             for (var j = 0; j < matrixSize; j++)
@@ -221,16 +229,18 @@ namespace Matrix
                 vector[j] = new Fraction(numerator, denominator);
             }
 
-            return vector;
+            return new Tuple<Fraction[], double>(vector, time);
         }
 
-        public double[] LoadDoubleVector(string fileName)
+        public Tuple<double[], double> LoadDoubleVector(string fileName, bool withTime)
         {
+            var lineOffset = withTime ? 1 : 0;
             var matrixFile = File.ReadAllLines(fileName);
-            var matrixSize = int.Parse(matrixFile[0]);
+            var matrixSize = int.Parse(matrixFile[0 + lineOffset]);
+            var time = double.Parse(matrixFile[0]);
             var vector = new double[matrixSize];
 
-            var line = matrixFile[1];
+            var line = matrixFile[1 + lineOffset];
             var values = line.Split(' ');
 
             for (var j = 0; j < matrixSize; j++)
@@ -238,16 +248,18 @@ namespace Matrix
                 vector[j] = double.Parse(values[j]);
             }
 
-            return vector;
+            return new Tuple<double[], double>(vector, time);
         }
 
-        public float[] LoadFloatVector(string fileName)
+        public Tuple<float[], double> LoadFloatVector(string fileName, bool withTime)
         {
+            var lineOffset = withTime ? 1 : 0;
             var matrixFile = File.ReadAllLines(fileName);
-            var matrixSize = int.Parse(matrixFile[0]);
+            var matrixSize = int.Parse(matrixFile[0 + lineOffset]);
+            var time = double.Parse(matrixFile[0]);
             var vector = new float[matrixSize];
 
-            var line = matrixFile[1];
+            var line = matrixFile[1 + lineOffset];
             var values = line.Split(' ');
 
             for (var j = 0; j < matrixSize; j++)
@@ -255,7 +267,7 @@ namespace Matrix
                 vector[j] = float.Parse(values[j]);
             }
 
-            return vector;
+            return new Tuple<float[], double>(vector, time);
         }
     }
 }
