@@ -11,22 +11,27 @@ namespace Matrix
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
-            if (args.Length != 1)
+            if (args.Length < 1)
             {
                 DisplayHelp();
                 return;
             }
 
-            var tester = new MyMatrixTestRunner(50);
+            var param = args[1] != null ? int.Parse(args[1]) : 1;
+            var tr = new MyMatrixTestRunner();
+
             switch (args[0])
             {
                 case "-p":
-                    PrepareMatrices(tester);
-                    PerformMatrixOperations(tester);
+                    tr.WriteMatrices(param);
+                    break;
+
+                case "-t":
+                    tr.LoadMatrices();
+                    PerformMatrixOperations(tr, param);
                     break;
 
                 case "-c":
-                    CompareOutput(tester);
                     break;
 
                 default:
@@ -38,36 +43,27 @@ namespace Matrix
         public static void DisplayHelp()
         {
             Console.WriteLine("Invalid option!");
-            Console.WriteLine("-p prepare matrices + perform operations");
-            Console.WriteLine("-c compare output");
+            Console.WriteLine("-p  MATRIX_SIZE   -- prepare matrices");
+            Console.WriteLine("-t  TEST_COUNT    -- perform operations");
+            Console.WriteLine("-c                -- compare output");
         }
 
-        public static void PrepareMatrices(MyMatrixTestRunner tr)
+        public static void PerformMatrixOperations(MyMatrixTestRunner tr, int testCount)
         {
-            tr.WriteMatrices();
-        }
-
-        public static void PerformMatrixOperations(MyMatrixTestRunner tr)
-        {
-            tr.MatrixMulVectorTest();
-            tr.MatrixAddMatrixMulVectorTest();
-            tr.MatrixMulMatrixTest();
+            tr.MatrixMulVectorTest(testCount);
+            tr.MatrixAddMatrixMulVectorTest(testCount);
+            tr.MatrixMulMatrixTest(testCount);
 
             try
             {
-                tr.MatrixGaussianReductionNoPivotTest();
-                tr.MatrixGaussianReductionPartialPivotTest();
-                tr.MatrixGaussianReductionFullPivotTest();
+                tr.MatrixGaussianReductionNoPivotTest(testCount);
+                tr.MatrixGaussianReductionPartialPivotTest(testCount);
+                tr.MatrixGaussianReductionFullPivotTest(testCount);
             }
             catch (ArgumentException e)
             {
                 Console.WriteLine(e.Message);
             }
-        }
-
-        public static void CompareOutput(MyMatrixTestRunner tester)
-        {
-            
         }
     }
 }
