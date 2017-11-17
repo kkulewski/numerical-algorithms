@@ -211,9 +211,9 @@ VectorXd loadVector(const char* fileName)
 void saveMatrix(char* fileName, int size, double durationUs, string result)
 {
     ofstream file(fileName);
-    file << size;
-    file << "\n";
     file << durationUs / 1000.0;
+    file << "\n";
+    file << size;
     file << "\n";
     file << result;
 }
