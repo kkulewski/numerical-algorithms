@@ -27,6 +27,22 @@ namespace Matrix
         private readonly MyMatrixIoHandler _handler;
         private readonly Stopwatch _stopwatch;
         private readonly int _testCount;
+        private TimeSpan time;
+
+        private MyMatrix<Fraction> sfrA;
+        private MyMatrix<Fraction> sfrB;
+        private MyMatrix<Fraction> sfrC;
+        private Fraction[] sfrX;
+
+        private MyMatrix<float> sfA;
+        private MyMatrix<float> sfB;
+        private MyMatrix<float> sfC;
+        private float[] sfX;
+
+        private MyMatrix<double> sdA;
+        private MyMatrix<double> sdB;
+        private MyMatrix<double> sdC;
+        private double[] sdX;
 
         public MyMatrixTestRunner(int matrixSize, int testCount)
         {
@@ -34,6 +50,7 @@ namespace Matrix
             _handler = new MyMatrixIoHandler();
             _stopwatch = new Stopwatch();
             _testCount = testCount;
+            time = new TimeSpan();
         }
 
         public void WriteMatrices()
@@ -69,17 +86,33 @@ namespace Matrix
             _handler.WriteVectorToFile(dX, PrefixDouble + FileX);
         }
 
+        public void LoadMatrices()
+        {
+            // fraction
+            sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
+            sfrB = _handler.LoadFractionMatrix(PrefixFraction + FileB);
+            sfrC = _handler.LoadFractionMatrix(PrefixFraction + FileC);
+            sfrX = _handler.LoadFractionVector(PrefixFraction + FileX);
+
+            // float
+            sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
+            sfB = _handler.LoadFloatMatrix(PrefixFloat + FileB);
+            sfC = _handler.LoadFloatMatrix(PrefixFloat + FileC);
+            sfX = _handler.LoadFloatVector(PrefixFloat + FileX);
+
+            // double
+            sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
+            sdB = _handler.LoadDoubleMatrix(PrefixDouble + FileB);
+            sdC = _handler.LoadDoubleMatrix(PrefixDouble + FileC);
+            sdX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+        }
+
         public void MatrixGaussianReductionNoPivotTest()
         {
-            TimeSpan time;
-
             // ---------------------------------------------------------
             // fraction
             // ---------------------------------------------------------
             time = new TimeSpan();
-
-            var sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            var sfrX = _handler.LoadFractionVector(PrefixFraction + FileX);
 
             var frA = new MyMatrix<Fraction>(sfrA.Matrix);
             var frX = (Fraction[]) sfrX.Clone();
@@ -101,13 +134,11 @@ namespace Matrix
                 _matrixSize,
                 time.TotalMilliseconds / _testCount);
 
+
             // ---------------------------------------------------------
             // float
             // ---------------------------------------------------------
             time = new TimeSpan();
-
-            var sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            var sfX = _handler.LoadFloatVector(PrefixFloat + FileX);
 
             var fA = new MyMatrix<float>(sfA.Matrix);
             var fX = (float[]) sfX.Clone();
@@ -129,13 +160,11 @@ namespace Matrix
                 _matrixSize,
                 time.TotalMilliseconds / _testCount);
 
+
             // ---------------------------------------------------------
             // double
             // ---------------------------------------------------------
             time = new TimeSpan();
-
-            var sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            var sdX = _handler.LoadDoubleVector(PrefixDouble + FileX);
 
             var dA = new MyMatrix<double>(sdA.Matrix);
             var dX = (double[]) sdX.Clone();
@@ -160,15 +189,10 @@ namespace Matrix
 
         public void MatrixGaussianReductionPartialPivotTest()
         {
-            TimeSpan time;
-
             // ---------------------------------------------------------
             // fraction
             // ---------------------------------------------------------
             time = new TimeSpan();
-
-            var sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            var sfrX = _handler.LoadFractionVector(PrefixFraction + FileX);
 
             var frA = new MyMatrix<Fraction>(sfrA.Matrix);
             var frX = (Fraction[])sfrX.Clone();
@@ -190,13 +214,11 @@ namespace Matrix
                 _matrixSize,
                 time.TotalMilliseconds / _testCount);
 
+
             // ---------------------------------------------------------
             // float
             // ---------------------------------------------------------
             time = new TimeSpan();
-
-            var sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            var sfX = _handler.LoadFloatVector(PrefixFloat + FileX);
 
             var fA = new MyMatrix<float>(sfA.Matrix);
             var fX = (float[])sfX.Clone();
@@ -218,13 +240,11 @@ namespace Matrix
                 _matrixSize,
                 time.TotalMilliseconds / _testCount);
 
+
             // ---------------------------------------------------------
             // double
             // ---------------------------------------------------------
             time = new TimeSpan();
-
-            var sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            var sdX = _handler.LoadDoubleVector(PrefixDouble + FileX);
 
             var dA = new MyMatrix<double>(sdA.Matrix);
             var dX = (double[])sdX.Clone();
@@ -249,15 +269,10 @@ namespace Matrix
 
         public void MatrixGaussianReductionFullPivotTest()
         {
-            TimeSpan time;
-
             // ---------------------------------------------------------
             // fraction
             // ---------------------------------------------------------
             time = new TimeSpan();
-
-            var sfrA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            var sfrX = _handler.LoadFractionVector(PrefixFraction + FileX);
 
             var frA = new MyMatrix<Fraction>(sfrA.Matrix);
             var frX = (Fraction[])sfrX.Clone();
@@ -279,13 +294,11 @@ namespace Matrix
                 _matrixSize,
                 time.TotalMilliseconds / _testCount);
 
+
             // ---------------------------------------------------------
             // float
             // ---------------------------------------------------------
             time = new TimeSpan();
-
-            var sfA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            var sfX = _handler.LoadFloatVector(PrefixFloat + FileX);
 
             var fA = new MyMatrix<float>(sfA.Matrix);
             var fX = (float[])sfX.Clone();
@@ -307,13 +320,11 @@ namespace Matrix
                 _matrixSize,
                 time.TotalMilliseconds / _testCount);
 
+
             // ---------------------------------------------------------
             // double
             // ---------------------------------------------------------
             time = new TimeSpan();
-
-            var sdA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            var sdX = _handler.LoadDoubleVector(PrefixDouble + FileX);
 
             var dA = new MyMatrix<double>(sdA.Matrix);
             var dX = (double[])sdX.Clone();
@@ -338,158 +349,268 @@ namespace Matrix
 
         public void MatrixMulVectorTest()
         {
-            // fraction A * X
-            var frA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            var frX = _handler.LoadFractionVector(PrefixFraction + FileX);
+            // ---------------------------------------------------------
+            // fraction
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            var frResult = frA * frX;
-            _stopwatch.Stop();
-            var time = _stopwatch.Elapsed;
+            var frA = new MyMatrix<Fraction>(sfrA.Matrix);
+            var frX = (Fraction[])sfrX.Clone();
+            var frResult = new Fraction[0];
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                frA = new MyMatrix<Fraction>(sfrA.Matrix);
+                frX = (Fraction[])sfrX.Clone();
+
+                _stopwatch.Reset();
+                frResult = frA * frX;
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultAx,
                 MyMatrixFormatter.GetFormattedVector(frResult), 
                 _matrixSize, 
-                time);
+                time.TotalMilliseconds / _testCount);
 
-            // float A * X
-            var fA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            var fX = _handler.LoadFloatVector(PrefixFloat + FileX);
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            var fResult = fA * fX;
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            // ---------------------------------------------------------
+            // float
+            // ---------------------------------------------------------
+            time = new TimeSpan();
+
+            var fA = new MyMatrix<float>(sfA.Matrix);
+            var fX = (float[])sfX.Clone();
+            var fResult = new float[0];
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                fA = new MyMatrix<float>(sfA.Matrix);
+                fX = (float[])sfX.Clone();
+
+                _stopwatch.Reset();
+                fResult = fA * fX;
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultAx,
                 MyMatrixFormatter.GetFormattedVector(fResult),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
 
-            // double A * X
-            var dA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            var dX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+            // ---------------------------------------------------------
+            // double
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            var dResult = dA * dX;
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var dA = new MyMatrix<double>(sdA.Matrix);
+            var dX = (double[])sdX.Clone();
+            var dResult = new double[0];
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                dA = new MyMatrix<double>(sdA.Matrix);
+                dX = (double[]) sdX.Clone();
+
+                _stopwatch.Reset();
+                dResult = dA * dX;
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultAx,
                 MyMatrixFormatter.GetFormattedVector(dResult),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
         }
 
         public void MatrixAddMatrixMulVectorTest()
         {
+            // ---------------------------------------------------------
             // fraction
-            var frA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            var frB = _handler.LoadFractionMatrix(PrefixFraction + FileB);
-            var frC = _handler.LoadFractionMatrix(PrefixFraction + FileC);
-            var frX = _handler.LoadFractionVector(PrefixFraction + FileX);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            var frResult = (frA + frB + frC) * frX;
-            _stopwatch.Stop();
-            var time = _stopwatch.Elapsed;
+            var frA = new MyMatrix<Fraction>(sfrA.Matrix);
+            var frB = new MyMatrix<Fraction>(sfrB.Matrix);
+            var frC = new MyMatrix<Fraction>(sfrC.Matrix);
+            var frX = (Fraction[])sfrX.Clone();
+            var frResult = new Fraction[0];
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                frA = new MyMatrix<Fraction>(sfrA.Matrix);
+                frB = new MyMatrix<Fraction>(sfrB.Matrix);
+                frC = new MyMatrix<Fraction>(sfrC.Matrix);
+                frX = (Fraction[]) sfrX.Clone();
+
+                _stopwatch.Reset();
+                frResult = (frA + frB + frC) * frX;
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultAbcx,
                 MyMatrixFormatter.GetFormattedVector(frResult),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
+
+            // ---------------------------------------------------------
             // float
-            var fA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            var fB = _handler.LoadFloatMatrix(PrefixFloat + FileB);
-            var fC = _handler.LoadFloatMatrix(PrefixFloat + FileC);
-            var fX = _handler.LoadFloatVector(PrefixFloat + FileX);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            var fResult = (fA + fB + fC) * fX;
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var fA = new MyMatrix<float>(sfA.Matrix);
+            var fB = new MyMatrix<float>(sfB.Matrix);
+            var fC = new MyMatrix<float>(sfC.Matrix);
+            var fX = (float[]) sfX.Clone();
+            var fResult = new float[0];
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                fA = new MyMatrix<float>(sfA.Matrix);
+                fB = new MyMatrix<float>(sfB.Matrix);
+                fC = new MyMatrix<float>(sfC.Matrix);
+                fX = (float[]) sfX.Clone();
+
+                _stopwatch.Reset();
+                fResult = (fA + fB + fC) * fX;
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultAbcx,
                 MyMatrixFormatter.GetFormattedVector(fResult),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
 
+            // ---------------------------------------------------------
             // double
-            var dA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            var dB = _handler.LoadDoubleMatrix(PrefixDouble + FileB);
-            var dC = _handler.LoadDoubleMatrix(PrefixDouble + FileC);
-            var dX = _handler.LoadDoubleVector(PrefixDouble + FileX);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            var dResult = (dA + dB + dC) * dX;
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var dA = new MyMatrix<double>(sdA.Matrix);
+            var dB = new MyMatrix<double>(sdB.Matrix);
+            var dC = new MyMatrix<double>(sdC.Matrix);
+            var dX = (double[]) sdX.Clone();
+            var dResult = new double[0];
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                dA = new MyMatrix<double>(sdA.Matrix);
+                dB = new MyMatrix<double>(sdB.Matrix);
+                dC = new MyMatrix<double>(sdC.Matrix);
+                dX = (double[]) sdX.Clone();
+
+                _stopwatch.Reset();
+                dResult = (dA + dB + dC) * dX;
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultAbcx,
                 MyMatrixFormatter.GetFormattedVector(dResult),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
         }
 
         public void MatrixMulMatrixTest()
         {
+            // ---------------------------------------------------------
             // fraction
-            var frA = _handler.LoadFractionMatrix(PrefixFraction + FileA);
-            var frB = _handler.LoadFractionMatrix(PrefixFraction + FileB);
-            var frC = _handler.LoadFractionMatrix(PrefixFraction + FileC);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            var frResult = frA * (frB * frC);
-            _stopwatch.Stop();
-            var time = _stopwatch.Elapsed;
+            var frA = new MyMatrix<Fraction>(sfrA.Matrix);
+            var frB = new MyMatrix<Fraction>(sfrB.Matrix);
+            var frC = new MyMatrix<Fraction>(sfrC.Matrix);
+            var frResult = new MyMatrix<Fraction>(1, 1);
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                frA = new MyMatrix<Fraction>(sfrA.Matrix);
+                frB = new MyMatrix<Fraction>(sfrB.Matrix);
+                frC = new MyMatrix<Fraction>(sfrC.Matrix);
+
+                _stopwatch.Reset();
+                frResult = frA * (frB * frC);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFraction + ResultAbc,
                 MyMatrixFormatter.GetFormattedMatrix(frResult),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
+
+            // ---------------------------------------------------------
             // float
-            var fA = _handler.LoadFloatMatrix(PrefixFloat + FileA);
-            var fB = _handler.LoadFloatMatrix(PrefixFloat + FileB);
-            var fC = _handler.LoadFloatMatrix(PrefixFloat + FileC);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            var fResult = fA * (fB * fC);
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var fA = new MyMatrix<float>(sfA.Matrix);
+            var fB = new MyMatrix<float>(sfB.Matrix);
+            var fC = new MyMatrix<float>(sfC.Matrix);
+            var fResult = new MyMatrix<float>(1, 1);
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                fA = new MyMatrix<float>(sfA.Matrix);
+                fB = new MyMatrix<float>(sfB.Matrix);
+                fC = new MyMatrix<float>(sfC.Matrix);
+
+                _stopwatch.Reset();
+                fResult = fA * (fB * fC);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixFloat + ResultAbc,
                 MyMatrixFormatter.GetFormattedMatrix(fResult),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
 
-
+            // ---------------------------------------------------------
             // double
-            var dA = _handler.LoadDoubleMatrix(PrefixDouble + FileA);
-            var dB = _handler.LoadDoubleMatrix(PrefixDouble + FileB);
-            var dC = _handler.LoadDoubleMatrix(PrefixDouble + FileC);
+            // ---------------------------------------------------------
+            time = new TimeSpan();
 
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            var dResult = dA * (dB * dC);
-            _stopwatch.Stop();
-            time = _stopwatch.Elapsed;
+            var dA = new MyMatrix<double>(sdA.Matrix);
+            var dB = new MyMatrix<double>(sdB.Matrix);
+            var dC = new MyMatrix<double>(sdC.Matrix);
+            var dResult = new MyMatrix<double>(1, 1);
+
+            for (var i = 0; i < _testCount; i++)
+            {
+                dA = new MyMatrix<double>(sdA.Matrix);
+                dB = new MyMatrix<double>(sdB.Matrix);
+                dC = new MyMatrix<double>(sdC.Matrix);
+
+                _stopwatch.Reset();
+                dResult = dA * (dB * dC);
+                _stopwatch.Start();
+                time += _stopwatch.Elapsed;
+            }
+
             _handler.WriteToFileWithTimespan(
                 PrefixDouble + ResultAbc,
                 MyMatrixFormatter.GetFormattedMatrix(dResult),
                 _matrixSize,
-                time);
+                time.TotalMilliseconds / _testCount);
         }
     }
 }

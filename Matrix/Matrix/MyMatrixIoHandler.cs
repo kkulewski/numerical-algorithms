@@ -19,11 +19,11 @@ namespace Matrix
             File.WriteAllText(fileName, sb.ToString());
         }
 
-        public void WriteToFileWithTimespan(string fileName, string text, int matrixSize, TimeSpan timespan)
+        public void WriteToFileWithTimespan(string fileName, string text, int matrixSize, double time)
         {
             // append matrix size
             var sb = new StringBuilder();
-            sb.AppendLine(((double)timespan.Milliseconds).ToString());
+            sb.AppendLine(time.ToString());
             sb.AppendLine(matrixSize.ToString());
             sb.AppendLine(text);
 
