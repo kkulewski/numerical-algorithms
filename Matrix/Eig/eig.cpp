@@ -10,11 +10,14 @@ using namespace chrono;
 
 MatrixXd loadMatrix(const char* fileName);
 VectorXd loadVector(const char* fileName);
-void saveMatrix(char* fileName, int size, double durationUs, string result);
+void saveMatrix(char* fileName, int size, long long durationNs, string result);
 
 
-int main()
+int main(int argc, char* argv[])
 {
+    int testCountArg = atoi(argv[1]);
+    int testCount = testCountArg > 0 ? testCountArg : 1;
+
     IOFormat ResultFormat(FullPrecision, DontAlignCols, " ", " ", "", "", "", "");
     auto start = high_resolution_clock::now();
     auto end = high_resolution_clock::now();
@@ -40,15 +43,23 @@ int main()
     VectorXd dPartial(matrixSize);
     VectorXf fPartial(matrixSize);
 
-    start = high_resolution_clock::now();
-    dPartial = dA.partialPivLu().solve(dX);
-    end = high_resolution_clock::now();
-    auto dPartialMs = duration_cast<microseconds>(end - start).count();
+    long long dPartialNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
+        dPartial = dA.partialPivLu().solve(dX);
+        end = high_resolution_clock::now();
+        dPartialNs += duration_cast<nanoseconds>(end - start).count();
+    }
     
-    start = high_resolution_clock::now();
-    fPartial = fA.partialPivLu().solve(fX);
-    end = high_resolution_clock::now();
-    auto fPartialMs = duration_cast<microseconds>(end - start).count();
+    long long fPartialNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
+        fPartial = fA.partialPivLu().solve(fX);
+        end = high_resolution_clock::now();
+        fPartialNs += duration_cast<nanoseconds>(end - start).count();
+    }
     
     stringstream dPartialResult;   
     stringstream fPartialResult; 
@@ -56,8 +67,8 @@ int main()
     dPartialResult << dPartial.format(ResultFormat);
     fPartialResult << fPartial.format(ResultFormat);
 
-    saveMatrix("eigen_double_result_partial.txt", matrixSize, dPartialMs, dPartialResult.str());
-    saveMatrix("eigen_float_result_partial.txt", matrixSize, fPartialMs, fPartialResult.str());
+    saveMatrix("eigen_double_result_partial.txt", matrixSize, dPartialNs / testCount, dPartialResult.str());
+    saveMatrix("eigen_float_result_partial.txt", matrixSize, fPartialNs / testCount, fPartialResult.str());
 
 
     // ****************************************************************************************
@@ -66,15 +77,23 @@ int main()
     VectorXd dFull(matrixSize);
     VectorXf fFull(matrixSize);
 
-    start = high_resolution_clock::now();
-    dFull = dA.fullPivLu().solve(dX);
-    end = high_resolution_clock::now();
-    auto dFullMs = duration_cast<microseconds>(end - start).count();
+    long long dFullNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
+        dFull = dA.fullPivLu().solve(dX);
+        end = high_resolution_clock::now();
+        dFullNs += duration_cast<nanoseconds>(end - start).count();
+    }
 
-    start = high_resolution_clock::now();
-    fFull = fA.fullPivLu().solve(fX);
-    end = high_resolution_clock::now();
-    auto fFullMs = duration_cast<microseconds>(end - start).count();
+    long long fFullNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
+        fFull = fA.fullPivLu().solve(fX);
+        end = high_resolution_clock::now();
+        fFullNs += duration_cast<nanoseconds>(end - start).count();
+    }
 
     stringstream dFullResult;
     stringstream fFullResult;
@@ -82,8 +101,8 @@ int main()
     dFullResult << dFull.format(ResultFormat);
     fFullResult << fFull.format(ResultFormat);
 
-    saveMatrix("eigen_double_result_full.txt", matrixSize, dFullMs, dPartialResult.str());
-    saveMatrix("eigen_float_result_full.txt", matrixSize, fFullMs, fPartialResult.str());
+    saveMatrix("eigen_double_result_full.txt", matrixSize, dFullNs / testCount, dPartialResult.str());
+    saveMatrix("eigen_float_result_full.txt", matrixSize, fFullNs / testCount, fPartialResult.str());
 
 
     // ****************************************************************************************
@@ -92,17 +111,24 @@ int main()
     MatrixXd dAX(matrixSize, matrixSize);
     MatrixXf fAX(matrixSize, matrixSize);
 
-    start = high_resolution_clock::now();
-    for(int i = 0; i < 10; i++)
+    long long dAXNs = 0;
+    int di = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
         dAX = dA * dX;
-    end = high_resolution_clock::now();
-    auto dAXMs = duration_cast<microseconds>(end - start).count();
+        end = high_resolution_clock::now();
+        dAXNs += duration_cast<nanoseconds>(end - start).count();
+    }
 
-    start = high_resolution_clock::now();
-    for(int i = 0; i < 10; i++)
+    long long fAXNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
         fAX = fA * fX;
-    end = high_resolution_clock::now();
-    auto fAXMs = duration_cast<microseconds>(end - start).count();
+        end = high_resolution_clock::now();
+        fAXNs += duration_cast<nanoseconds>(end - start).count();
+    }
 
     stringstream dAXResult;
     stringstream fAXResult;
@@ -110,8 +136,8 @@ int main()
     dAXResult << dAX.format(ResultFormat);
     fAXResult << fAX.format(ResultFormat);
     
-    saveMatrix("eigen_double_result_ax.txt", matrixSize, dAXMs / 10.0, dAXResult.str());
-    saveMatrix("eigen_float_result_ax.txt", matrixSize, fAXMs / 10.0, fAXResult.str());
+    saveMatrix("eigen_double_result_ax.txt", matrixSize, dAXNs / testCount, dAXResult.str());
+    saveMatrix("eigen_float_result_ax.txt", matrixSize, fAXNs / testCount, fAXResult.str());
 
 
     // ****************************************************************************************
@@ -120,15 +146,23 @@ int main()
     MatrixXd dABCX(matrixSize, matrixSize);
     MatrixXf fABCX(matrixSize, matrixSize);
 
-    start = high_resolution_clock::now();
-    dABCX = (dA + dB + dC) * dX;
-    end = high_resolution_clock::now();
-    auto dABCXMs = duration_cast<microseconds>(end - start).count();
+    long long dABCXNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
+        dABCX = (dA + dB + dC) * dX;
+        end = high_resolution_clock::now();
+        dABCXNs += duration_cast<nanoseconds>(end - start).count();
+    }
 
-    start = high_resolution_clock::now();
-    fABCX = (fA + fB + fC) * fX;
-    end = high_resolution_clock::now();
-    auto fABCXMs = duration_cast<microseconds>(end - start).count();
+    long long fABCXNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
+        fABCX = (fA + fB + fC) * fX;
+        end = high_resolution_clock::now();
+        fABCXNs += duration_cast<nanoseconds>(end - start).count();
+    }
 
     stringstream dABCXResult;
     stringstream fABCXResult;
@@ -136,8 +170,8 @@ int main()
     dABCXResult << dABCX.format(ResultFormat);
     fABCXResult << fABCX.format(ResultFormat);
 
-    saveMatrix("eigen_double_result_abcx.txt", matrixSize, dABCXMs, dABCXResult.str());
-    saveMatrix("eigen_float_result_abcx.txt", matrixSize, fABCXMs, fABCXResult.str());
+    saveMatrix("eigen_double_result_abcx.txt", matrixSize, dABCXNs / testCount, dABCXResult.str());
+    saveMatrix("eigen_float_result_abcx.txt", matrixSize, fABCXNs / testCount, fABCXResult.str());
 
 
     // ****************************************************************************************
@@ -146,15 +180,23 @@ int main()
     MatrixXd dABC(matrixSize, matrixSize);
     MatrixXf fABC(matrixSize, matrixSize);
 
-    start = high_resolution_clock::now();
-    dABC = dA * (dB * dC);
-    end = high_resolution_clock::now();
-    auto dABCMs = duration_cast<microseconds>(end - start).count();
+    long long dABCNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
+        dABC = dA * (dB * dC);
+        end = high_resolution_clock::now();
+        dABCNs += duration_cast<nanoseconds>(end - start).count();
+    }
 
-    start = high_resolution_clock::now();
-    fABC = fA * (fB * fC);
-    end = high_resolution_clock::now();
-    auto fABCMs = duration_cast<microseconds>(end - start).count();
+    long long fABCNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();
+        fABC = fA * (fB * fC);
+        end = high_resolution_clock::now();
+        fABCNs += duration_cast<nanoseconds>(end - start).count();
+    }
 
     stringstream dABCResult;
     stringstream fABCResult;
@@ -162,8 +204,8 @@ int main()
     dABCResult << dABC.format(ResultFormat);
     fABCResult << fABC.format(ResultFormat);
 
-    saveMatrix("eigen_double_result_abc.txt", matrixSize, dABCMs, dABCResult.str());
-    saveMatrix("eigen_float_result_abc.txt", matrixSize, fABCMs, fABCResult.str());
+    saveMatrix("eigen_double_result_abc.txt", matrixSize, dABCNs / testCount, dABCResult.str());
+    saveMatrix("eigen_float_result_abc.txt", matrixSize, fABCNs / testCount, fABCResult.str());
 
     return 0;
 }
@@ -208,10 +250,10 @@ VectorXd loadVector(const char* fileName)
 }
 
 
-void saveMatrix(char* fileName, int size, double durationUs, string result)
+void saveMatrix(char* fileName, int size, long long durationNs, string result)
 {
     ofstream file(fileName);
-    file << durationUs / 1000.0;
+    file << durationNs / (1000.0 * 1000.0);
     file << "\n";
     file << size;
     file << "\n";
