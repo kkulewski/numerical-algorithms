@@ -48,7 +48,90 @@ namespace Matrix
             Console.WriteLine("eigen  float  time: " + ef.Item2);
         }
 
+        public void GaussTimeComparison()
+        {
+            var fractionFull = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultFullPivot, true);
+            var fractionPartial = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultPartialPivot, true);
+            var fractionNo = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultNoPivot, true);
 
+            var doubleFull = _handler.LoadDoubleVector(IO.PrefixDouble + IO.ResultFullPivot, true);
+            var doublePartial = _handler.LoadDoubleVector(IO.PrefixDouble + IO.ResultPartialPivot, true);
+            var doubleNo = _handler.LoadDoubleVector(IO.PrefixDouble + IO.ResultNoPivot, true);
+
+            var floatFull = _handler.LoadDoubleVector(IO.PrefixFloat + IO.ResultFullPivot, true);
+            var floatPartial = _handler.LoadDoubleVector(IO.PrefixFloat + IO.ResultPartialPivot, true);
+            var floatNo = _handler.LoadDoubleVector(IO.PrefixFloat + IO.ResultNoPivot, true);
+
+            var edoubleFull = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixDouble + IO.ResultFullPivot, true);
+            var edoublePartial = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixDouble + IO.ResultPartialPivot, true);
+
+            var efloatFull = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixFloat + IO.ResultFullPivot, true);
+            var efloatPartial = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixFloat + IO.ResultPartialPivot, true);
+
+            var timeHeader = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "type",
+                "GaussFull",
+                "GaussPartial",
+                "GaussNo"
+            );
+
+            var timeFraction = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "csh_fraction",
+                fractionFull.Item2,
+                fractionPartial.Item2,
+                fractionNo.Item2
+            );
+
+            var timeDouble = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "csh_double",
+                doubleFull.Item2,
+                doublePartial.Item2,
+                doubleNo.Item2
+            );
+
+            var timeFloat = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "csh_float",
+                floatFull.Item2,
+                floatPartial.Item2,
+                floatNo.Item2
+            );
+
+            var timeEigenDouble = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "eig_double",
+                edoubleFull.Item2,
+                edoublePartial.Item2,
+                string.Empty
+            );
+
+            var timeEigenFloat = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "eig_float",
+                efloatFull.Item2,
+                efloatPartial.Item2,
+                string.Empty
+            );
+
+            var sb = new StringBuilder();
+            sb.AppendLine(timeHeader);
+            sb.AppendLine(timeFraction);
+            sb.AppendLine(timeDouble);
+            sb.AppendLine(timeFloat);
+            sb.AppendLine(timeEigenDouble);
+            sb.AppendLine(timeEigenFloat);
+
+            File.WriteAllText(IO.SummaryTimeGauss, sb.ToString());
+        }
 
         public void GaussNormComparison()
         {
@@ -118,8 +201,8 @@ namespace Matrix
             var sb = new StringBuilder();
             sb.AppendLine(normHeader);
             sb.AppendLine(normDouble);
-            sb.AppendLine(normEigenDouble);
             sb.AppendLine(normFloat);
+            sb.AppendLine(normEigenDouble);
             sb.AppendLine(normEigenFloat);
 
             File.WriteAllText(IO.SummaryNormGauss, sb.ToString());
@@ -195,8 +278,8 @@ namespace Matrix
             var sb = new StringBuilder();
             sb.AppendLine(normHeader);
             sb.AppendLine(normDouble);
-            sb.AppendLine(normEigenDouble);
             sb.AppendLine(normFloat);
+            sb.AppendLine(normEigenDouble);
             sb.AppendLine(normEigenFloat);
 
             File.WriteAllText(IO.SummaryNormElementary, sb.ToString());

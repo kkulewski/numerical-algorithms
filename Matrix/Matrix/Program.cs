@@ -33,10 +33,9 @@ namespace Matrix
 
                 case "-c":
                     var ta = new MyMatrixTestAnalyzer();
-                    //ta.CompareGaussNoPivot();
-                    //ta.CompareGaussPartialPivot();
                     ta.ElementaryOperationsNormComparison();
                     ta.GaussNormComparison();
+                    ta.GaussTimeComparison();
                     break;
 
                 default:
