@@ -24,5 +24,9 @@
         public const string ResultPartialPivot = PrefixResult + "partial" + FileType;
         public const string ResultFullPivot = PrefixResult + "full" + FileType;
 
+        public const string SummaryNormElementary = "summary_norm_elementary.csv";
+        public const string SummaryNormGauss = "summary_norm_gauss.csv";
+        public const string SummaryTimeElementary = "summary_time_elementary.csv";
+        public const string SummaryTimeGauss = "summary_time_gauss.csv";
     }
 }
