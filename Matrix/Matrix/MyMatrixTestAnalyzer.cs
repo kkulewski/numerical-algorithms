@@ -20,7 +20,6 @@ namespace Matrix
 
         public void CompareGaussPartialPivot()
         {
-
             var fr = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultPartialPivot, true);
 
             var d = _handler.LoadDoubleVector(IO.PrefixDouble + IO.ResultPartialPivot, true);
@@ -71,16 +70,16 @@ namespace Matrix
             var timeHeader = string.Format
             (
                 "{0};{1};{2};{3}",
-                "type",
-                "GaussFull",
-                "GaussPartial",
-                "GaussNo"
+                "typ",
+                "Gauss-Full-Pivot",
+                "Gauss-Partial-Pivot",
+                "Gauss-No-Pivot"
             );
 
             var timeFraction = string.Format
             (
                 "{0};{1};{2};{3}",
-                "csh_fraction",
+                "csh-fraction",
                 fractionFull.Item2,
                 fractionPartial.Item2,
                 fractionNo.Item2
@@ -89,7 +88,7 @@ namespace Matrix
             var timeDouble = string.Format
             (
                 "{0};{1};{2};{3}",
-                "csh_double",
+                "csh-double",
                 doubleFull.Item2,
                 doublePartial.Item2,
                 doubleNo.Item2
@@ -98,7 +97,7 @@ namespace Matrix
             var timeFloat = string.Format
             (
                 "{0};{1};{2};{3}",
-                "csh_float",
+                "csh-float",
                 floatFull.Item2,
                 floatPartial.Item2,
                 floatNo.Item2
@@ -107,7 +106,7 @@ namespace Matrix
             var timeEigenDouble = string.Format
             (
                 "{0};{1};{2};{3}",
-                "eig_double",
+                "eig-double",
                 edoubleFull.Item2,
                 edoublePartial.Item2,
                 string.Empty
@@ -116,7 +115,7 @@ namespace Matrix
             var timeEigenFloat = string.Format
             (
                 "{0};{1};{2};{3}",
-                "eig_float",
+                "eig-float",
                 efloatFull.Item2,
                 efloatPartial.Item2,
                 string.Empty
@@ -156,16 +155,16 @@ namespace Matrix
             var normHeader = string.Format
             (
                 "{0};{1};{2};{3}",
-                "type",
-                "GaussFull",
-                "GaussPartial",
-                "GaussNo"
+                "typ",
+                "Gauss-Full-Pivot",
+                "Gauss-Partial-Pivot",
+                "Gauss-No-Pivot"
             );
 
             var normDouble = string.Format
             (
                 "{0};{1};{2};{3}",
-                "csh_double",
+                "csh-double",
                 VectorNorm(doubleFull.Item1, fractionFull.Item1),
                 VectorNorm(doublePartial.Item1, fractionPartial.Item1),
                 VectorNorm(doubleNo.Item1, fractionNo.Item1)
@@ -174,7 +173,7 @@ namespace Matrix
             var normFloat = string.Format
             (
                 "{0};{1};{2};{3}",
-                "csh_float",
+                "csh-float",
                 VectorNorm(floatFull.Item1, fractionFull.Item1),
                 VectorNorm(floatPartial.Item1, fractionPartial.Item1),
                 VectorNorm(floatNo.Item1, fractionNo.Item1)
@@ -183,7 +182,7 @@ namespace Matrix
             var normEigenDouble = string.Format
             (
                 "{0};{1};{2};{3}",
-                "eig_double",
+                "eig-double",
                 VectorNorm(edoubleFull.Item1, fractionFull.Item1),
                 VectorNorm(edoublePartial.Item1, fractionPartial.Item1),
                 string.Empty
@@ -192,7 +191,7 @@ namespace Matrix
             var normEigenFloat = string.Format
             (
                 "{0};{1};{2};{3}",
-                "eig_float",
+                "eig-float",
                 VectorNorm(efloatFull.Item1, fractionFull.Item1),
                 VectorNorm(efloatPartial.Item1, fractionPartial.Item1),
                 string.Empty
@@ -207,7 +206,7 @@ namespace Matrix
 
             File.WriteAllText(IO.SummaryNormGauss, sb.ToString());
         }
-
+        
         public void ElementaryOperationsNormComparison()
         {
             var fractionAx = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultAx, true);
@@ -233,16 +232,16 @@ namespace Matrix
             var normHeader = string.Format
             (
                 "{0};{1};{2};{3}",
-                "type",
-                "A-mul-X",
-                "(A-add-B-add-C)-mul-X",
-                "A-mul-(B-mul-C)"
+                "typ",
+                "A * X",
+                "(A + B + C) * X",
+                "A * (B * C)"
             );
 
             var normDouble = string.Format
             (
                 "{0};{1};{2};{3}",
-                "csh_double",
+                "csh-double",
                 VectorNorm(doubleAx.Item1, fractionAx.Item1),
                 VectorNorm(doubleAbcx.Item1, fractionAbcx.Item1),
                 MatrixNorm(doubleAbc.Item1, fractionAbc.Item1)
@@ -251,7 +250,7 @@ namespace Matrix
             var normFloat = string.Format
             (
                 "{0};{1};{2};{3}",
-                "csh_float",
+                "csh-float",
                 VectorNorm(floatAx.Item1, fractionAx.Item1),
                 VectorNorm(floatAbcx.Item1, fractionAbcx.Item1),
                 MatrixNorm(floatAbc.Item1, fractionAbc.Item1)
@@ -260,7 +259,7 @@ namespace Matrix
             var normEigenDouble = string.Format
             (
                 "{0};{1};{2};{3}",
-                "eig_double",
+                "eig-double",
                 VectorNorm(edoubleAx.Item1, fractionAx.Item1),
                 VectorNorm(edoubleAbcx.Item1, fractionAbcx.Item1),
                 MatrixNorm(edoubleAbc.Item1, fractionAbc.Item1)
@@ -269,7 +268,7 @@ namespace Matrix
             var normEigenFloat = string.Format
             (
                 "{0};{1};{2};{3}",
-                "eig_float",
+                "eig-float",
                 VectorNorm(efloatAx.Item1, fractionAx.Item1),
                 VectorNorm(efloatAbcx.Item1, fractionAbcx.Item1),
                 MatrixNorm(efloatAbc.Item1, fractionAbc.Item1)
