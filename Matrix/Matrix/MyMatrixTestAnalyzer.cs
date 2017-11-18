@@ -48,6 +48,83 @@ namespace Matrix
             Console.WriteLine("eigen  float  time: " + ef.Item2);
         }
 
+
+
+        public void GaussNormComparison()
+        {
+            var fractionFull = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultFullPivot, true);
+            var fractionPartial = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultPartialPivot, true);
+            var fractionNo = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultNoPivot, true);
+
+            var doubleFull = _handler.LoadDoubleVector(IO.PrefixDouble + IO.ResultFullPivot, true);
+            var doublePartial = _handler.LoadDoubleVector(IO.PrefixDouble + IO.ResultPartialPivot, true);
+            var doubleNo = _handler.LoadDoubleVector(IO.PrefixDouble + IO.ResultNoPivot, true);
+
+            var floatFull = _handler.LoadDoubleVector(IO.PrefixFloat + IO.ResultFullPivot, true);
+            var floatPartial = _handler.LoadDoubleVector(IO.PrefixFloat + IO.ResultPartialPivot, true);
+            var floatNo = _handler.LoadDoubleVector(IO.PrefixFloat + IO.ResultNoPivot, true);
+
+            var edoubleFull = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixDouble + IO.ResultFullPivot, true);
+            var edoublePartial = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixDouble + IO.ResultPartialPivot, true);
+
+            var efloatFull = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixFloat + IO.ResultFullPivot, true);
+            var efloatPartial = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixFloat + IO.ResultPartialPivot, true);
+
+            var normHeader = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "type",
+                "GaussFull",
+                "GaussPartial",
+                "GaussNo"
+            );
+
+            var normDouble = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "csh_double",
+                VectorNorm(doubleFull.Item1, fractionFull.Item1),
+                VectorNorm(doublePartial.Item1, fractionPartial.Item1),
+                VectorNorm(doubleNo.Item1, fractionNo.Item1)
+            );
+
+            var normFloat = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "csh_float",
+                VectorNorm(floatFull.Item1, fractionFull.Item1),
+                VectorNorm(floatPartial.Item1, fractionPartial.Item1),
+                VectorNorm(floatNo.Item1, fractionNo.Item1)
+            );
+
+            var normEigenDouble = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "eig_double",
+                VectorNorm(edoubleFull.Item1, fractionFull.Item1),
+                VectorNorm(edoublePartial.Item1, fractionPartial.Item1),
+                string.Empty
+            );
+
+            var normEigenFloat = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "eig_float",
+                VectorNorm(efloatFull.Item1, fractionFull.Item1),
+                VectorNorm(efloatPartial.Item1, fractionPartial.Item1),
+                string.Empty
+            );
+
+            var sb = new StringBuilder();
+            sb.AppendLine(normHeader);
+            sb.AppendLine(normDouble);
+            sb.AppendLine(normEigenDouble);
+            sb.AppendLine(normFloat);
+            sb.AppendLine(normEigenFloat);
+
+            File.WriteAllText(IO.SummaryNormGauss, sb.ToString());
+        }
+
         public void ElementaryOperationsNormComparison()
         {
             var fractionAx = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultAx, true);

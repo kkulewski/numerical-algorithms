@@ -36,6 +36,7 @@ namespace Matrix
                     //ta.CompareGaussNoPivot();
                     //ta.CompareGaussPartialPivot();
                     ta.ElementaryOperationsNormComparison();
+                    ta.GaussNormComparison();
                     break;
 
                 default:
