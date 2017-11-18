@@ -17,6 +17,18 @@ namespace Matrix
                 return;
             }
 
+            try
+            {
+                Run(args);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static void Run(string[] args)
+        {
             var param = args.Length > 1 && args[1] != null ? int.Parse(args[1]) : 1;
             var tr = new MyMatrixTestRunner();
 
@@ -32,10 +44,7 @@ namespace Matrix
                     break;
 
                 case "-c":
-                    var ta = new MyMatrixTestAnalyzer();
-                    ta.ElementaryOperationsNormComparison();
-                    ta.GaussNormComparison();
-                    ta.GaussTimeComparison();
+                    CreateSummary();
                     break;
 
                 default:
@@ -68,6 +77,15 @@ namespace Matrix
             {
                 Console.WriteLine(e.Message);
             }
+        }
+        
+        public static void CreateSummary()
+        {
+            var ta = new MyMatrixTestAnalyzer();
+            ta.ElementaryOperationsNormComparison();
+            ta.ElementaryOperationsTimeComparison();
+            ta.GaussNormComparison();
+            ta.GaussTimeComparison();
         }
     }
 }
