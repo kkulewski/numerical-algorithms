@@ -123,11 +123,11 @@ namespace Matrix
 
             var sb = new StringBuilder();
             sb.AppendLine(timeHeader);
-            sb.AppendLine(timeFraction);
-            sb.AppendLine(timeDouble);
-            sb.AppendLine(timeFloat);
             sb.AppendLine(timeEigenDouble);
             sb.AppendLine(timeEigenFloat);
+            sb.AppendLine(timeDouble);
+            sb.AppendLine(timeFloat);
+            sb.AppendLine(timeFraction);
 
             File.WriteAllText(IO.SummaryTimeGauss, sb.ToString());
         }
@@ -199,14 +199,101 @@ namespace Matrix
 
             var sb = new StringBuilder();
             sb.AppendLine(normHeader);
-            sb.AppendLine(normDouble);
-            sb.AppendLine(normFloat);
             sb.AppendLine(normEigenDouble);
             sb.AppendLine(normEigenFloat);
+            sb.AppendLine(normDouble);
+            sb.AppendLine(normFloat);
 
             File.WriteAllText(IO.SummaryNormGauss, sb.ToString());
         }
-        
+
+        public void ElementaryOperationsTimeComparison()
+        {
+            var fractionAx = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultAx, true);
+            var fractionAbcx = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultAbcx, true);
+            var fractionAbc = _handler.LoadDoubleMatrix(IO.PrefixFraction + IO.ResultAbc, true);
+
+            var doubleAx = _handler.LoadDoubleVector(IO.PrefixDouble + IO.ResultAx, true);
+            var doubleAbcx = _handler.LoadDoubleVector(IO.PrefixDouble + IO.ResultAbcx, true);
+            var doubleAbc = _handler.LoadDoubleMatrix(IO.PrefixDouble + IO.ResultAbc, true);
+
+            var floatAx = _handler.LoadDoubleVector(IO.PrefixFloat + IO.ResultAx, true);
+            var floatAbcx = _handler.LoadDoubleVector(IO.PrefixFloat + IO.ResultAbcx, true);
+            var floatAbc = _handler.LoadDoubleMatrix(IO.PrefixFloat + IO.ResultAbc, true);
+
+            var edoubleAx = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixDouble + IO.ResultAx, true);
+            var edoubleAbcx = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixDouble + IO.ResultAbcx, true);
+            var edoubleAbc = _handler.LoadDoubleMatrix(IO.PrefixEigen + IO.PrefixDouble + IO.ResultAbc, true);
+
+            var efloatAx = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixFloat + IO.ResultAx, true);
+            var efloatAbcx = _handler.LoadDoubleVector(IO.PrefixEigen + IO.PrefixFloat + IO.ResultAbcx, true);
+            var efloatAbc = _handler.LoadDoubleMatrix(IO.PrefixEigen + IO.PrefixFloat + IO.ResultAbc, true);
+
+            var timeHeader = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "typ",
+                "A * X",
+                "(A + B + C) * X",
+                "A * (B * C)"
+            );
+
+            var timeFraction = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "csh-fraction",
+                fractionAx.Item2,
+                fractionAbcx.Item2,
+                fractionAbc.Item2
+            );
+
+            var timeDouble = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "csh-double",
+                doubleAx.Item2,
+                doubleAbcx.Item2,
+                doubleAbc.Item2
+            );
+
+            var timeFloat = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "csh-float",
+                floatAx.Item2,
+                floatAbcx.Item2,
+                floatAbc.Item2
+            );
+
+            var timeEigenDouble = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "eig-double",
+                edoubleAx.Item2,
+                edoubleAbcx.Item2,
+                edoubleAbc.Item2
+            );
+
+            var timeEigenFloat = string.Format
+            (
+                "{0};{1};{2};{3}",
+                "eig-float",
+                efloatAx.Item2,
+                efloatAbcx.Item2,
+                efloatAbc.Item2
+            );
+
+            var sb = new StringBuilder();
+            sb.AppendLine(timeHeader);
+            sb.AppendLine(timeEigenDouble);
+            sb.AppendLine(timeEigenFloat);
+            sb.AppendLine(timeDouble);
+            sb.AppendLine(timeFloat);
+            sb.AppendLine(timeFraction);
+
+            File.WriteAllText(IO.SummaryTimeElementary, sb.ToString());
+        }
+
         public void ElementaryOperationsNormComparison()
         {
             var fractionAx = _handler.LoadDoubleVector(IO.PrefixFraction + IO.ResultAx, true);
@@ -276,10 +363,10 @@ namespace Matrix
 
             var sb = new StringBuilder();
             sb.AppendLine(normHeader);
-            sb.AppendLine(normDouble);
-            sb.AppendLine(normFloat);
             sb.AppendLine(normEigenDouble);
             sb.AppendLine(normEigenFloat);
+            sb.AppendLine(normDouble);
+            sb.AppendLine(normFloat);
 
             File.WriteAllText(IO.SummaryNormElementary, sb.ToString());
         }
