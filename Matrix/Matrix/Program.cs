@@ -17,7 +17,7 @@ namespace Matrix
                 return;
             }
 
-            var param = args[1] != null ? int.Parse(args[1]) : 1;
+            var param = args.Length > 1 && args[1] != null ? int.Parse(args[1]) : 1;
             var tr = new MyMatrixTestRunner();
 
             switch (args[0])
@@ -33,8 +33,9 @@ namespace Matrix
 
                 case "-c":
                     var ta = new MyMatrixTestAnalyzer();
-                    ta.CompareGaussNoPivot();
-                    ta.CompareGaussPartialPivot();
+                    //ta.CompareGaussNoPivot();
+                    //ta.CompareGaussPartialPivot();
+                    ta.ElementaryOperationsNormComparison();
                     break;
 
                 default:
