@@ -18,7 +18,8 @@ int main(int argc, char* argv[])
     int testCountArg = atoi(argv[1]);
     int testCount = testCountArg > 0 ? testCountArg : 1;
 
-    IOFormat ResultFormat(FullPrecision, DontAlignCols, " ", " ", "", "", "", "");
+    IOFormat VResultFormat(FullPrecision, DontAlignCols, " ", " ", "", "", "", "");
+    IOFormat MResultFormat(FullPrecision, DontAlignCols, " ", "", "", "\n", "", "");
     auto start = high_resolution_clock::now();
     auto end = high_resolution_clock::now();
 
@@ -64,8 +65,8 @@ int main(int argc, char* argv[])
     stringstream dPartialResult;   
     stringstream fPartialResult; 
 
-    dPartialResult << dPartial.format(ResultFormat);
-    fPartialResult << fPartial.format(ResultFormat);
+    dPartialResult << dPartial.format(VResultFormat);
+    fPartialResult << fPartial.format(VResultFormat);
 
     saveMatrix("eigen_double_result_partial.txt", matrixSize, dPartialNs / testCount, dPartialResult.str());
     saveMatrix("eigen_float_result_partial.txt", matrixSize, fPartialNs / testCount, fPartialResult.str());
@@ -98,8 +99,8 @@ int main(int argc, char* argv[])
     stringstream dFullResult;
     stringstream fFullResult;
 
-    dFullResult << dFull.format(ResultFormat);
-    fFullResult << fFull.format(ResultFormat);
+    dFullResult << dFull.format(VResultFormat);
+    fFullResult << fFull.format(VResultFormat);
 
     saveMatrix("eigen_double_result_full.txt", matrixSize, dFullNs / testCount, dPartialResult.str());
     saveMatrix("eigen_float_result_full.txt", matrixSize, fFullNs / testCount, fPartialResult.str());
@@ -133,8 +134,8 @@ int main(int argc, char* argv[])
     stringstream dAXResult;
     stringstream fAXResult;
 
-    dAXResult << dAX.format(ResultFormat);
-    fAXResult << fAX.format(ResultFormat);
+    dAXResult << dAX.format(VResultFormat);
+    fAXResult << fAX.format(VResultFormat);
     
     saveMatrix("eigen_double_result_ax.txt", matrixSize, dAXNs / testCount, dAXResult.str());
     saveMatrix("eigen_float_result_ax.txt", matrixSize, fAXNs / testCount, fAXResult.str());
@@ -167,8 +168,8 @@ int main(int argc, char* argv[])
     stringstream dABCXResult;
     stringstream fABCXResult;
 
-    dABCXResult << dABCX.format(ResultFormat);
-    fABCXResult << fABCX.format(ResultFormat);
+    dABCXResult << dABCX.format(VResultFormat);
+    fABCXResult << fABCX.format(VResultFormat);
 
     saveMatrix("eigen_double_result_abcx.txt", matrixSize, dABCXNs / testCount, dABCXResult.str());
     saveMatrix("eigen_float_result_abcx.txt", matrixSize, fABCXNs / testCount, fABCXResult.str());
@@ -201,8 +202,8 @@ int main(int argc, char* argv[])
     stringstream dABCResult;
     stringstream fABCResult;
 
-    dABCResult << dABC.format(ResultFormat);
-    fABCResult << fABC.format(ResultFormat);
+    dABCResult << dABC.format(MResultFormat);
+    fABCResult << fABC.format(MResultFormat);
 
     saveMatrix("eigen_double_result_abc.txt", matrixSize, dABCNs / testCount, dABCResult.str());
     saveMatrix("eigen_float_result_abc.txt", matrixSize, fABCNs / testCount, fABCResult.str());
