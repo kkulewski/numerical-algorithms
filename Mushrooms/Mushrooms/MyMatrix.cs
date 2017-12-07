@@ -341,5 +341,19 @@ namespace Mushrooms
 
             return Math.Sqrt(sum);
         }
+
+        public static double MatrixNorm<T1, T2>(MyMatrix<T1> matrix, MyMatrix<T2> refMatrix) where T1 : new() where T2 : new()
+        {
+            var sum = 0.0;
+            for (var i = 0; i < matrix.Rows; i++)
+            {
+                for (var j = 0; j < matrix.Cols; j++)
+                {
+                    sum += (refMatrix[i, j] - (dynamic)matrix[i, j]) * (refMatrix[i, j] - (dynamic)matrix[i, j]);
+                }
+            }
+
+            return Math.Sqrt(sum);
+        }
     }
 }
