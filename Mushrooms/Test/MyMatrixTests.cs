@@ -561,6 +561,28 @@ namespace Test
             Assert.Equal(95, v[1].Denominator);
         }
 
+        [Fact]
+        public void SolvesEquation_InReasonableTime_Using_GaussianReductionPartialPivot_With_Double()
+        {
+            var rnd = new Random();
+
+            var size = 1000;
+            var innerMatrix = new double[size, size];
+            var vector = new double[size];
+            for (var i = 0; i < size; i++)
+            {
+                for (var j = 0; j < size; j++)
+                {
+                    innerMatrix[i, j] = rnd.NextDouble();
+                }
+
+                vector[i] = rnd.NextDouble();
+            }
+
+            var matrix = new MyMatrix<double>(innerMatrix);
+            matrix.GaussianReductionPartialPivot(vector);
+        }
+
         private MyMatrix<Fraction> GetFraction2X2Matrix()
         {
             var matrix = new[,]
