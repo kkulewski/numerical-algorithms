@@ -330,5 +330,16 @@ namespace Mushrooms
                 this[i, i] = this[i, i] / (dynamic) this[i, i];
             }
         }
+
+        public static double VectorNorm<T1, T2>(T1[] vector, T2[] refVector)
+        {
+            var sum = 0.0;
+            for (var i = 0; i < vector.Length; i++)
+            {
+                sum += (refVector[i] - (dynamic)vector[i]) * (refVector[i] - (dynamic)vector[i]);
+            }
+
+            return Math.Sqrt(sum);
+        }
     }
 }
