@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace Matrix
+namespace Mushrooms
 {
     public class Fraction
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Matrix
+namespace Mushrooms
 {
     public class MyMatrix<T> where T: new()
     {
