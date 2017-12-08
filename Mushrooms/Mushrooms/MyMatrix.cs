@@ -356,7 +356,7 @@ namespace Mushrooms
             return Math.Sqrt(sum);
         }
 
-        public void Jacobi(T[] bVector, int iterations)
+        public void GaussSeidel(T[] bVector, int iterations)
         {
             var xVector = new T[Cols];
             for (var it = 0; it < iterations; it++)
@@ -365,8 +365,21 @@ namespace Mushrooms
                 for (var row = 0; row < Rows; row++)
                     xVector[row] = (dynamic) JacobiApproximateUnknown(bVector, xVector, row);
             }
+            
+            for (var i = 0; i < Rows; i++)
+                bVector[i] = xVector[i];
+        }
 
-            // copy result into source vector
+        public void Jacobi(T[] bVector, int iterations)
+        {
+            var xVector = new T[Cols];
+            for (var it = 0; it < iterations; it++)
+            {
+                var xVectorFromPreviousIteration = (T[]) xVector.Clone();
+                for (var row = 0; row < Rows; row++)
+                    xVector[row] = (dynamic) JacobiApproximateUnknown(bVector, xVectorFromPreviousIteration, row);
+            }
+            
             for (var i = 0; i < Rows; i++)
                 bVector[i] = xVector[i];
         }
@@ -377,7 +390,6 @@ namespace Mushrooms
             var leadingElement = this[row, row];
 
             var rowApproximation = ((dynamic) bVector[row] - nonLeadingElementsSum) / leadingElement;
-            Console.WriteLine("current sigma: " + rowApproximation);
             return rowApproximation;
         }
 
