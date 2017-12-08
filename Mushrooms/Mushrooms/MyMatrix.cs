@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Mushrooms
 {
@@ -357,25 +356,41 @@ namespace Mushrooms
             return Math.Sqrt(sum);
         }
 
-        public T[] Jacobi(T[] vector, int iterations)
+        public void Jacobi(T[] bVector, int iterations)
         {
-            var solvedVector = new T[Cols];
-            for (var iter = 0; iter < iterations; iter++)
+            var xVector = new T[Cols];
+            for (var it = 0; it < iterations; it++)
             {
+                // approximate each unknown (x1, x2, x3...) in equation
                 for (var row = 0; row < Rows; row++)
-                {
-                    var sigma = 0.0;
-                    for (var col = 0; col < Cols; col++)
-                    {
-                        if (col != row)
-                            sigma += (dynamic) this[row, col] * solvedVector[col];
-                    }
-
-                    solvedVector[row] = ((dynamic) vector[row] - sigma) / this[row, row];
-                }
+                    xVector[row] = (dynamic) JacobiApproximateUnknown(bVector, xVector, row);
             }
 
-            return solvedVector;
+            // copy result into source vector
+            for (var i = 0; i < Rows; i++)
+                bVector[i] = xVector[i];
+        }
+
+        private double JacobiApproximateUnknown(T[] bVector, T[] xVector, int row)
+        {
+            var nonLeadingElementsSum = JacobiSumNonLeadingElementsForGivenRow(xVector, row);
+            var leadingElement = this[row, row];
+
+            var rowApproximation = ((dynamic) bVector[row] - nonLeadingElementsSum) / leadingElement;
+            Console.WriteLine("current sigma: " + rowApproximation);
+            return rowApproximation;
+        }
+
+        private double JacobiSumNonLeadingElementsForGivenRow(T[] xVector, int row)
+        {
+            var rowResult = 0.0;
+            for (var col = 0; col < Cols; col++)
+            {
+                if (col != row)
+                    rowResult += (dynamic) this[row, col] * xVector[col];
+            }
+
+            return rowResult;
         }
     }
 }
