@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Mushrooms
 {
@@ -354,6 +355,27 @@ namespace Mushrooms
             }
 
             return Math.Sqrt(sum);
+        }
+
+        public T[] Jacobi(T[] vector, int iterations)
+        {
+            var solvedVector = new T[Cols];
+            for (var iter = 0; iter < iterations; iter++)
+            {
+                for (var row = 0; row < Rows; row++)
+                {
+                    var sigma = 0.0;
+                    for (var col = 0; col < Cols; col++)
+                    {
+                        if (col != row)
+                            sigma += (dynamic) this[row, col] * solvedVector[col];
+                    }
+
+                    solvedVector[row] = ((dynamic) vector[row] - sigma) / this[row, row];
+                }
+            }
+
+            return solvedVector;
         }
     }
 }
