@@ -40,6 +40,12 @@ namespace Mushrooms
             foreach (var currentState in gameStates.Values)
             {
                 currentState.Transitions = new List<int>();
+
+                bool gameFinished = currentState.Player1Position == 0 ||
+                                    currentState.Player2Position == 0;
+                if(gameFinished)
+                    continue;
+
                 foreach (var nextState in gameStates.Values)
                 {
                     // hard-coded 1 is not a viable solution - it only works for dice with 2 indices (-1 and 1)
