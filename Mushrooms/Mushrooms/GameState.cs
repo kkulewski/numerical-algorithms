@@ -18,10 +18,6 @@ namespace Mushrooms
 
         public List<int> Transitions;
 
-        public bool Player1Won => Player1Position == 0 && Player2Position != 0;
-
-        public bool Player2Won => Player1Position != 0 && Player2Position == 0;
-
         public GameState(int gameStateId, int player1Position, int player2Position, bool isPlayer1Turn)
         {
             GameStateId = gameStateId;
