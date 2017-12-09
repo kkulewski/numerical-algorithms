@@ -39,7 +39,7 @@ namespace Mushrooms
             // ASSIGN TRANSITION LIST TO EACH STATE
             foreach (var currentState in gameStates.Values)
             {
-                var transitions = new List<int>();
+                currentState.Transitions = new List<int>();
                 foreach (var nextState in gameStates.Values)
                 {
                     // hard-coded 1 is not a viable solution - it only works for dice with 2 indices (-1 and 1)
@@ -65,10 +65,8 @@ namespace Mushrooms
                                               (isPlayer2Turn && player2Moves && player1Waits && turnChanges);
 
                     if (possibleTransition)
-                        transitions.Add(nextState.GameStateId);
+                        currentState.Transitions.Add(nextState.GameStateId);
                 }
-
-                currentState.Transitions = transitions;
             }
 
             // FILL MATRIX WITH TRANSITIONS
