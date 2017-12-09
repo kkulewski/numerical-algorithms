@@ -77,11 +77,14 @@ namespace Mushrooms
             var probabilityVector = new double[size];
             for (var row = 0; row < size; row++)
             {
+                // TODO: exclude win (pos==0) or lose situations
                 var state = gameStates[row];
                 var probability = 0.0;
                 foreach (var transition in state.Transitions)
                 {
-                    if (!gameStates[transition].Player2Won)
+
+                    // TODO: check if condition makes sense
+                    if (gameStates[transition].Player2Position != 0)
                     {
                         stateMatrix[row, transition] = -1.0 / indices;
                         probability += -1.0 / indices;
@@ -106,8 +109,8 @@ namespace Mushrooms
                 Console.WriteLine(" ] [ {0} ]", probabilityVector[i]);
             }
 
-            var mymatrix = new MyMatrix<double>(stateMatrix);
-            mymatrix.Jacobi(probabilityVector, 100);
+            //var mymatrix = new MyMatrix<double>(stateMatrix);
+            //mymatrix.Jacobi(probabilityVector, 100);
 
         }
     }
