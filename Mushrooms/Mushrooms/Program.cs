@@ -27,6 +27,9 @@ namespace Mushrooms
             {
                 for (var player2Pos = -n; player2Pos <= n; player2Pos++)
                 {
+                    if (player1Pos == 0 && player2Pos == 0)
+                        continue;
+
                     for (var turn = 0; turn < 2; turn++)
                     {
                         var isPlayer1Turn = turn == 0;
