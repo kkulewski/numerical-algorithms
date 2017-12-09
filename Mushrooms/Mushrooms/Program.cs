@@ -26,10 +26,10 @@ namespace Mushrooms
                 {
                     for (var player2Pos = -n; player2Pos <= n; player2Pos++)
                     {
-                        gameStateId++;
                         var isPlayer1Turn = turn == 0;
                         var gameState = new GameState(gameStateId, player1Pos, player2Pos, isPlayer1Turn);
-                        gameStates.Add(gameStateId, gameState);
+                        gameStates[gameStateId] = gameState;
+                        gameStateId++;
                     }
                 }
             }
@@ -57,6 +57,23 @@ namespace Mushrooms
                 }
 
                 currentState.Transitions = transitions;
+            }
+
+            var size = gameStates.Count;
+            var stateMatrix = new double[size, size];
+            for (var row = 0; row < size; row++)
+            {
+                var state = gameStates[row];
+                for (var col = 0; col < size; col++)
+                {
+                    foreach (var transition in state.Transitions)
+                    {
+                        stateMatrix[row, transition] = -1.0 / indices;
+                    }
+
+                }
+
+                stateMatrix[row, row] = 1;
             }
         }
     }
