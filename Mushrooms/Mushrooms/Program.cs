@@ -18,6 +18,7 @@ namespace Mushrooms
 
             var boardSize = 2 * n + 1;
 
+
             // GENERATE ALL POSSIBLE GAME STATES
             var gameStates = new Dictionary<int, GameState>();
             var gameStateId = 0;
@@ -35,6 +36,7 @@ namespace Mushrooms
                     }
                 }
             }
+
 
             // ASSIGN TRANSITION LIST TO EACH STATE
             foreach (var currentState in gameStates.Values)
@@ -75,32 +77,38 @@ namespace Mushrooms
                 }
             }
 
+
             // FILL MATRIX WITH TRANSITIONS
             var size = gameStates.Count;
             var stateMatrix = new double[size, size];
             var probabilityVector = new double[size];
             for (var row = 0; row < size; row++)
             {
-                // TODO: exclude win (pos==0) or lose situations
+                stateMatrix[row, row] = 1;
                 var state = gameStates[row];
-                var probability = 0.0;
-                foreach (var transition in state.Transitions)
-                {
 
-                    // TODO: check if condition makes sense
-                    if (gameStates[transition].Player2Position != 0)
-                    {
-                        stateMatrix[row, transition] = -1.0 / indices;
-                        probability += -1.0 / indices;
-                    }
+                bool player1Won = state.Player1Position == 0;
+                bool player2Won = state.Player2Position == 0;
+
+                if (player1Won)
+                {
+                    probabilityVector[row] = 1;
+                    continue;
 
                 }
+                
+                if (player2Won)
+                {
+                    probabilityVector[row] = 0;
+                    continue;
+                }
 
-                stateMatrix[row, row] = 1;
-                probability += 1;
-
-                probabilityVector[row] = probability;
+                foreach (var transition in state.Transitions)
+                {
+                    stateMatrix[row, transition] = -1.0 / indices;
+                }
             }
+
 
             // PRINT MATRIX
             for (var i = 0; i < size; i++)
