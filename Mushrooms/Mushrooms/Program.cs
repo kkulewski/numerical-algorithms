@@ -42,19 +42,24 @@ namespace Mushrooms
                 var transitions = new List<int>();
                 foreach (var nextState in gameStates.Values)
                 {
-                    var player1Waits = nextState.Player1Position == currentState.Player1Position;
-                    var player1Moves = nextState.Player1Position == (currentState.Player1Position + 1) ||
-                                        nextState.Player1Position == (currentState.Player1Position - 1);
+                    bool player1Waits = nextState.Player1Position == currentState.Player1Position;
+                    bool player1Moves = nextState.Player1Position == (currentState.Player1Position + 1) ||
+                                        nextState.Player1Position == (currentState.Player1Position - 1) ||
+                                        nextState.Player1Position == -n && currentState.Player1Position == n ||
+                                        nextState.Player1Position == n && currentState.Player1Position == -n;
 
-                    var player2Waits = nextState.Player2Position == currentState.Player2Position;
-                    var player2Moves = nextState.Player2Position == (currentState.Player2Position + 1) ||
-                                        nextState.Player2Position == (currentState.Player2Position - 1);
+                    bool player2Waits = nextState.Player2Position == currentState.Player2Position;
+                    bool player2Moves = nextState.Player2Position == (currentState.Player2Position + 1) ||
+                                        nextState.Player2Position == (currentState.Player2Position - 1) ||
+                                        nextState.Player2Position == -n && currentState.Player2Position == n ||
+                                        nextState.Player2Position == n && currentState.Player2Position == -n;
 
-                    var turnChanges = nextState.IsPlayer1Turn != currentState.IsPlayer1Turn;
-                    var isPlayer1Turn = currentState.IsPlayer1Turn;
+                    bool isPlayer1Turn = currentState.IsPlayer1Turn;
+                    bool isPlayer2Turn = !isPlayer1Turn;
+                    bool turnChanges = currentState.IsPlayer1Turn != nextState.IsPlayer1Turn;
 
                     var possibleTransition = (isPlayer1Turn && player1Moves && player2Waits && turnChanges) ||
-                                              (!isPlayer1Turn && player1Waits && player2Moves && turnChanges);
+                                              (isPlayer2Turn && player2Moves && player1Waits && turnChanges);
 
                     if (possibleTransition)
                         transitions.Add(nextState.GameStateId);
