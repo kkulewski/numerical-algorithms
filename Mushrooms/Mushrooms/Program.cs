@@ -42,6 +42,9 @@ namespace Mushrooms
                 var transitions = new List<int>();
                 foreach (var nextState in gameStates.Values)
                 {
+                    // hard-coded 1 is not a viable solution - it only works for dice with 2 indices (-1 and 1)
+                    // for cubic dice (ie. -3 .. 3) there is need for separate branch for each number
+                    // TODO: find a better way to handle it
                     bool player1Waits = nextState.Player1Position == currentState.Player1Position;
                     bool player1Moves = nextState.Player1Position == (currentState.Player1Position + 1) ||
                                         nextState.Player1Position == (currentState.Player1Position - 1) ||
@@ -71,15 +74,25 @@ namespace Mushrooms
             // FILL MATRIX WITH TRANSITIONS
             var size = gameStates.Count;
             var stateMatrix = new double[size, size];
+            var probabilityVector = new double[size];
             for (var row = 0; row < size; row++)
             {
                 var state = gameStates[row];
+                var probability = 0.0;
                 foreach (var transition in state.Transitions)
                 {
-                    stateMatrix[row, transition] = -1.0 / indices;
+                    if (!gameStates[transition].Player2Won)
+                    {
+                        stateMatrix[row, transition] = -1.0 / indices;
+                        probability += -1.0 / indices;
+                    }
+
                 }
 
                 stateMatrix[row, row] = 1;
+                probability += 1;
+
+                probabilityVector[row] = probability;
             }
 
             // PRINT MATRIX
@@ -90,8 +103,12 @@ namespace Mushrooms
                 {
                     Console.Write("{0:N1} ", stateMatrix[i, j]);
                 }
-                Console.WriteLine(" ]");
+                Console.WriteLine(" ] [ {0} ]", probabilityVector[i]);
             }
+
+            var mymatrix = new MyMatrix<double>(stateMatrix);
+            mymatrix.Jacobi(probabilityVector, 100);
+
         }
     }
 }
