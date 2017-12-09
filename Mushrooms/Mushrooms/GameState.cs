@@ -16,7 +16,7 @@ namespace Mushrooms
 
         public bool IsPlayer1Turn;
 
-        public List<int> PossibleGameStates = new List<int>();
+        public List<int> Transitions;
 
         public GameState(int gameStateId, int player1Position, int player2Position, bool isPlayer1Turn)
         {
