@@ -75,6 +75,16 @@ namespace Mushrooms
 
                 stateMatrix[row, row] = 1;
             }
+
+            for (var i = 0; i < size; i++)
+            {
+                Console.Write("[ ");
+                for (var j = 0; j < size; j++)
+                {
+                    Console.Write("{0:N1} ", stateMatrix[i, j]);
+                }
+                Console.WriteLine(" ]");
+            }
         }
     }
 }
