@@ -76,7 +76,7 @@ namespace Mushrooms
                 var state = gameStates[row];
                 foreach (var transition in state.Transitions)
                 {
-                    stateMatrix[row, transition] = 1.0 / indices;
+                    stateMatrix[row, transition] = -1.0 / indices;
                 }
 
                 stateMatrix[row, row] = 1;
