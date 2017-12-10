@@ -12,6 +12,7 @@ namespace Mushrooms
         {
             // k = 3 + 4%6 == 7
             var n = 4;
+            var boardSize = 2 * n + 1;
 
             var indiceList = new List<Tuple<int, double>>
             {
@@ -20,8 +21,6 @@ namespace Mushrooms
                 new Tuple<int, double>(1, 0.25),
                 new Tuple<int, double>(2, 0.25)
             };
-
-            var boardSize = 2 * n + 1;
 
 
             // GENERATE ALL POSSIBLE GAME STATES
@@ -73,8 +72,12 @@ namespace Mushrooms
                         bool possibleTransition = isPlayer1Turn && player1Moves && player2Waits && turnChanges ||
                                                   isPlayer2Turn && player2Moves && player1Waits && turnChanges;
 
-                        if (possibleTransition)
+                        bool alreadyInList = currentState.Transitions.Select(s => s.Item1).Contains(nextState.GameStateId);
+
+                        if (possibleTransition && !alreadyInList)
+                        {
                             currentState.Transitions.Add(new Tuple<int, double>(nextState.GameStateId, toss.Item2));
+                        }
                     }
                 }
             }
@@ -96,7 +99,6 @@ namespace Mushrooms
                 {
                     probabilityVector[row] = 1;
                     continue;
-
                 }
                 
                 if (player2Won)
