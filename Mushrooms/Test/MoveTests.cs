@@ -105,6 +105,25 @@ namespace Test
             Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
         }
 
+        [Fact]
+        public void ValidMoves_When_N4_D2_In_0()
+        {
+            const int n = 4;
+            const int boardSize = 2 * n + 1;
+
+            const int startPosition = 0;
+            var endPositionForGivenToss = new Dictionary<int, int>
+            {
+                [-2] = -2,
+                [-1] = -1,
+                [1] = 1,
+                [2] = 2
+            };
+
+            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
+            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
+        }
+
         private static bool ValidMovesAccepted(int startPosition, Dictionary<int, int> endPositionForGivenToss, int boardSize)
         {
             var allValidMovesMatch =
