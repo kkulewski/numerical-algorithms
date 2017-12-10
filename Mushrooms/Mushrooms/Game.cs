@@ -50,8 +50,7 @@ namespace Mushrooms
             {
                 currentState.Transitions = new List<Tuple<int, double>>();
 
-                bool gameFinished = currentState.Player1Position == 0
-                                    || currentState.Player2Position == 0;
+                bool gameFinished = Player1Won(currentState) || Player2Won(currentState);
                 if (gameFinished)
                     continue;
 
@@ -115,16 +114,13 @@ namespace Mushrooms
                 stateMatrix[row, row] = 1;
                 var state = GameStates[row];
 
-                bool player1Won = state.Player1Position == 0;
-                bool player2Won = state.Player2Position == 0;
-
-                if (player1Won)
+                if (Player1Won(state))
                 {
                     probabilityVector[row] = 1;
                     continue;
                 }
 
-                if (player2Won)
+                if (Player2Won(state))
                 {
                     probabilityVector[row] = 0;
                     continue;
@@ -137,6 +133,16 @@ namespace Mushrooms
             }
 
             return new Tuple<double[,], double[]>(stateMatrix, probabilityVector);
+        }
+
+        private static bool Player1Won(GameState state)
+        {
+            return state.Player1Position == 0;
+        }
+
+        private static bool Player2Won(GameState state)
+        {
+            return state.Player2Position == 0;
         }
     }
 }
