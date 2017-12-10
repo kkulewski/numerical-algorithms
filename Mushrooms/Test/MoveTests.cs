@@ -11,7 +11,7 @@ namespace Test
     public class MoveTests
     {
         [Fact]
-        public void ValidMoves_When_N4_D2_No0Cross_NoNCross()
+        public void ValidMoves_When_N4_D2_NoCross()
         {
             const int n = 4;
             const int boardSize = 2 * n + 1;
@@ -30,7 +30,7 @@ namespace Test
         }
 
         [Fact]
-        public void ValidMoves_When_N4_D2_No0Cross_NCross()
+        public void ValidMoves_When_N4_D2_Cross_N_Forward()
         {
             const int n = 4;
             const int boardSize = 2 * n + 1;
@@ -44,6 +44,25 @@ namespace Test
                 [2] = -3
             };
             
+            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
+            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
+        }
+
+        [Fact]
+        public void ValidMoves_When_N4_D2_Cross_0_Forward()
+        {
+            const int n = 4;
+            const int boardSize = 2 * n + 1;
+
+            const int startPosition = -1;
+            var endPositionForGivenToss = new Dictionary<int, int>
+            {
+                [-2] = -3,
+                [-1] = -2,
+                [1] = 0,
+                [2] = 1
+            };
+
             Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
             Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
         }
