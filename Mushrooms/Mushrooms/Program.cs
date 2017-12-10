@@ -134,11 +134,13 @@ namespace Mushrooms
         {
             var n = (boardSize - 1) / 2;
 
-            bool forwardNoCross = (startPosition + toss <= n)
+            bool forwardNoCross = (toss > 0)
+                && (startPosition + toss <= n)
                 && (endPosition == startPosition + toss);
 
-            bool backwardNoCross = (startPosition - toss >= 0)
-                && (endPosition == startPosition - toss);
+            bool backwardNoCross = (toss < 0)
+                && (startPosition + toss >= 0)
+                && (endPosition == startPosition + toss);
 
             bool forwardCross = (toss > 0)
                 && (startPosition + toss > n)
