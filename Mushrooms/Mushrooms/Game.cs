@@ -42,5 +42,26 @@ namespace Mushrooms
                 }
             }
         }
+        
+        public bool IsValidMove(int startPosition, int endPosition, int toss)
+        {
+            bool forwardNoCross = (toss > 0)
+                                  && (startPosition + toss <= BoardBound)
+                                  && (endPosition == startPosition + toss);
+
+            bool backwardNoCross = (toss < 0)
+                                   && (startPosition - toss >= -BoardBound)
+                                   && (endPosition == startPosition + toss);
+
+            bool forwardCross = (toss > 0)
+                                && (startPosition + toss > BoardBound)
+                                && (endPosition == -BoardBound + (toss - 1 - (BoardBound - startPosition)));
+
+            bool backwardCross = (toss < 0)
+                                 && (startPosition + toss < -BoardBound)
+                                 && (endPosition == BoardBound + (toss + 1 + (BoardBound + startPosition)));
+
+            return forwardNoCross || backwardNoCross || forwardCross || backwardCross;
+        }
     }
 }
