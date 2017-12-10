@@ -20,6 +20,14 @@ namespace Mushrooms
 
         public int BoardBound => (BoardSize - 1) / 2;
 
+        public Game(int boardSize, int player1Position, int player2Position, List<Tuple<int, double>> dice)
+        {
+            BoardSize = boardSize;
+            Player1InitialPosition = player1Position;
+            Player2InitialPosition = player2Position;
+            Dice = dice;
+        }
+
         public void GeneratePossibleStates()
         {
             GameStates = new Dictionary<int, GameState>();
