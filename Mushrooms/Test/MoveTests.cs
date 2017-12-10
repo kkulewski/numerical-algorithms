@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Mushrooms;
 using Xunit;
 
@@ -14,7 +12,12 @@ namespace Test
 
         public Game GetN4D2Game()
         {
-            return new Game(4 * 2 + 1, 4, -4, null);
+            const int n = 4;
+            const int boardSize = 2 * n + 1;
+            const int player1Position = 4;
+            const int player2Position = -4;
+            const List<Tuple<int, double>> dice = null; 
+            return new Game(boardSize, player1Position, player2Position, dice);
         }
 
         [Fact]
