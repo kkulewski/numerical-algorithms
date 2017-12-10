@@ -18,16 +18,16 @@ namespace Mushrooms
 
         public int Player2InitialPosition;
 
+        public int BoardBound => (BoardSize - 1) / 2;
+
         public void GeneratePossibleStates()
         {
-            // GENERATE ALL POSSIBLE GAME STATES
             GameStates = new Dictionary<int, GameState>();
-            var n = (BoardSize - 1) / 2;
             var gameStateId = 0;
 
-            for (var player1Pos = -n; player1Pos <= n; player1Pos++)
+            for (var player1Pos = -BoardBound; player1Pos <= BoardBound; player1Pos++)
             {
-                for (var player2Pos = -n; player2Pos <= n; player2Pos++)
+                for (var player2Pos = -BoardBound; player2Pos <= BoardBound; player2Pos++)
                 {
                     if (player1Pos == 0 && player2Pos == 0)
                         continue;
