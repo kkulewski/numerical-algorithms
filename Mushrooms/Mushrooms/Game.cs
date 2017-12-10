@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mushrooms
 {
-    class Game
+    public class Game
     {
         public int BoardSize;
 

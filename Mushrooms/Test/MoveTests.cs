@@ -10,11 +10,17 @@ namespace Test
 {
     public class MoveTests
     {
+        public Game Game;
+
+        public Game GetN4D2Game()
+        {
+            return new Game(4 * 2 + 1, 4, -4, null);
+        }
+
         [Fact]
         public void ValidMoves_When_N4_D2_NoCross()
         {
-            const int n = 4;
-            const int boardSize = 2 * n + 1;
+            Game = GetN4D2Game();
 
             const int startPosition = 2;
             var endPositionForGivenToss = new Dictionary<int, int>
@@ -25,15 +31,14 @@ namespace Test
                 [2] = 4
             };
 
-            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
-            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
+            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss));
+            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss));
         }
 
         [Fact]
         public void ValidMoves_When_N4_D2_Cross_N_Forward()
         {
-            const int n = 4;
-            const int boardSize = 2 * n + 1;
+            Game = GetN4D2Game();
 
             const int startPosition = 4;
             var endPositionForGivenToss = new Dictionary<int, int>
@@ -44,15 +49,14 @@ namespace Test
                 [2] = -3
             };
             
-            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
-            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
+            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss));
+            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss));
         }
 
         [Fact]
         public void ValidMoves_When_N4_D2_Cross_N_Backward()
         {
-            const int n = 4;
-            const int boardSize = 2 * n + 1;
+            Game = GetN4D2Game();
 
             const int startPosition = -3;
             var endPositionForGivenToss = new Dictionary<int, int>
@@ -63,15 +67,14 @@ namespace Test
                 [2] = -1
             };
 
-            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
-            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
+            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss));
+            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss));
         }
 
         [Fact]
         public void ValidMoves_When_N4_D2_Cross_0_Forward()
         {
-            const int n = 4;
-            const int boardSize = 2 * n + 1;
+            Game = GetN4D2Game();
 
             const int startPosition = -1;
             var endPositionForGivenToss = new Dictionary<int, int>
@@ -82,15 +85,14 @@ namespace Test
                 [2] = 1
             };
 
-            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
-            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
+            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss));
+            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss));
         }
 
         [Fact]
         public void ValidMoves_When_N4_D2_Cross_0_Backward()
         {
-            const int n = 4;
-            const int boardSize = 2 * n + 1;
+            Game = GetN4D2Game();
 
             const int startPosition = 1;
             var endPositionForGivenToss = new Dictionary<int, int>
@@ -101,15 +103,14 @@ namespace Test
                 [2] = 3
             };
 
-            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
-            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
+            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss));
+            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss));
         }
 
         [Fact]
         public void ValidMoves_When_N4_D2_In_0()
         {
-            const int n = 4;
-            const int boardSize = 2 * n + 1;
+            Game = GetN4D2Game();
 
             const int startPosition = 0;
             var endPositionForGivenToss = new Dictionary<int, int>
@@ -120,28 +121,28 @@ namespace Test
                 [2] = 2
             };
 
-            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
-            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
+            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss));
+            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss));
         }
 
-        private static bool ValidMovesAccepted(int startPosition, Dictionary<int, int> endPositionForGivenToss, int boardSize)
+        private bool ValidMovesAccepted(int startPosition, Dictionary<int, int> endPositionForGivenToss)
         {
             var allValidMovesMatch =
              endPositionForGivenToss
-                    .All(x => Program.CheckIfValidMove(startPosition, x.Value, x.Key, boardSize));
+                    .All(x => Game.IsValidMove(startPosition, x.Value, x.Key));
 
             return allValidMovesMatch;
         }
 
-        private static bool InvalidMovesRejected(int startPosition, Dictionary<int, int> endPositionForGivenToss, int boardSize)
+        private bool InvalidMovesRejected(int startPosition, Dictionary<int, int> endPositionForGivenToss)
         {
             var anyValidMovePlusOneMatch =
                 endPositionForGivenToss
-                    .Any(x => Program.CheckIfValidMove(startPosition, x.Value + 1, x.Key, boardSize));
+                    .Any(x => Game.IsValidMove(startPosition, x.Value + 1, x.Key));
 
             var anyValidMoveMinusOneMatch =
                 endPositionForGivenToss
-                    .Any(x => Program.CheckIfValidMove(startPosition, x.Value - 1, x.Key, boardSize));
+                    .Any(x => Game.IsValidMove(startPosition, x.Value - 1, x.Key));
 
             return !anyValidMovePlusOneMatch && !anyValidMoveMinusOneMatch;
         }
