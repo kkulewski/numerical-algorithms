@@ -42,7 +42,47 @@ namespace Mushrooms
                 }
             }
         }
-        
+
+        public void GeneratePossibleTransitions()
+        {
+            // ASSIGN TRANSITION LIST TO EACH STATE
+            foreach (var currentState in GameStates.Values)
+            {
+                currentState.Transitions = new List<Tuple<int, double>>();
+
+                bool gameFinished = currentState.Player1Position == 0
+                                    || currentState.Player2Position == 0;
+                if (gameFinished)
+                    continue;
+
+                foreach (var nextState in GameStates.Values)
+                {
+                    bool turnChanges = currentState.IsPlayer1Turn != nextState.IsPlayer1Turn;
+
+                    foreach (var toss in Dice)
+                    {
+                        bool isPlayer1Turn = currentState.IsPlayer1Turn;
+                        bool player1Moves = IsValidMove(currentState.Player1Position, nextState.Player1Position, toss.Item1);
+                        bool player2Waits = nextState.Player2Position == currentState.Player2Position;
+
+                        bool isPlayer2Turn = !currentState.IsPlayer1Turn;
+                        bool player2Moves = IsValidMove(currentState.Player2Position, nextState.Player2Position, toss.Item1);
+                        bool player1Waits = nextState.Player1Position == currentState.Player1Position;
+
+                        bool possibleTransition = isPlayer1Turn && player1Moves && player2Waits && turnChanges
+                                                  || isPlayer2Turn && player2Moves && player1Waits && turnChanges;
+
+                        bool alreadyInList = currentState.Transitions.Select(s => s.Item1).Contains(nextState.GameStateId);
+
+                        if (possibleTransition && !alreadyInList)
+                        {
+                            currentState.Transitions.Add(new Tuple<int, double>(nextState.GameStateId, toss.Item2));
+                        }
+                    }
+                }
+            }
+        }
+
         public bool IsValidMove(int startPosition, int endPosition, int toss)
         {
             bool forwardNoCross = (toss > 0)
