@@ -139,7 +139,7 @@ namespace Mushrooms
                 && (endPosition == startPosition + toss);
 
             bool backwardNoCross = (toss < 0)
-                && (startPosition + toss >= 0)
+                && (startPosition - toss >= -n)
                 && (endPosition == startPosition + toss);
 
             bool forwardCross = (toss > 0)
