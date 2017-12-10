@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mushrooms
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -134,19 +134,19 @@ namespace Mushrooms
         {
             var n = (boardSize - 1) / 2;
 
-            bool forwardNoCross = (startPosition + toss < n)
+            bool forwardNoCross = (startPosition + toss <= n)
                 && (endPosition == startPosition + toss);
 
-            bool backwardNoCross = (startPosition - toss > 0)
+            bool backwardNoCross = (startPosition - toss >= 0)
                 && (endPosition == startPosition - toss);
 
             bool forwardCross = (toss > 0)
                 && (startPosition + toss > n)
-                && (endPosition == -n + (startPosition - toss));
+                && (endPosition == -n + (toss - 1 - (n - startPosition)));
 
             bool backwardCross = (toss < 0)
                 && (startPosition + toss < -n)
-                && (endPosition == n + (startPosition - toss));
+                && (endPosition == n + (toss + 1 + (n + startPosition)));
             
             return forwardNoCross || backwardNoCross || forwardCross || backwardCross;
         }
