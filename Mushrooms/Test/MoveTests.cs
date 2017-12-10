@@ -49,6 +49,25 @@ namespace Test
         }
 
         [Fact]
+        public void ValidMoves_When_N4_D2_Cross_N_Backward()
+        {
+            const int n = 4;
+            const int boardSize = 2 * n + 1;
+
+            const int startPosition = -3;
+            var endPositionForGivenToss = new Dictionary<int, int>
+            {
+                [-2] = 4,
+                [-1] = -4,
+                [1] = -2,
+                [2] = -1
+            };
+
+            Assert.True(ValidMovesAccepted(startPosition, endPositionForGivenToss, boardSize));
+            Assert.True(InvalidMovesRejected(startPosition, endPositionForGivenToss, boardSize));
+        }
+
+        [Fact]
         public void ValidMoves_When_N4_D2_Cross_0_Forward()
         {
             const int n = 4;
