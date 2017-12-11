@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mushrooms.IO;
 
 namespace Mushrooms
 {
@@ -35,6 +36,10 @@ namespace Mushrooms
             var probabilityVector = mv.Item2;
             var iterations = 100;
 
+            // write generated matrix + vector
+            MyMatrixIoHandler.WriteMatrixToFile(stateMatrix, "m.txt");
+            MyMatrixIoHandler.WriteVectorToFile(probabilityVector, "v.txt");
+
             //stateMatrix.GaussianReductionPartialPivot(probabilityVector);
             //stateMatrix.Jacobi(probabilityVector, iterations);
             stateMatrix.GaussSeidel(probabilityVector, iterations);
@@ -43,6 +48,9 @@ namespace Mushrooms
                 p1Pos,
                 p2Pos,
                 probabilityVector[game.InitialStateIndex]);
+
+            // write solved probability vector
+            MyMatrixIoHandler.WriteVectorToFile(probabilityVector, "v-cs.txt");
         }
     }
 }
