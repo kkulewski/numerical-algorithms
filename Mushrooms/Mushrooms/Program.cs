@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Mushrooms
 {
@@ -37,6 +38,11 @@ namespace Mushrooms
             //stateMatrix.GaussianReductionPartialPivot(probabilityVector);
             //stateMatrix.Jacobi(probabilityVector, iterations);
             stateMatrix.GaussSeidel(probabilityVector, iterations);
+
+            Console.WriteLine("[P1_POS: {0}, P2_POS: {1}, P1_TURN]: {2} win chance",
+                p1Pos,
+                p2Pos,
+                probabilityVector[game.InitialStateIndex]);
         }
     }
 }

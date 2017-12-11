@@ -14,17 +14,19 @@ namespace Mushrooms
 
         public Dictionary<int, GameState> GameStates;
 
-        public int Player1InitialPosition;
-
-        public int Player2InitialPosition;
-
         public int BoardBound => (BoardSize - 1) / 2;
+
+        public int InitialStateIndex;
+
+        private readonly int _player1InitialPosition;
+
+        private readonly int _player2InitialPosition;
 
         public Game(int boardSize, int player1Position, int player2Position, Dice dice)
         {
             BoardSize = boardSize;
-            Player1InitialPosition = player1Position;
-            Player2InitialPosition = player2Position;
+            _player1InitialPosition = player1Position;
+            _player2InitialPosition = player2Position;
             Dice = dice;
         }
 
@@ -45,6 +47,13 @@ namespace Mushrooms
                         var isPlayer1Turn = turn == 0;
                         var gameState = new GameState(gameStateId, player1Pos, player2Pos, isPlayer1Turn);
                         GameStates[gameStateId] = gameState;
+
+                        var isInitialState = isPlayer1Turn
+                                             && player1Pos == _player1InitialPosition
+                                             && player2Pos == _player2InitialPosition;
+                        if (isInitialState)
+                            InitialStateIndex = gameStateId;
+
                         gameStateId++;
                     }
                 }
