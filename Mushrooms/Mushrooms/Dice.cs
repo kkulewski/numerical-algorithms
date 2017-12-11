@@ -3,24 +3,43 @@ using System.Collections.Generic;
 
 namespace Mushrooms
 {
-    public class Dice : IEnumerable
+    public class Dice : IEnumerable<DiceFace>
     {
-        public IDictionary<int, double> Indices;
+        public IDictionary<int, double> DiceFaces;
 
         public double this[int index]
         {
-            get => Indices[index];
-            set => Indices[index] = value;
+            get => DiceFaces[index];
+            set => DiceFaces[index] = value;
         }
 
-        public Dice(IDictionary<int, double> indices)
+        public Dice(IDictionary<int, double> tossResults)
         {
-            Indices = indices;
+            DiceFaces = tossResults;
         }
 
-        public IEnumerator GetEnumerator()
+        public IEnumerator<DiceFace> GetEnumerator()
         {
-            return Indices.GetEnumerator();
+            foreach (var f in DiceFaces)
+                yield return new DiceFace(f.Key, f.Value);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return DiceFaces.GetEnumerator();
+        }
+    }
+    
+    public class DiceFace
+    {
+        public int Value;
+
+        public double Probability;
+
+        public DiceFace(int value, double probability)
+        {
+            Value = value;
+            Probability = probability;
         }
     }
 }

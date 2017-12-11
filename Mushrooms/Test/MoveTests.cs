@@ -16,7 +16,7 @@ namespace Test
             const int boardSize = 2 * n + 1;
             const int player1Position = 4;
             const int player2Position = -4;
-            const List<Tuple<int, double>> dice = null; 
+            const Dice dice = null; 
             return new Game(boardSize, player1Position, player2Position, dice);
         }
 
