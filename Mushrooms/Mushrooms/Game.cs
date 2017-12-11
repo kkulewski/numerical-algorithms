@@ -152,20 +152,6 @@ namespace Mushrooms
             return new Tuple<double[,], double[]>(stateMatrix, probabilityVector);
         }
 
-        public void PrintGameMatrixAndProbabilityVector(double[,] gameMatrix, double[] probabilityVector)
-        {
-            var size = probabilityVector.Length;
-            for (var i = 0; i < size; i++)
-            {
-                Console.Write("{0:D2} [ ", i);
-                for (var j = 0; j < size; j++)
-                {
-                    Console.Write("{0:N1} ", gameMatrix[i, j]);
-                }
-                Console.WriteLine(" ] [ {0} ]", probabilityVector[i]);
-            }
-        }
-
         private static bool Player1Won(GameState state)
         {
             return state.Player1Position == 0;
