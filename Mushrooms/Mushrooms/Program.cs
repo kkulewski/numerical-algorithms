@@ -14,7 +14,7 @@ namespace Mushrooms
             var p1Pos = n;
             var p2Pos = -n;
 
-            var dice = new Dice
+            var dice = Dice.GetDice
             (
                 new Dictionary<int, double>
                 {
@@ -61,7 +61,7 @@ namespace Mushrooms
                 while (currentState.Player1Position != 0 && currentState.Player2Position != 0)
                 {
                     var toss = dice.Toss();
-                    currentState = currentState.Transitions.Find(p => p.Item2.Value == toss.Value).Item1;
+                    currentState = currentState.Transitions[toss];
                 }
 
                 if (currentState.Player1Position == 0)
