@@ -32,7 +32,7 @@ namespace Mushrooms
 
             // SOLVE
             var mv = game.GetGameMatrixAndProbabilityVector();
-            var stateMatrix = new MyMatrix<double>(mv.Item1);
+            var stateMatrix = mv.Item1;
             var probabilityVector = mv.Item2;
             var iterations = 100;
 
@@ -51,6 +51,29 @@ namespace Mushrooms
 
             // write solved probability vector
             MyMatrixIoHandler.WriteVectorToFile(probabilityVector, "v-cs.txt");
+
+
+            // MONTE CARLO
+            int p1Wins = 0, p2Wins = 0;
+            for (var i = 0; i < 1000; i++)
+            {
+                var currentState = game.GameStates[game.InitialStateIndex];
+                while (currentState.Player1Position != 0 && currentState.Player2Position != 0)
+                {
+                    var toss = dice.Toss();
+                    currentState = currentState.Transitions.Find(p => p.Item2.Value == toss.Value).Item1;
+                }
+
+                if (currentState.Player1Position == 0)
+                    p1Wins++;
+
+                if (currentState.Player2Position == 0)
+                    p2Wins++;
+
+            }
+
+            Console.WriteLine("P1-WINS: " + p1Wins);
+            Console.WriteLine("P2-WINS: " + p2Wins);
         }
     }
 }
