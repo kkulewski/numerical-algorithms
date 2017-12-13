@@ -65,7 +65,7 @@ namespace Mushrooms
             // ASSIGN TRANSITION LIST TO EACH STATE
             foreach (var currentState in GameStates.Values)
             {
-                currentState.Transitions = new List<Tuple<int, double>>();
+                currentState.Transitions = new List<Tuple<int, DiceFace>>();
 
                 bool gameFinished = Player1Won(currentState) || Player2Won(currentState);
                 if (gameFinished)
@@ -92,7 +92,7 @@ namespace Mushrooms
 
                         if (possibleTransition && !alreadyInList)
                         {
-                            currentState.Transitions.Add(new Tuple<int, double>(nextState.GameStateId, toss.Probability));
+                            currentState.Transitions.Add(new Tuple<int, DiceFace>(nextState.GameStateId, toss));
                         }
                     }
                 }
@@ -145,7 +145,7 @@ namespace Mushrooms
 
                 foreach (var transition in state.Transitions)
                 {
-                    stateMatrix[row, transition.Item1] = -transition.Item2;
+                    stateMatrix[row, transition.Item1] = -transition.Item2.Probability;
                 }
             }
 

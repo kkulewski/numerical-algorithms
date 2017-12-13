@@ -16,7 +16,7 @@ namespace Mushrooms
 
         public bool IsPlayer1Turn;
 
-        public List<Tuple<int, double>> Transitions;
+        public List<Tuple<int, DiceFace>> Transitions;
 
         public GameState(int gameStateId, int player1Position, int player2Position, bool isPlayer1Turn)
         {
