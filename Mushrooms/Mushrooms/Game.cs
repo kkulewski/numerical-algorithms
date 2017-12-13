@@ -43,7 +43,7 @@ namespace Mushrooms
                     for (var turn = 0; turn < 2; turn++)
                     {
                         var isPlayer1Turn = turn == 0;
-                        var gameState = new GameState(player1Pos, player2Pos, isPlayer1Turn);
+                        var gameState = new GameState(gameStateId, player1Pos, player2Pos, isPlayer1Turn);
                         GameStates[gameStateId] = gameState;
 
                         var isInitialState = isPlayer1Turn
@@ -143,7 +143,7 @@ namespace Mushrooms
 
                 foreach (var transition in state.Transitions)
                 {
-                    stateMatrix[row, state.Transitions.IndexOf(transition)] = -transition.Item2.Probability;
+                    stateMatrix[row, transition.Value.GameStateId] = -transition.Key.Probability;
                 }
             }
             
