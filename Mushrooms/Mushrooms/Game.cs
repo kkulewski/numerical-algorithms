@@ -118,7 +118,7 @@ namespace Mushrooms
             return forwardNoCross || backwardNoCross || forwardCross || backwardCross;
         }
 
-        public Tuple<double[,], double[]> GetGameMatrixAndProbabilityVector()
+        public Tuple<MyMatrix<double>, double[]> GetGameMatrixAndProbabilityVector()
         {
             var size = GameStates.Count;
             var stateMatrix = new double[size, size];
@@ -146,8 +146,8 @@ namespace Mushrooms
                     stateMatrix[row, state.Transitions.IndexOf(transition)] = -transition.Item2.Probability;
                 }
             }
-
-            return new Tuple<double[,], double[]>(stateMatrix, probabilityVector);
+            
+            return new Tuple<MyMatrix<double>, double[]>(new MyMatrix<double>(stateMatrix), probabilityVector);
         }
 
         private static bool Player1Won(GameState state)
