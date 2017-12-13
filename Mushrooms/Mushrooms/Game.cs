@@ -63,7 +63,7 @@ namespace Mushrooms
             // ASSIGN TRANSITION LIST TO EACH STATE
             foreach (var currentState in GameStates.Values)
             {
-                currentState.Transitions = new List<Tuple<GameState, DiceFace>>();
+                currentState.Transitions = new Dictionary<DiceFace, GameState>();
 
                 bool gameFinished = Player1Won(currentState) || Player2Won(currentState);
                 if (gameFinished)
@@ -86,11 +86,11 @@ namespace Mushrooms
                         bool possibleTransition = isPlayer1Turn && player1Moves && player2Waits && turnChanges
                                                   || isPlayer2Turn && player2Moves && player1Waits && turnChanges;
 
-                        bool alreadyInList = currentState.Transitions.Select(s => s.Item1).Contains(nextState);
+                        bool alreadyInList = currentState.Transitions.ContainsKey(toss);
 
                         if (possibleTransition && !alreadyInList)
                         {
-                            currentState.Transitions.Add(new Tuple<GameState, DiceFace>(nextState, toss));
+                            currentState.Transitions[toss] = nextState;
                         }
                     }
                 }

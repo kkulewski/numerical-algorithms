@@ -6,22 +6,27 @@ namespace Mushrooms
 {
     public class Dice : IEnumerable<DiceFace>
     {
-        public IDictionary<int, double> DiceFaces;
+        public IDictionary<int, DiceFace> DiceFaces;
 
         private readonly Random _random = new Random();
 
-        public double this[int index]
-        {
-            get => DiceFaces[index];
-            set => DiceFaces[index] = value;
-        }
+        public DiceFace this[int index] => DiceFaces[index];
 
-        public Dice(IDictionary<int, double> diceFaces)
+        private Dice(IDictionary<int, DiceFace> diceFaces)
         {
-            if(!DiceIsValid(diceFaces))
+            if (!DiceIsValid(diceFaces))
                 throw new Exception("Dice total probability is not equal to 1.0");
 
             DiceFaces = diceFaces;
+        }
+
+        public static Dice GetDice(IDictionary<int, double> diceFaces)
+        {
+            var faces = new Dictionary<int, DiceFace>();
+            foreach (var face in diceFaces)
+                faces[face.Key] = new DiceFace(face.Key, face.Value);
+
+            return new Dice(faces);
         }
 
         public DiceFace Toss()
@@ -46,7 +51,7 @@ namespace Mushrooms
         public IEnumerator<DiceFace> GetEnumerator()
         {
             foreach (var f in DiceFaces)
-                yield return new DiceFace(f.Key, f.Value);
+                yield return f.Value;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -54,13 +59,13 @@ namespace Mushrooms
             return DiceFaces.GetEnumerator();
         }
 
-        private static bool DiceIsValid(IDictionary<int, double> diceFaces)
+        private static bool DiceIsValid(IDictionary<int, DiceFace> diceFaces)
         {
             const double tolerance = 0.001;
 
             var sum = 0.0;
             foreach (var f in diceFaces)
-                sum += f.Value;
+                sum += f.Value.Probability;
             
             return Math.Abs(sum - 1.0) < tolerance;
         }
