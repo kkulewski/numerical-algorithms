@@ -65,11 +65,14 @@ namespace Mushrooms
                 }
 
                 if (currentState.Player1Won)
+                {
                     p1Wins++;
+                }
 
                 if (currentState.Player2Won)
+                {
                     p2Wins++;
-
+                }
             }
 
             Console.WriteLine("P1-WINS: " + p1Wins);

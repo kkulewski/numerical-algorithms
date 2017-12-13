@@ -13,11 +13,15 @@ namespace Mushrooms.IO
                 {
                     sb.Append(matrix[i, j]);
                     if (j < matrix.Cols - 1)
+                    {
                         sb.Append(" ");
+                    }
                 }
 
                 if (i < matrix.Rows - 1)
+                {
                     sb.AppendLine();
+                }
             }
             return sb.ToString();
         }
@@ -29,7 +33,9 @@ namespace Mushrooms.IO
             {
                 sb.Append(vector[i]);
                 if (i < vector.Length - 1)
+                {
                     sb.Append(" ");
+                }
             }
 
             return sb.ToString();

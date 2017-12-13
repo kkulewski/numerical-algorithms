@@ -38,19 +38,23 @@ namespace Mushrooms
                 for (var player2Pos = -BoardBound; player2Pos <= BoardBound; player2Pos++)
                 {
                     if (player1Pos == 0 && player2Pos == 0)
+                    {
                         continue;
+                    }
 
                     for (var turn = 0; turn < 2; turn++)
                     {
                         var isPlayer1Turn = turn == 0;
-                        var gameState = new GameState(gameStateId, player1Pos, player2Pos, isPlayer1Turn);
-                        GameStates[gameStateId] = gameState;
+                        GameStates[gameStateId] = new GameState(gameStateId, player1Pos, player2Pos, isPlayer1Turn);
 
                         var isInitialState = isPlayer1Turn
                                              && player1Pos == _player1InitialPosition
                                              && player2Pos == _player2InitialPosition;
+
                         if (isInitialState)
+                        {
                             InitialStateIndex = gameStateId;
+                        }
 
                         gameStateId++;
                     }
@@ -60,14 +64,15 @@ namespace Mushrooms
 
         public void GeneratePossibleTransitions()
         {
-            // ASSIGN TRANSITION LIST TO EACH STATE
             foreach (var currentState in GameStates.Values)
             {
                 currentState.Transitions = new Dictionary<DiceFace, GameState>();
-
                 bool gameFinished = currentState.Player1Won || currentState.Player2Won;
+
                 if (gameFinished)
+                {
                     continue;
+                }
 
                 foreach (var nextState in GameStates.Values)
                 {

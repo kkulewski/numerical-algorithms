@@ -53,8 +53,10 @@ namespace Mushrooms
 
         public static MyMatrix<T> operator +(MyMatrix<T> a, MyMatrix<T> b)
         {
-            if(a.Rows != b.Rows || a.Cols != b.Cols)
+            if (a.Rows != b.Rows || a.Cols != b.Cols)
+            {
                 throw new ArgumentException("Matrix sizes are not equal.");
+            }
 
             var output = new T[a.Rows, a.Cols];
             for (var i = 0; i < a.Rows; i++)
@@ -71,7 +73,9 @@ namespace Mushrooms
         public static MyMatrix<T> operator *(MyMatrix<T> a, MyMatrix<T> b)
         {
             if (a.Cols != b.Rows)
+            {
                 throw new ArgumentException("Matrix sizes are not equal.");
+            }
 
             var output = new T[a.Rows, b.Cols];
             for (var row = 0; row < a.Rows; row++)
@@ -94,11 +98,15 @@ namespace Mushrooms
         public static T[] operator *(MyMatrix<T> a, T[] b)
         {
             if (a.Cols != b.Length)
+            {
                 throw new ArgumentException("Matrix sizes are not equal.");
+            }
 
             var output = new T[a.Rows];
             for (var row = 0; row < a.Rows; row++)
+            {
                 output[row] = new T();
+            }
 
             for (var row = 0; row < a.Rows; row++)
             {
@@ -189,7 +197,9 @@ namespace Mushrooms
             // initial column order
             var columnOrder = new int[Cols];
             for (var i = 0; i < Cols; i++)
+            {
                 columnOrder[i] = i;
+            }
 
             ReduceLeftBottomTriangleFullPivot(vector, columnOrder);
             ReduceRightTopTriangle(vector);
@@ -198,10 +208,14 @@ namespace Mushrooms
             // reorder colums back
             var orderedVector = new T[Cols];
             for (var i = 0; i < Cols; i++)
+            {
                 orderedVector[columnOrder[i]] = vector[i];
+            }
 
             for (var i = 0; i < Cols; i++)
+            {
                 vector[i] = orderedVector[i];
+            }
         }
 
         public void ReduceLeftBottomTriangle(T[] vector)
@@ -238,6 +252,7 @@ namespace Mushrooms
         public void ChoosePartialPivot(T[] vector, int selected)
         {
             var maxRow = FindMaxInColumn(selected);
+
             // if its not the biggest element in current column
             if (selected != maxRow)
             {
@@ -294,15 +309,19 @@ namespace Mushrooms
 
         private void EnsureNoLeadingZero(int selected)
         {
-            if (this[selected, selected] == (dynamic)new T())
+            if (this[selected, selected] == (dynamic) new T())
+            {
                 throw new ArgumentException("Matrix diagonal contains zero! (leading zero detected)");
+            }
         }
 
         private void ReduceRow(T[] vector, int selected, int current)
         {
             // if current row is already reduced (leading 0) => return
             if (this[current, selected] == (dynamic) new T())
+            {
                 return;
+            }
 
             // get scalar for current row
             var scalar = this[current, selected] / (dynamic) this[selected, selected];
@@ -359,11 +378,15 @@ namespace Mushrooms
             {
                 // approximate each unknown (x1, x2, x3...) in equation
                 for (var row = 0; row < Rows; row++)
-                    xVector[row] = (dynamic) JacobiApproximateUnknown(bVector, xVector, row);
+                {
+                    xVector[row] = (dynamic)JacobiApproximateUnknown(bVector, xVector, row);
+                }
             }
-            
+
             for (var i = 0; i < Rows; i++)
+            {
                 bVector[i] = xVector[i];
+            }
         }
 
         public void Jacobi(T[] bVector, int iterations)
@@ -373,11 +396,15 @@ namespace Mushrooms
             {
                 var xVectorFromPreviousIteration = (T[]) xVector.Clone();
                 for (var row = 0; row < Rows; row++)
-                    xVector[row] = (dynamic) JacobiApproximateUnknown(bVector, xVectorFromPreviousIteration, row);
+                {
+                    xVector[row] = (dynamic)JacobiApproximateUnknown(bVector, xVectorFromPreviousIteration, row);
+                }
             }
-            
+
             for (var i = 0; i < Rows; i++)
+            {
                 bVector[i] = xVector[i];
+            }
         }
 
         private double JacobiApproximateUnknown(T[] bVector, T[] xVector, int row)
@@ -395,7 +422,9 @@ namespace Mushrooms
             for (var col = 0; col < Cols; col++)
             {
                 if (col != row)
-                    rowResult += (dynamic) this[row, col] * xVector[col];
+                {
+                    rowResult += (dynamic)this[row, col] * xVector[col];
+                }
             }
 
             return rowResult;

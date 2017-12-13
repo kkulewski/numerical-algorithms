@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mushrooms
 {
@@ -15,7 +16,9 @@ namespace Mushrooms
         private Dice(IDictionary<int, DiceFace> diceFaces)
         {
             if (!DiceIsValid(diceFaces))
+            {
                 throw new Exception("Dice total probability is not equal to 1.0");
+            }
 
             DiceFaces = diceFaces;
         }
@@ -24,7 +27,9 @@ namespace Mushrooms
         {
             var faces = new Dictionary<int, DiceFace>();
             foreach (var face in diceFaces)
+            {
                 faces[face.Key] = new DiceFace(face.Key, face.Value);
+            }
 
             return new Dice(faces);
         }
@@ -50,8 +55,7 @@ namespace Mushrooms
 
         public IEnumerator<DiceFace> GetEnumerator()
         {
-            foreach (var f in DiceFaces)
-                yield return f.Value;
+            return DiceFaces.Select(f => f.Value).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -63,10 +67,7 @@ namespace Mushrooms
         {
             const double tolerance = 0.001;
 
-            var sum = 0.0;
-            foreach (var f in diceFaces)
-                sum += f.Value.Probability;
-            
+            var sum = diceFaces.Sum(f => f.Value.Probability);
             return Math.Abs(sum - 1.0) < tolerance;
         }
     }
