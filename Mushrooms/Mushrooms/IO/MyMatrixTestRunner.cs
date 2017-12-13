@@ -23,12 +23,16 @@ namespace Mushrooms.IO
             _time = new TimeSpan();
         }
 
-        public void WriteMatrices(int matrixSize)
+        public void WriteGameMatrix(Game game)
         {
-            //var matrix = get game matrix
-            //var vector = get probability vector
-            //MyMatrixIoHandler.WriteMatrixToFile(matrix, IO.Matrix);
-            //MyMatrixIoHandler.WriteVectorToFile(vector, IO.Vector);
+            var matrix = GameMatrix.GetStateMatrix(game);
+            MyMatrixIoHandler.WriteMatrixToFile(matrix, IO.Matrix);
+        }
+
+        public void WriteProbabilityVector(Game game)
+        {
+            var vector = GameMatrix.GetProbabilityVector(game);
+            MyMatrixIoHandler.WriteVectorToFile(vector, IO.Vector);
         }
 
         public void LoadMatrices()
