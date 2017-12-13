@@ -1,43 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mushrooms
+﻿namespace Mushrooms
 {
     public static class GameMatrix
     {
-        public static Tuple<MyMatrix<double>, double[]> GetGameMatrixAndProbabilityVector(Game game)
+        public static MyMatrix<double> GetStateMatrix(Game game)
         {
-            var size = game.GameStates.Count;
+            var states = game.GameStates;
+            var size = states.Count;
             var stateMatrix = new double[size, size];
-            var probabilityVector = new double[size];
 
             for (var row = 0; row < size; row++)
             {
                 stateMatrix[row, row] = 1;
-                var state = game.GameStates[row];
-
-                if (state.Player1Won)
-                {
-                    probabilityVector[row] = 1;
-                    continue;
-                }
-
-                if (state.Player2Won)
-                {
-                    probabilityVector[row] = 0;
-                    continue;
-                }
-
-                foreach (var transition in state.Transitions)
+                foreach (var transition in states[row].Transitions)
                 {
                     stateMatrix[row, transition.Value.GameStateId] = -transition.Key.Probability;
                 }
             }
 
-            return new Tuple<MyMatrix<double>, double[]>(new MyMatrix<double>(stateMatrix), probabilityVector);
+            return new MyMatrix<double>(stateMatrix);
+        }
+
+        public static double[] GetProbabilityVector(Game game)
+        {
+            var states = game.GameStates;
+            var size = states.Count;
+            var probabilityVector = new double[size];
+
+            for (var row = 0; row < states.Count; row++)
+            {
+                if (states[row].Player1Won)
+                {
+                    probabilityVector[row] = 1;
+                    continue;
+                }
+
+                if (states[row].Player2Won)
+                {
+                    probabilityVector[row] = 0;
+                }
+            }
+
+            return probabilityVector;
         }
     }
 }
