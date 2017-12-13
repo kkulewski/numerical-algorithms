@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mushrooms
 {
@@ -45,7 +43,7 @@ namespace Mushrooms
                     for (var turn = 0; turn < 2; turn++)
                     {
                         var isPlayer1Turn = turn == 0;
-                        var gameState = new GameState(gameStateId, player1Pos, player2Pos, isPlayer1Turn);
+                        var gameState = new GameState(player1Pos, player2Pos, isPlayer1Turn);
                         GameStates[gameStateId] = gameState;
 
                         var isInitialState = isPlayer1Turn
@@ -65,7 +63,7 @@ namespace Mushrooms
             // ASSIGN TRANSITION LIST TO EACH STATE
             foreach (var currentState in GameStates.Values)
             {
-                currentState.Transitions = new List<Tuple<int, DiceFace>>();
+                currentState.Transitions = new List<Tuple<GameState, DiceFace>>();
 
                 bool gameFinished = Player1Won(currentState) || Player2Won(currentState);
                 if (gameFinished)
@@ -88,11 +86,11 @@ namespace Mushrooms
                         bool possibleTransition = isPlayer1Turn && player1Moves && player2Waits && turnChanges
                                                   || isPlayer2Turn && player2Moves && player1Waits && turnChanges;
 
-                        bool alreadyInList = currentState.Transitions.Select(s => s.Item1).Contains(nextState.GameStateId);
+                        bool alreadyInList = currentState.Transitions.Select(s => s.Item1).Contains(nextState);
 
                         if (possibleTransition && !alreadyInList)
                         {
-                            currentState.Transitions.Add(new Tuple<int, DiceFace>(nextState.GameStateId, toss));
+                            currentState.Transitions.Add(new Tuple<GameState, DiceFace>(nextState, toss));
                         }
                     }
                 }
@@ -145,7 +143,7 @@ namespace Mushrooms
 
                 foreach (var transition in state.Transitions)
                 {
-                    stateMatrix[row, transition.Item1] = -transition.Item2.Probability;
+                    stateMatrix[row, state.Transitions.IndexOf(transition)] = -transition.Item2.Probability;
                 }
             }
 
