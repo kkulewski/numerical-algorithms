@@ -40,5 +40,28 @@ namespace Mushrooms.IO
             _matrix = MyMatrixIoHandler.LoadDoubleMatrix(IO.Matrix, false).Item1;
             _vector = MyMatrixIoHandler.LoadDoubleVector(IO.Vector, false).Item1;
         }
+
+        public void JacobiTest(int testCount, int iterations)
+        {
+            _time = new TimeSpan();
+            var vector = Vector;
+
+            for (var i = 0; i < testCount; i++)
+            {
+                var matrix = new MyMatrix<double>(Matrix);
+                vector = Vector;
+
+                _stopwatch.Reset();
+                _stopwatch.Start();
+                matrix.Jacobi(vector, iterations);
+                _stopwatch.Stop();
+                _time += _stopwatch.Elapsed;
+            }
+
+            MyMatrixIoHandler.WriteToFileWithTimespan(IO.CsharpJacobi,
+                MyMatrixFormatter.GetFormattedVector(vector),
+                CurrentMatrixSize,
+                _time.TotalMilliseconds / testCount);
+        }
     }
 }
