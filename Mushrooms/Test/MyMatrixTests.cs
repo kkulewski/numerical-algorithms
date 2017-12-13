@@ -139,28 +139,6 @@ namespace Test
         }
 
         [Fact]
-        public void Multiplicates_Fraction_Vectors()
-        {
-            var a = new MyMatrix<Fraction>(new[,]
-            {
-                {new Fraction(1, 2), new Fraction(1, 3),}
-            });
-
-            var b = new MyMatrix<Fraction>(new[,]
-            {
-                {new Fraction(1, 4)},
-                {new Fraction(1, 2)}
-            });
-
-            var c = a * b;
-
-            // [1/2 1/3] * [1/4] = [1/8 + 1/6 =  6/48 + 8/48 = 14/48 = 7/24]
-            //           * [1/2] =
-            Assert.Equal(7, c[0, 0].Numerator);
-            Assert.Equal(24, c[0, 0].Denominator);
-        }
-
-        [Fact]
         public void Multiplicates_Int_Matrix_With_Vector()
         {
             var a = new MyMatrix<int>(new[,]
@@ -508,60 +486,6 @@ namespace Test
         }
 
         [Fact]
-        public void SolvesEquation_Using_GaussianReductionNoPivot_With_Fraction()
-        {
-            var m = GetFraction2X2Matrix();
-            var v = GetFraction2X2Vector();
-
-            // [3/2, 2/7] = [1/5]
-            // [1/4, 1/2] = [3/5]
-
-            // [3/2, 12/42] = [  1/5]
-            // [0/1, 19/42] = [17/30]
-
-            // [3/2,   0/1] = [-3/19]
-            // [0/1, 19/42] = [17/30]
-
-            // [1/1, 0/1] = [ -2/19]
-            // [0/1, 1/1] = [119/95]
-
-            m.GaussianReductionNoPivot(v);
-
-            Assert.Equal(-2, v[0].Numerator);
-            Assert.Equal(19, v[0].Denominator);
-            Assert.Equal(119, v[1].Numerator);
-            Assert.Equal(95, v[1].Denominator);
-        }
-
-        [Fact]
-        public void SolvesEquation_Using_GaussianReductionPartialPivot_With_Fraction()
-        {
-            var m = GetFraction2X2Matrix();
-            var v = GetFraction2X2Vector();
-
-            m.GaussianReductionPartialPivot(v);
-
-            Assert.Equal(-2, v[0].Numerator);
-            Assert.Equal(19, v[0].Denominator);
-            Assert.Equal(119, v[1].Numerator);
-            Assert.Equal(95, v[1].Denominator);
-        }
-
-        [Fact]
-        public void SolvesEquation_Using_GaussianReductionFullPivot_With_Fraction()
-        {
-            var m = GetFraction2X2Matrix();
-            var v = GetFraction2X2Vector();
-
-            m.GaussianReductionFullPivot(v);
-
-            Assert.Equal(-2, v[0].Numerator);
-            Assert.Equal(19, v[0].Denominator);
-            Assert.Equal(119, v[1].Numerator);
-            Assert.Equal(95, v[1].Denominator);
-        }
-
-        [Fact]
         public void SolvesEquation_InReasonableTime_Using_GaussianReductionPartialPivot_With_Double()
         {
             var rnd = new Random();
@@ -581,24 +505,6 @@ namespace Test
 
             var matrix = new MyMatrix<double>(innerMatrix);
             matrix.GaussianReductionPartialPivot(vector);
-        }
-
-        private MyMatrix<Fraction> GetFraction2X2Matrix()
-        {
-            var matrix = new[,]
-            {
-                {new Fraction(3, 2), new Fraction(2, 7)},
-                {new Fraction(1, 4), new Fraction(1,2)}
-            };
-            return new MyMatrix<Fraction>(matrix);
-        }
-
-        private Fraction[] GetFraction2X2Vector()
-        {
-            return new[]
-            {
-                new Fraction(1, 5), new Fraction(3, 5)
-            };
         }
     }
 }

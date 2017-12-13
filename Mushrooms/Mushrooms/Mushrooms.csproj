@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dice.cs" />
-    <Compile Include="Fraction.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IO\MyMatrixFormatter.cs" />
     <Compile Include="IO\MyMatrixIoHandler.cs" />

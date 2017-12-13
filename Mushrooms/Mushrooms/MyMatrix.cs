@@ -21,7 +21,7 @@ namespace Mushrooms
                 {
                     if (matrix is int[,])
                     {
-                        matrix[i, j] = (dynamic)random.Next();
+                        matrix[i, j] = (dynamic) random.Next();
                     }
                     else if (matrix is double[,])
                     {
@@ -30,10 +30,6 @@ namespace Mushrooms
                     else if (matrix is float[,])
                     {
                         matrix[i, j] = (dynamic) (float) random.NextDouble();
-                    }
-                    else if (matrix is Fraction[,])
-                    {
-                        matrix[i, j] = (dynamic) new Fraction(random.Next(), random.Next(1, int.MaxValue));
                     }
                     else
                     {
