@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameMatrix.cs" />
     <Compile Include="IO\MyMatrixFormatter.cs" />
     <Compile Include="IO\MyMatrixIoHandler.cs" />
     <Compile Include="MyMatrix.cs" />
