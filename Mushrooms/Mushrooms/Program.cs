@@ -31,7 +31,7 @@ namespace Mushrooms
 
 
             // SOLVE
-            var mv = game.GetGameMatrixAndProbabilityVector();
+            var mv = GameMatrix.GetGameMatrixAndProbabilityVector(game);
             var stateMatrix = mv.Item1;
             var probabilityVector = mv.Item2;
             var iterations = 100;
