@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Mushrooms.IO
@@ -34,6 +35,47 @@ namespace Mushrooms.IO
         {
             var formattedVector = MyMatrixFormatter.GetFormattedVector(vector);
             WriteToFile(fileName, formattedVector, vector.Length);
+        }
+
+        public static Tuple<MyMatrix<double>, double> LoadDoubleMatrix(string fileName, bool withTime)
+        {
+            var lineOffset = withTime ? 1 : 0;
+            var matrixFile = File.ReadAllLines(fileName);
+            var matrixSize = int.Parse(matrixFile[0 + lineOffset]);
+            var time = double.Parse(matrixFile[0]);
+            var innerMatrix = new double[matrixSize, matrixSize];
+
+            for (var i = 0; i < matrixSize; i++)
+            {
+                var line = matrixFile[i + lineOffset + 1];
+                var values = line.Split(' ');
+
+                for (var j = 0; j < matrixSize; j++)
+                {
+                    innerMatrix[i, j] = double.Parse(values[j]);
+                }
+            }
+
+            return new Tuple<MyMatrix<double>, double>(new MyMatrix<double>(innerMatrix), time);
+        }
+
+        public static Tuple<double[], double> LoadDoubleVector(string fileName, bool withTime)
+        {
+            var lineOffset = withTime ? 1 : 0;
+            var matrixFile = File.ReadAllLines(fileName);
+            var matrixSize = int.Parse(matrixFile[0 + lineOffset]);
+            var time = double.Parse(matrixFile[0]);
+            var vector = new double[matrixSize];
+
+            var line = matrixFile[1 + lineOffset];
+            var values = line.Split(' ');
+
+            for (var j = 0; j < matrixSize; j++)
+            {
+                vector[j] = double.Parse(values[j]);
+            }
+
+            return new Tuple<double[], double>(vector, time);
         }
     }
 }
