@@ -65,7 +65,7 @@ namespace Mushrooms
             {
                 currentState.Transitions = new Dictionary<DiceFace, GameState>();
 
-                bool gameFinished = Player1Won(currentState) || Player2Won(currentState);
+                bool gameFinished = currentState.Player1Won || currentState.Player2Won;
                 if (gameFinished)
                     continue;
 
@@ -129,13 +129,13 @@ namespace Mushrooms
                 stateMatrix[row, row] = 1;
                 var state = GameStates[row];
 
-                if (Player1Won(state))
+                if (state.Player1Won)
                 {
                     probabilityVector[row] = 1;
                     continue;
                 }
 
-                if (Player2Won(state))
+                if (state.Player2Won)
                 {
                     probabilityVector[row] = 0;
                     continue;
@@ -148,16 +148,6 @@ namespace Mushrooms
             }
             
             return new Tuple<MyMatrix<double>, double[]>(new MyMatrix<double>(stateMatrix), probabilityVector);
-        }
-
-        private static bool Player1Won(GameState state)
-        {
-            return state.Player1Position == 0;
-        }
-
-        private static bool Player2Won(GameState state)
-        {
-            return state.Player2Position == 0;
         }
     }
 }

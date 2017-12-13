@@ -54,20 +54,21 @@ namespace Mushrooms
 
 
             // MONTE CARLO
+            const int runs = 10000;
             int p1Wins = 0, p2Wins = 0;
-            for (var i = 0; i < 1000; i++)
+            for (var i = 0; i < runs; i++)
             {
                 var currentState = game.GameStates[game.InitialStateIndex];
-                while (currentState.Player1Position != 0 && currentState.Player2Position != 0)
+                while (!currentState.Player1Won && !currentState.Player2Won)
                 {
                     var toss = dice.Toss();
                     currentState = currentState.Transitions[toss];
                 }
 
-                if (currentState.Player1Position == 0)
+                if (currentState.Player1Won)
                     p1Wins++;
 
-                if (currentState.Player2Position == 0)
+                if (currentState.Player2Won)
                     p2Wins++;
 
             }

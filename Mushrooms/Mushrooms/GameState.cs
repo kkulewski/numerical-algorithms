@@ -22,5 +22,9 @@ namespace Mushrooms
             Player2Position = player2Position;
             IsPlayer1Turn = isPlayer1Turn;
         }
+
+        public bool Player1Won => Player1Position == 0;
+
+        public bool Player2Won => Player2Position == 0;
     }
 }
