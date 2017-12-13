@@ -86,5 +86,28 @@ namespace Mushrooms.IO
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
         }
+        
+        public void GaussianReductionPartialPivotTest(int testCount)
+        {
+            _time = new TimeSpan();
+            var vector = Vector;
+
+            for (var i = 0; i < testCount; i++)
+            {
+                var matrix = new MyMatrix<double>(Matrix);
+                vector = Vector;
+
+                _stopwatch.Reset();
+                _stopwatch.Start();
+                matrix.GaussianReductionPartialPivot(vector);
+                _stopwatch.Stop();
+                _time += _stopwatch.Elapsed;
+            }
+
+            MyMatrixIoHandler.WriteToFileWithTimespan(IO.CsharpGaussPartialPivot,
+                MyMatrixFormatter.GetFormattedVector(vector),
+                CurrentMatrixSize,
+                _time.TotalMilliseconds / testCount);
+        }
     }
 }
