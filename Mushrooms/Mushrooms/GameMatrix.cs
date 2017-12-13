@@ -26,17 +26,11 @@
             var size = states.Count;
             var probabilityVector = new double[size];
 
-            for (var row = 0; row < states.Count; row++)
+            for (var row = 0; row < size; row++)
             {
                 if (states[row].Player1Won)
                 {
                     probabilityVector[row] = 1;
-                    continue;
-                }
-
-                if (states[row].Player2Won)
-                {
-                    probabilityVector[row] = 0;
                 }
             }
 
