@@ -5,7 +5,7 @@ namespace Mushrooms.IO
 {
     public class MyMatrixTestAnalyzer
     {
-        public static void TimeComparison()
+        public static void TimeSummary()
         {
             var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussSeidel, true);
             var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpJacobi, true);
@@ -60,7 +60,7 @@ namespace Mushrooms.IO
             File.WriteAllText(IoConsts.SummaryTime, sb.ToString());
         }
 
-        public static void NormComparison()
+        public static void NormSummary()
         {
             var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussSeidel, true);
             var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpJacobi, true);

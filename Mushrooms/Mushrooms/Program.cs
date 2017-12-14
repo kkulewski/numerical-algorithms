@@ -64,8 +64,8 @@ namespace Mushrooms
                     break;
 
                 case "-c":
-                    MyMatrixTestAnalyzer.TimeComparison();
-                    MyMatrixTestAnalyzer.NormComparison();
+                    MyMatrixTestAnalyzer.TimeSummary();
+                    MyMatrixTestAnalyzer.NormSummary();
                     break;
 
                 default:
@@ -79,7 +79,7 @@ namespace Mushrooms
             Console.WriteLine("Invalid option!");
             Console.WriteLine("-p  CONFIG_FILE M_CARLO_ITERATIONS   -- prepare game + run Monte-Carlo");
             Console.WriteLine("-t  TEST_COUNT  ITERATIONS           -- run tests (solve game matrix)");
-            Console.WriteLine("-c                                   -- create summary");
+            Console.WriteLine("-s                                   -- create summary");
         }
     }
 }
