@@ -61,34 +61,34 @@ namespace Mushrooms.IO
             Console.WriteLine("P2-WINS: " + p2Wins);
         }
 
-        public void SolveGameMatrix(int testCount, int iterations)
+        public void SolveGame(int testCount, int iterations)
         {
             LoadMatrices();
 
-            JacobiTest(testCount, iterations);
-            GaussSeidelTest(testCount, iterations);
-            GaussianReductionPartialPivotTest(testCount);
+            SolveJacobi(testCount, iterations);
+            SolveGaussSeidel(testCount, iterations);
+            SolveGaussPartialPivot(testCount);
         }
 
-        public void WriteGameMatrix(Game game)
+        private void WriteGameMatrix(Game game)
         {
             var matrix = GameMatrix.GetStateMatrix(game);
             MyMatrixIoHandler.WriteMatrixToFile(matrix, IO.Matrix);
         }
 
-        public void WriteProbabilityVector(Game game)
+        private void WriteProbabilityVector(Game game)
         {
             var vector = GameMatrix.GetProbabilityVector(game);
             MyMatrixIoHandler.WriteVectorToFile(vector, IO.Vector);
         }
 
-        public void LoadMatrices()
+        private void LoadMatrices()
         {
             _matrix = MyMatrixIoHandler.LoadDoubleMatrix(IO.Matrix, false).Item1;
             _vector = MyMatrixIoHandler.LoadDoubleVector(IO.Vector, false).Item1;
         }
 
-        public void JacobiTest(int testCount, int iterations)
+        private void SolveJacobi(int testCount, int iterations)
         {
             _time = new TimeSpan();
             var vector = Vector;
@@ -111,7 +111,7 @@ namespace Mushrooms.IO
                 _time.TotalMilliseconds / testCount);
         }
 
-        public void GaussSeidelTest(int testCount, int iterations)
+        private void SolveGaussSeidel(int testCount, int iterations)
         {
             _time = new TimeSpan();
             var vector = Vector;
@@ -133,8 +133,8 @@ namespace Mushrooms.IO
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
         }
-        
-        public void GaussianReductionPartialPivotTest(int testCount)
+
+        private void SolveGaussPartialPivot(int testCount)
         {
             _time = new TimeSpan();
             var vector = Vector;

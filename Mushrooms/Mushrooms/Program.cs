@@ -43,7 +43,7 @@ namespace Mushrooms
                 case "-t":
                     var param1 = args.Length > 1 && args[1] != null ? int.Parse(args[1]) : 1;
                     var param2 = args.Length > 2 && args[2] != null ? int.Parse(args[2]) : 10;
-                    tr.SolveGameMatrix(param1, param2);
+                    tr.SolveGame(param1, param2);
                     break;
 
                 case "-c":
