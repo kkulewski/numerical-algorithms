@@ -59,7 +59,7 @@ namespace Mushrooms
 
             var winChance = (double) p1Wins / iterations;
             var output = string.Format("{0}", winChance);
-            File.WriteAllText(IoConsts.MonteCarlo, output);
+            File.WriteAllText(IoConsts.CsharpMonteCarlo, output);
         }
 
         public void SolveGame(int testCount, int iterations)

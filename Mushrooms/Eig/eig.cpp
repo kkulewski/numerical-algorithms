@@ -25,8 +25,8 @@ int main(int argc, char* argv[])
 
     
     // LOAD MATRICES
-    MatrixXd dA = loadMatrix("m.txt");
-    VectorXd dX = loadVector("v.txt");
+    MatrixXd dA = loadMatrix("input_matrix.txt");
+    VectorXd dX = loadVector("input_vector.txt");
     int matrixSize = dA.rows();
 
 
