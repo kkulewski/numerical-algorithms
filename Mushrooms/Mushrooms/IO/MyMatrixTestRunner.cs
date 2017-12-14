@@ -24,26 +24,12 @@ namespace Mushrooms.IO
             _time = new TimeSpan();
         }
 
-        public void CreateGame()
+        public void CreateGame(GameConfig config)
         {
-            var n = 4;
-            var boardSize = 2 * n + 1;
+            var boardSize = 2 * config.N + 1;
+            var dice = Dice.GetDice(config.DiceFaces);
 
-            var p1Pos = n;
-            var p2Pos = -n;
-
-            var dice = Dice.GetDice
-            (
-                new Dictionary<int, double>
-                {
-                    [-2] = 0.25,
-                    [-1] = 0.25,
-                    [1] = 0.25,
-                    [2] = 0.25
-                }
-            );
-
-            var game = new Game(boardSize, p1Pos, p2Pos, dice);
+            var game = new Game(boardSize, config.Player1Position, config.Player2Position, dice);
             game.GeneratePossibleStates();
             game.GeneratePossibleTransitions();
 
