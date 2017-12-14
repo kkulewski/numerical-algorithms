@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using Mushrooms.IO;
 
-namespace Mushrooms.IO
+namespace Mushrooms
 {
-    public class MyMatrixTestRunner
+    public class GameTestRunner
     {
         private readonly Stopwatch _stopwatch;
         private TimeSpan _time;
@@ -21,7 +22,7 @@ namespace Mushrooms.IO
         private Dice _dice;
 
 
-        public MyMatrixTestRunner()
+        public GameTestRunner()
         {
             _stopwatch = new Stopwatch();
             _time = new TimeSpan();
@@ -58,7 +59,7 @@ namespace Mushrooms.IO
 
             var winChance = (double) p1Wins / iterations;
             var output = string.Format("{0}", winChance);
-            File.WriteAllText(output, IoConsts.MonteCarlo);
+            File.WriteAllText(IoConsts.MonteCarlo, output);
         }
 
         public void SolveGame(int testCount, int iterations)

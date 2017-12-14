@@ -30,22 +30,37 @@ namespace Mushrooms
 
         public static void Run(string[] args)
         {
-            var tr = new MyMatrixTestRunner();
+            const int defaultMonteCarloIterations = 10000000;
+            const int defaultTestCount = 1;
+            const int defaultSolveIterations = 100;
+            var gtr = new GameTestRunner();
 
             switch (args[0])
             {
                 case "-p":
-                    var configFileName = args.Length > 1 && args[1] != null ? args[1] : IoConsts.GameConfig;
-                    var monteCarloIterations = args.Length > 2 && args[2] != null ? int.Parse(args[2]) : 1000000;
+                    var configFileName = args.Length > 1 && args[1] != null 
+                        ? args[1] 
+                        : IoConsts.GameConfig;
+
+                    var monteCarloIterations = args.Length > 2 && args[2] != null 
+                        ? int.Parse(args[2]) 
+                        : defaultMonteCarloIterations;
+
                     var config = new GameConfig(configFileName);
-                    tr.CreateGame(config);
-                    tr.RunMonteCarlo(monteCarloIterations);
+                    gtr.CreateGame(config);
+                    gtr.RunMonteCarlo(monteCarloIterations);
                     break;
 
                 case "-t":
-                    var tests = args.Length > 1 && args[1] != null ? int.Parse(args[1]) : 1;
-                    var iterations = args.Length > 2 && args[2] != null ? int.Parse(args[2]) : 100;
-                    tr.SolveGame(tests, iterations);
+                    var tests = args.Length > 1 && args[1] != null 
+                        ? int.Parse(args[1]) 
+                        : defaultTestCount;
+
+                    var iterations = args.Length > 2 && args[2] != null 
+                        ? int.Parse(args[2]) 
+                        : defaultSolveIterations;
+
+                    gtr.SolveGame(tests, iterations);
                     break;
 
                 case "-c":
