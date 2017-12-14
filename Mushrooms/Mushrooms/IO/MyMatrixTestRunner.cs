@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace Mushrooms.IO
 {
@@ -17,6 +17,9 @@ namespace Mushrooms.IO
         private double[] _vector;
         private double[] Vector => (double[]) _vector.Clone();
 
+        private Game _game;
+        private Dice _dice;
+
 
         public MyMatrixTestRunner()
         {
@@ -26,23 +29,24 @@ namespace Mushrooms.IO
 
         public void CreateGame(GameConfig config)
         {
-            var dice = Dice.GetDice(config.DiceFaces);
-            var game = new Game(config.BoardSize, config.Player1Position, config.Player2Position, dice);
-            game.GeneratePossibleStates();
-            game.GeneratePossibleTransitions();
+            _dice = Dice.GetDice(config.DiceFaces);
+            _game = new Game(config.BoardSize, config.Player1Position, config.Player2Position, _dice);
+            _game.GeneratePossibleStates();
+            _game.GeneratePossibleTransitions();
 
-            WriteGameMatrix(game);
-            WriteProbabilityVector(game);
+            WriteGameMatrix(_game);
+            WriteProbabilityVector(_game);
+        }
 
-            // MONTE CARLO
-            const int runs = 10000;
-            int p1Wins = 0, p2Wins = 0;
-            for (var i = 0; i < runs; i++)
+        public void RunMonteCarlo(int iterations)
+        {
+            var p1Wins = 0;
+            for (var i = 0; i < iterations; i++)
             {
-                var currentState = game.GameStates[game.InitialStateIndex];
+                var currentState = _game.GameStates[_game.InitialStateIndex];
                 while (!currentState.Player1Won && !currentState.Player2Won)
                 {
-                    var toss = dice.Toss();
+                    var toss = _dice.Toss();
                     currentState = currentState.Transitions[toss];
                 }
 
@@ -50,15 +54,11 @@ namespace Mushrooms.IO
                 {
                     p1Wins++;
                 }
-
-                if (currentState.Player2Won)
-                {
-                    p2Wins++;
-                }
             }
 
-            Console.WriteLine("P1-WINS: " + p1Wins);
-            Console.WriteLine("P2-WINS: " + p2Wins);
+            var winChance = (double) p1Wins / iterations;
+            var output = string.Format("{0}", winChance);
+            File.WriteAllText(output, IO.MonteCarlo);
         }
 
         public void SolveGame(int testCount, int iterations)
