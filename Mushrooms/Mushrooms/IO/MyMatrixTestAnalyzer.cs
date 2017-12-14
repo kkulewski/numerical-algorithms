@@ -7,13 +7,13 @@ namespace Mushrooms.IO
     {
         public static void TimeComparison()
         {
-            var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IO.CsharpGaussSeidel, true);
-            var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IO.CsharpJacobi, true);
-            var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IO.CsharpGaussPartialPivot, true);
-            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IO., true);
+            var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussSeidel, true);
+            var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpJacobi, true);
+            var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussPartialPivot, true);
+            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts., true);
 
-            var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IO.EigenGaussPartialPivot, true);
-            //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IO.., true);
+            var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.EigenGaussPartialPivot, true);
+            //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.., true);
 
             var timeHeader = string.Format
             (
@@ -57,18 +57,18 @@ namespace Mushrooms.IO
             sb.AppendLine(timeCshGaussPartial);
             sb.AppendLine(timeEigGaussPartial);
 
-            File.WriteAllText(IO.SummaryTime, sb.ToString());
+            File.WriteAllText(IoConsts.SummaryTime, sb.ToString());
         }
 
         public static void NormComparison()
         {
-            var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IO.CsharpGaussSeidel, true);
-            var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IO.CsharpJacobi, true);
-            var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IO.CsharpGaussPartialPivot, true);
-            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IO., true);
+            var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussSeidel, true);
+            var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpJacobi, true);
+            var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussPartialPivot, true);
+            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts., true);
 
-            var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IO.EigenGaussPartialPivot, true);
-            //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IO.., true);
+            var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.EigenGaussPartialPivot, true);
+            //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.., true);
 
             var normHeader = string.Format
             (
@@ -112,7 +112,7 @@ namespace Mushrooms.IO
             sb.AppendLine(normCshGaussPartial);
             sb.AppendLine(normEigGaussPartial);
 
-            File.WriteAllText(IO.SummaryNorm, sb.ToString());
+            File.WriteAllText(IoConsts.SummaryNorm, sb.ToString());
         }
     }
 }

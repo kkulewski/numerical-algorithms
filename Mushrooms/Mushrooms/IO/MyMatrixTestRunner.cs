@@ -58,7 +58,7 @@ namespace Mushrooms.IO
 
             var winChance = (double) p1Wins / iterations;
             var output = string.Format("{0}", winChance);
-            File.WriteAllText(output, IO.MonteCarlo);
+            File.WriteAllText(output, IoConsts.MonteCarlo);
         }
 
         public void SolveGame(int testCount, int iterations)
@@ -73,19 +73,19 @@ namespace Mushrooms.IO
         private void WriteGameMatrix(Game game)
         {
             var matrix = GameMatrix.GetStateMatrix(game);
-            MyMatrixIoHandler.WriteMatrixToFile(matrix, IO.Matrix);
+            MyMatrixIoHandler.WriteMatrixToFile(matrix, IoConsts.Matrix);
         }
 
         private void WriteProbabilityVector(Game game)
         {
             var vector = GameMatrix.GetProbabilityVector(game);
-            MyMatrixIoHandler.WriteVectorToFile(vector, IO.Vector);
+            MyMatrixIoHandler.WriteVectorToFile(vector, IoConsts.Vector);
         }
 
         private void LoadMatrices()
         {
-            _matrix = MyMatrixIoHandler.LoadDoubleMatrix(IO.Matrix, false).Item1;
-            _vector = MyMatrixIoHandler.LoadDoubleVector(IO.Vector, false).Item1;
+            _matrix = MyMatrixIoHandler.LoadDoubleMatrix(IoConsts.Matrix, false).Item1;
+            _vector = MyMatrixIoHandler.LoadDoubleVector(IoConsts.Vector, false).Item1;
         }
 
         private void SolveJacobi(int testCount, int iterations)
@@ -105,7 +105,7 @@ namespace Mushrooms.IO
                 _time += _stopwatch.Elapsed;
             }
 
-            MyMatrixIoHandler.WriteToFileWithTimespan(IO.CsharpJacobi,
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpJacobi,
                 MyMatrixFormatter.GetFormattedVector(vector),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -128,7 +128,7 @@ namespace Mushrooms.IO
                 _time += _stopwatch.Elapsed;
             }
 
-            MyMatrixIoHandler.WriteToFileWithTimespan(IO.CsharpGaussSeidel,
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussSeidel,
                 MyMatrixFormatter.GetFormattedVector(vector),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
@@ -151,7 +151,7 @@ namespace Mushrooms.IO
                 _time += _stopwatch.Elapsed;
             }
 
-            MyMatrixIoHandler.WriteToFileWithTimespan(IO.CsharpGaussPartialPivot,
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(vector),
                 CurrentMatrixSize,
                 _time.TotalMilliseconds / testCount);
