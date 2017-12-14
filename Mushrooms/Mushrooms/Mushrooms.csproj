@@ -46,8 +46,10 @@
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameMatrix.cs" />
+    <Compile Include="IO\IO.cs" />
     <Compile Include="IO\MyMatrixFormatter.cs" />
     <Compile Include="IO\MyMatrixIoHandler.cs" />
+    <Compile Include="IO\MyMatrixTestRunner.cs" />
     <Compile Include="MyMatrix.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

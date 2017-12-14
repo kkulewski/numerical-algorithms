@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Mushrooms.IO
@@ -21,6 +22,68 @@ namespace Mushrooms.IO
         {
             _stopwatch = new Stopwatch();
             _time = new TimeSpan();
+        }
+
+        public void CreateGame()
+        {
+            var n = 4;
+            var boardSize = 2 * n + 1;
+
+            var p1Pos = n;
+            var p2Pos = -n;
+
+            var dice = Dice.GetDice
+            (
+                new Dictionary<int, double>
+                {
+                    [-2] = 0.25,
+                    [-1] = 0.25,
+                    [1] = 0.25,
+                    [2] = 0.25
+                }
+            );
+
+            var game = new Game(boardSize, p1Pos, p2Pos, dice);
+            game.GeneratePossibleStates();
+            game.GeneratePossibleTransitions();
+
+            WriteGameMatrix(game);
+            WriteProbabilityVector(game);
+
+            // MONTE CARLO
+            const int runs = 10000;
+            int p1Wins = 0, p2Wins = 0;
+            for (var i = 0; i < runs; i++)
+            {
+                var currentState = game.GameStates[game.InitialStateIndex];
+                while (!currentState.Player1Won && !currentState.Player2Won)
+                {
+                    var toss = dice.Toss();
+                    currentState = currentState.Transitions[toss];
+                }
+
+                if (currentState.Player1Won)
+                {
+                    p1Wins++;
+                }
+
+                if (currentState.Player2Won)
+                {
+                    p2Wins++;
+                }
+            }
+
+            Console.WriteLine("P1-WINS: " + p1Wins);
+            Console.WriteLine("P2-WINS: " + p2Wins);
+        }
+
+        public void SolveGameMatrix(int testCount, int iterations)
+        {
+            LoadMatrices();
+
+            JacobiTest(testCount, iterations);
+            GaussSeidelTest(testCount, iterations);
+            GaussianReductionPartialPivotTest(testCount);
         }
 
         public void WriteGameMatrix(Game game)
