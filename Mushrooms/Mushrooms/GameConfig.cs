@@ -6,7 +6,9 @@ namespace Mushrooms
 {
     public class GameConfig
     {
-        public int N;
+        public int BoardBound;
+
+        public int BoardSize => BoardBound * 2 + 1;
 
         public int Player1Position;
 
@@ -22,7 +24,7 @@ namespace Mushrooms
             {
                 var lines = File.ReadAllLines(fileName);
 
-                N = int.Parse(lines[0]);
+                BoardBound = int.Parse(lines[0]);
                 var positions = lines[1].Split(' ');
                 Player1Position = int.Parse(positions[0]);
                 Player2Position = int.Parse(positions[1]);

@@ -26,10 +26,8 @@ namespace Mushrooms.IO
 
         public void CreateGame(GameConfig config)
         {
-            var boardSize = 2 * config.N + 1;
             var dice = Dice.GetDice(config.DiceFaces);
-
-            var game = new Game(boardSize, config.Player1Position, config.Player2Position, dice);
+            var game = new Game(config.BoardSize, config.Player1Position, config.Player2Position, dice);
             game.GeneratePossibleStates();
             game.GeneratePossibleTransitions();
 
