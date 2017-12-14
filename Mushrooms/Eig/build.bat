@@ -1,0 +1,1 @@
+g++ -o ../output/eig eig.cpp -std=c++11 -O3 -w
