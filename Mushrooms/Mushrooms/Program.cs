@@ -45,7 +45,8 @@ namespace Mushrooms
                     break;
 
                 case "-c":
-                    //CreateSummary();
+                    MyMatrixTestAnalyzer.TimeComparison();
+                    MyMatrixTestAnalyzer.NormComparison();
                     break;
 
                 default:
