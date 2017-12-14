@@ -35,15 +35,17 @@ namespace Mushrooms
             switch (args[0])
             {
                 case "-p":
-                    var param = args.Length > 1 && args[1] != null ? args[1] : "input.txt";
-                    var config = new GameConfig(param);
+                    var configFileName = args.Length > 1 && args[1] != null ? args[1] : IoConsts.GameConfig;
+                    var monteCarloIterations = args.Length > 2 && args[2] != null ? int.Parse(args[2]) : 1000000;
+                    var config = new GameConfig(configFileName);
                     tr.CreateGame(config);
+                    tr.RunMonteCarlo(monteCarloIterations);
                     break;
 
                 case "-t":
-                    var param1 = args.Length > 1 && args[1] != null ? int.Parse(args[1]) : 1;
-                    var param2 = args.Length > 2 && args[2] != null ? int.Parse(args[2]) : 10;
-                    tr.SolveGame(param1, param2);
+                    var tests = args.Length > 1 && args[1] != null ? int.Parse(args[1]) : 1;
+                    var iterations = args.Length > 2 && args[2] != null ? int.Parse(args[2]) : 100;
+                    tr.SolveGame(tests, iterations);
                     break;
 
                 case "-c":
@@ -60,9 +62,9 @@ namespace Mushrooms
         public static void DisplayHelp()
         {
             Console.WriteLine("Invalid option!");
-            Console.WriteLine("-p  CONFIG_FILE             -- prepare game + run Monte-Carlo");
-            Console.WriteLine("-t  TEST_COUNT  ITERATIONS  -- perform operations");
-            Console.WriteLine("-c                          -- compare output");
+            Console.WriteLine("-p  CONFIG_FILE M_CARLO_ITERATIONS   -- prepare game + run Monte-Carlo");
+            Console.WriteLine("-t  TEST_COUNT  ITERATIONS           -- run tests (solve game matrix)");
+            Console.WriteLine("-c                                   -- create summary");
         }
     }
 }
