@@ -81,6 +81,7 @@ namespace Mushrooms
             SolveJacobi(testCount, iterations);
             SolveGaussSeidel(testCount, iterations);
             SolveGaussPartialPivot(testCount);
+            SolveGaussPartialPivotSparse(testCount);
         }
 
         private void WriteGameMatrix(Game game)
@@ -190,6 +191,35 @@ namespace Mushrooms
                 time);
 
             MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivot,
+                MyMatrixFormatter.GetFormattedVector(new[] { vector[GetInitialStateIndex()] }),
+                1,
+                time);
+        }
+
+        private void SolveGaussPartialPivotSparse(int testCount)
+        {
+            _time = new TimeSpan();
+            var vector = Vector;
+
+            for (var i = 0; i < testCount; i++)
+            {
+                var matrix = new MyMatrix<double>(Matrix);
+                vector = Vector;
+
+                _stopwatch.Reset();
+                _stopwatch.Start();
+                matrix.GaussianReductionPartialPivotSparse(vector);
+                _stopwatch.Stop();
+                _time += _stopwatch.Elapsed;
+            }
+
+            var time = _time.TotalMilliseconds / testCount;
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussPartialPivotSparse,
+                MyMatrixFormatter.GetFormattedVector(vector),
+                CurrentMatrixSize,
+                time);
+
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivotSparse,
                 MyMatrixFormatter.GetFormattedVector(new[] { vector[GetInitialStateIndex()] }),
                 1,
                 time);

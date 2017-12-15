@@ -20,7 +20,7 @@
         public const string CsharpJacobi = PrefixResult + PrefixCsharp + "jacobi" + FileType;
         public const string CsharpGaussSeidel = PrefixResult + PrefixCsharp + "gauss-seidel" + FileType;
         public const string CsharpGaussPartialPivot = PrefixResult + PrefixCsharp + "gauss-partial" + FileType;
-        //public const string CsharpSparseGaussPartialPivot = PrefixResult + PrefixCsharp + "sparse-gauss-partial" + FileType;
+        public const string CsharpGaussPartialPivotSparse = PrefixResult + PrefixCsharp + "gauss-partial-sparse" + FileType;
         public const string EigenGaussPartialPivot = PrefixResult + PrefixEigen + "gauss-partial" + FileType;
         //public const string EigenSparseGaussPartialPivot = PrefixResult + PrefixEigen + "sparse-gauss-partial" + FileType;
 

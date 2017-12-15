@@ -10,7 +10,7 @@ namespace Mushrooms.IO
             var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussSeidel, true);
             var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpJacobi, true);
             var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussPartialPivot, true);
-            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts., true);
+            var cshGaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussPartialPivotSparse, true);
             var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.EigenGaussPartialPivot, true);
             //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.., true);
 
@@ -19,6 +19,7 @@ namespace Mushrooms.IO
             sb.AppendLine(GetRow("csh-gauss-seidel", cshGaussSeidel.Item2));
             sb.AppendLine(GetRow("csh-jacobi", cshJacobi.Item2));
             sb.AppendLine(GetRow("csh-gauss-partial", cshGaussPartial.Item2));
+            sb.AppendLine(GetRow("csh-gauss-partial-sparse", cshGaussPartialSparse.Item2));
             sb.AppendLine(GetRow("eig-gauss-partial", eigenGaussPartial.Item2));
         }
 
@@ -27,7 +28,7 @@ namespace Mushrooms.IO
             var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussSeidel, true);
             var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpJacobi, true);
             var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussPartialPivot, true);
-            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts., true);
+            var cshGaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.CsharpGaussPartialPivotSparse, true);
             var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.EigenGaussPartialPivot, true);
             //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.., true);
 
@@ -36,6 +37,7 @@ namespace Mushrooms.IO
             sb.AppendLine(GetRow("csh-gauss-seidel", MyMatrix<double>.VectorNorm(cshGaussSeidel.Item1, eigenGaussPartial.Item1)));
             sb.AppendLine(GetRow("csh-jacobi", MyMatrix<double>.VectorNorm(cshJacobi.Item1, eigenGaussPartial.Item1)));
             sb.AppendLine(GetRow("csh-gauss-partial", MyMatrix<double>.VectorNorm(cshGaussPartial.Item1, eigenGaussPartial.Item1)));
+            sb.AppendLine(GetRow("csh-gauss-partial-sparse", MyMatrix<double>.VectorNorm(cshGaussPartialSparse.Item1, eigenGaussPartial.Item1)));
             sb.AppendLine(GetRow("eig-gauss-partial", MyMatrix<double>.VectorNorm(eigenGaussPartial.Item1, eigenGaussPartial.Item1)));
 
             File.WriteAllText(IoConsts.SummaryNorm, sb.ToString());
@@ -46,7 +48,7 @@ namespace Mushrooms.IO
             var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussSeidel, true);
             var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpJacobi, true);
             var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivot, true);
-            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts., true);
+            var cshGaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivotSparse, true);
             var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.EigenGaussPartialPivot, true);
             //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.., true);
 
@@ -55,6 +57,7 @@ namespace Mushrooms.IO
             sb.AppendLine(GetRow("csh-gauss-seidel", cshGaussSeidel.Item2));
             sb.AppendLine(GetRow("csh-jacobi", cshJacobi.Item2));
             sb.AppendLine(GetRow("csh-gauss-partial", cshGaussPartial.Item2));
+            sb.AppendLine(GetRow("csh-gauss-partial-sparse", cshGaussPartialSparse.Item2));
             sb.AppendLine(GetRow("eig-gauss-partial", eigenGaussPartial.Item2));
 
             File.WriteAllText(IoConsts.SummaryWinChanceTime, sb.ToString());
@@ -65,7 +68,7 @@ namespace Mushrooms.IO
             var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussSeidel, true);
             var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpJacobi, true);
             var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivot, true);
-            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts., true);
+            var cshGaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivotSparse, true);
             var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.EigenGaussPartialPivot, true);
             //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.., true);
 
@@ -74,6 +77,7 @@ namespace Mushrooms.IO
             sb.AppendLine(GetRow("csh-gauss-seidel", GetRelativeError(cshGaussSeidel.Item1[0], eigenGaussPartial.Item1[0])));
             sb.AppendLine(GetRow("csh-jacobi", GetRelativeError(cshJacobi.Item1[0], eigenGaussPartial.Item1[0])));
             sb.AppendLine(GetRow("csh-gauss-partial", GetRelativeError(cshGaussPartial.Item1[0], eigenGaussPartial.Item1[0])));
+            sb.AppendLine(GetRow("csh-gauss-partial-sparse", GetRelativeError(cshGaussPartialSparse.Item1[0], eigenGaussPartial.Item1[0])));
             sb.AppendLine(GetRow("eig-gauss-partial", GetRelativeError(eigenGaussPartial.Item1[0], eigenGaussPartial.Item1[0])));
 
             File.WriteAllText(IoConsts.SummaryWinChanceError, sb.ToString());

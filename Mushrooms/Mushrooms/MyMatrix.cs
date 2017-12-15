@@ -192,6 +192,13 @@ namespace Mushrooms
             ToIdentityMatrix(vector);
         }
 
+        public void GaussianReductionPartialPivotSparse(T[] vector)
+        {
+            ReduceLeftBottomTrianglePartialPivotSparse(vector);
+            ReduceRightTopTriangleSparse(vector);
+            ToIdentityMatrix(vector);
+        }
+
         public void GaussianReductionFullPivot(T[] vector)
         {
             // initial column order
@@ -244,6 +251,27 @@ namespace Mushrooms
                 // loop on each row below selected row
                 for (var current = selected + 1; current < Rows; current++)
                 {
+                    ReduceRow(vector, selected, current);
+                }
+            }
+        }
+        public void ReduceLeftBottomTrianglePartialPivotSparse(T[] vector)
+        {
+            // select row that will be used to reduce rows below it
+            for (var selected = 0; selected < Rows - 1; selected++)
+            {
+                EnsureNoLeadingZero(selected);
+                ChoosePartialPivot(vector, selected);
+
+                // loop on each row below selected row
+                for (var current = selected + 1; current < Rows; current++)
+                {
+                    // row already reduced
+                    if ((dynamic) this[current, selected] == new T())
+                    {
+                        continue;
+                    }
+
                     ReduceRow(vector, selected, current);
                 }
             }
@@ -302,6 +330,27 @@ namespace Mushrooms
                 // loop on each row above selected row
                 for (var current = selected - 1; current >= 0; current--)
                 {
+                    ReduceRow(vector, selected, current);
+                }
+            }
+        }
+
+        public void ReduceRightTopTriangleSparse(T[] vector)
+        {
+            // select last row that will be used to reduce rows above it
+            for (var selected = Rows - 1; selected >= 1; selected--)
+            {
+                EnsureNoLeadingZero(selected);
+
+                // loop on each row above selected row
+                for (var current = selected - 1; current >= 0; current--)
+                {
+                    // row already reduced
+                    if ((dynamic)this[current, selected] == new T())
+                    {
+                        continue;
+                    }
+
                     ReduceRow(vector, selected, current);
                 }
             }
