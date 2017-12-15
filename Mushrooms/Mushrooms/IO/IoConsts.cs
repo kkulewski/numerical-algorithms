@@ -22,7 +22,7 @@
         public const string CsharpGaussPartialPivot = PrefixResult + PrefixCsharp + "gauss-partial" + FileType;
         public const string CsharpGaussPartialPivotSparse = PrefixResult + PrefixCsharp + "gauss-partial-sparse" + FileType;
         public const string EigenGaussPartialPivot = PrefixResult + PrefixEigen + "gauss-partial" + FileType;
-        //public const string EigenSparseGaussPartialPivot = PrefixResult + PrefixEigen + "sparse-gauss-partial" + FileType;
+        public const string EigenGaussPartialPivotSparse = PrefixResult + PrefixEigen + "gauss-partial-sparse" + FileType;
 
         public const string SummaryTime = "summary_time" + SummaryType;
         public const string SummaryNorm = "summary_norm" + SummaryType;
