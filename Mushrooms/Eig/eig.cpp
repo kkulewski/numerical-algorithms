@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include "Eigen/Dense"
+#include "Eigen/Sparse"
+#include "Eigen/SparseLU"
 
 #define INPUT_MATRIX "input_matrix.txt"
 #define INPUT_VECTOR "input_vector.txt"
@@ -62,6 +64,18 @@ int main(int argc, char* argv[])
 
 
     // SPARSE LU
+
+    SparseMatrix<double, ColMajor> sdA = dA.sparseView;
+    SparseVector<double, ColMajor> sdX = dX.sparseView;
+
+    //SparseLU<SparseMatrix<double, ColMajor>, COLAMDOrdering<Index> >   solver;
+    // fill A and b;
+    // Compute the ordering permutation vector from the structural pattern of A
+    //solver.analyzePattern(sdA); 
+    // Compute the numerical factorization 
+    //solver.factorize(sdA); 
+    //Use the factors to solve the linear system 
+    //auto x = solver.solve(sdX); 
 }
 
 MatrixXd loadMatrix(const char* fileName)
