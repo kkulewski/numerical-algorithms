@@ -37,6 +37,7 @@ namespace Mushrooms
 
             WriteGameMatrix(_game);
             WriteProbabilityVector(_game);
+            WriteInitialStateIndex(_game);
         }
 
         public void RunMonteCarlo(int iterations)
@@ -83,6 +84,12 @@ namespace Mushrooms
             MyMatrixIoHandler.WriteVectorToFile(vector, IoConsts.Vector);
         }
 
+        private void WriteInitialStateIndex(Game game)
+        {
+            var index = game.InitialStateIndex;
+            File.WriteAllText(IoConsts.InitialStateIndex, index.ToString());
+        }
+
         private void LoadMatrices()
         {
             _matrix = MyMatrixIoHandler.LoadDoubleMatrix(IoConsts.Matrix, false).Item1;
@@ -106,10 +113,17 @@ namespace Mushrooms
                 _time += _stopwatch.Elapsed;
             }
 
+            var time = _time.TotalMilliseconds / testCount;
             MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpJacobi,
                 MyMatrixFormatter.GetFormattedVector(vector),
                 CurrentMatrixSize,
-                _time.TotalMilliseconds / testCount);
+                time
+                );
+
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpJacobi,
+                MyMatrixFormatter.GetFormattedVector(new[]{vector[GetInitialStateIndex()] }),
+                1,
+                time);
         }
 
         private void SolveGaussSeidel(int testCount, int iterations)
@@ -129,10 +143,16 @@ namespace Mushrooms
                 _time += _stopwatch.Elapsed;
             }
 
+            var time = _time.TotalMilliseconds / testCount;
             MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussSeidel,
                 MyMatrixFormatter.GetFormattedVector(vector),
                 CurrentMatrixSize,
-                _time.TotalMilliseconds / testCount);
+                time);
+
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpGaussSeidel,
+                MyMatrixFormatter.GetFormattedVector(new[] { vector[GetInitialStateIndex()] }),
+                1,
+                time);
         }
 
         private void SolveGaussPartialPivot(int testCount)
@@ -152,10 +172,22 @@ namespace Mushrooms
                 _time += _stopwatch.Elapsed;
             }
 
+            var time = _time.TotalMilliseconds / testCount;
             MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(vector),
                 CurrentMatrixSize,
-                _time.TotalMilliseconds / testCount);
+                time);
+
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivot,
+                MyMatrixFormatter.GetFormattedVector(new[] { vector[GetInitialStateIndex()] }),
+                1,
+                time);
+        }
+
+        private int GetInitialStateIndex()
+        {
+            var index = File.ReadAllText(IoConsts.InitialStateIndex);
+            return int.Parse(index);
         }
     }
 }
