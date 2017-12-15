@@ -114,5 +114,115 @@ namespace Mushrooms.IO
 
             File.WriteAllText(IoConsts.SummaryNorm, sb.ToString());
         }
+
+        public static void WinChanceTimeSummary()
+        {
+            var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussSeidel, true);
+            var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpJacobi, true);
+            var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivot, true);
+            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts., true);
+
+            var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.EigenGaussPartialPivot, true);
+            //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.., true);
+
+            var timeHeader = string.Format
+            (
+                "{0};{1}",
+                "op",
+                "time"
+            );
+
+            var timeCshGaussSeidel = string.Format
+            (
+                "{0};{1}",
+                "csh-gauss-seidel",
+                cshGaussSeidel.Item2
+            );
+
+            var timeCshJacobi = string.Format
+            (
+                "{0};{1}",
+                "csh-jacobi",
+                cshJacobi.Item2
+            );
+
+            var timeCshGaussPartial = string.Format
+            (
+                "{0};{1}",
+                "csh-gauss-partial",
+                cshGaussPartial.Item2
+            );
+
+            var timeEigGaussPartial = string.Format
+            (
+                "{0};{1}",
+                "eig-gauss-partial",
+                eigenGaussPartial.Item2
+            );
+
+            var sb = new StringBuilder();
+            sb.AppendLine(timeHeader);
+            sb.AppendLine(timeCshGaussSeidel);
+            sb.AppendLine(timeCshJacobi);
+            sb.AppendLine(timeCshGaussPartial);
+            sb.AppendLine(timeEigGaussPartial);
+
+            File.WriteAllText(IoConsts.SummaryTime, sb.ToString());
+        }
+
+        public static void WinChanceErrorSummary()
+        {
+            var cshGaussSeidel = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussSeidel, true);
+            var cshJacobi = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpJacobi, true);
+            var cshGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivot, true);
+            //var gaussPartialSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts., true);
+
+            var eigenGaussPartial = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.EigenGaussPartialPivot, true);
+            //var eigenSparse = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixWinChance + IoConsts.., true);
+
+            var errorHeader = string.Format
+            (
+                "{0};{1}",
+                "op",
+                "relative_error"
+            );
+
+            var errorCshGaussSeidel = string.Format
+            (
+                "{0};{1}",
+                "csh-gauss-seidel",
+                (cshGaussSeidel.Item1[0] - eigenGaussPartial.Item1[0]) / eigenGaussPartial.Item1[0]
+            );
+
+            var errorCshJacobi = string.Format
+            (
+                "{0};{1}",
+                "csh-jacobi",
+                (cshJacobi.Item1[0] - eigenGaussPartial.Item1[0]) / eigenGaussPartial.Item1[0]
+            );
+
+            var errorCshGaussPartial = string.Format
+            (
+                "{0};{1}",
+                "csh-gauss-partial",
+                (cshGaussPartial.Item1[0] - eigenGaussPartial.Item1[0]) / eigenGaussPartial.Item1[0]
+            );
+
+            var errorEigGaussPartial = string.Format
+            (
+                "{0};{1}",
+                "eig-gauss-partial",
+                (eigenGaussPartial.Item1[0] - eigenGaussPartial.Item1[0]) / eigenGaussPartial.Item1[0]
+            );
+
+            var sb = new StringBuilder();
+            sb.AppendLine(errorHeader);
+            sb.AppendLine(errorCshGaussSeidel);
+            sb.AppendLine(errorCshJacobi);
+            sb.AppendLine(errorCshGaussPartial);
+            sb.AppendLine(errorEigGaussPartial);
+
+            File.WriteAllText(IoConsts.SummaryWinChanceError, sb.ToString());
+        }
     }
 }

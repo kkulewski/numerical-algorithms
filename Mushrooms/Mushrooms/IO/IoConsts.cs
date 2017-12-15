@@ -26,5 +26,7 @@
 
         public const string SummaryTime = "summary_time" + SummaryType;
         public const string SummaryNorm = "summary_norm" + SummaryType;
+        public const string SummaryWinChanceTime = "summary_winchance_time" + SummaryType;
+        public const string SummaryWinChanceError = "summary_winchance_error" + SummaryType;
     }
 }

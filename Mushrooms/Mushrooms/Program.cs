@@ -30,7 +30,7 @@ namespace Mushrooms
 
         public static void Run(string[] args)
         {
-            const int defaultMonteCarloIterations = 10000000;
+            const int defaultMonteCarloIterations = 1000000;
             const int defaultTestCount = 1;
             const int defaultSolveIterations = 100;
             var gtr = new GameTestRunner();
@@ -64,6 +64,8 @@ namespace Mushrooms
                     break;
 
                 case "-c":
+                    MyMatrixTestAnalyzer.WinChanceTimeSummary();
+                    MyMatrixTestAnalyzer.WinChanceErrorSummary();
                     MyMatrixTestAnalyzer.TimeSummary();
                     MyMatrixTestAnalyzer.NormSummary();
                     break;
