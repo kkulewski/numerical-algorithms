@@ -43,8 +43,13 @@ namespace Mushrooms
         public void RunMonteCarlo(int iterations)
         {
             var p1Wins = 0;
+            
+            _time = new TimeSpan();
             for (var i = 0; i < iterations; i++)
             {
+                _stopwatch.Reset();
+                _stopwatch.Start();
+
                 var currentState = _game.GameStates[_game.InitialStateIndex];
                 while (!currentState.Player1Won && !currentState.Player2Won)
                 {
@@ -56,11 +61,17 @@ namespace Mushrooms
                 {
                     p1Wins++;
                 }
+                
+                _stopwatch.Stop();
+                _time += _stopwatch.Elapsed;
             }
 
             var winChance = (double) p1Wins / iterations;
-            var output = string.Format("{0}", winChance);
-            File.WriteAllText(IoConsts.CsharpMonteCarlo, output);
+            var time = _time.TotalMilliseconds;
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpMonteCarlo,
+                MyMatrixFormatter.GetFormattedVector(new[] { winChance }),
+                1,
+                time);
         }
 
         public void SolveGame(int testCount, int iterations)
