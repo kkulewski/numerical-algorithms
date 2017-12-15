@@ -4,12 +4,19 @@
 #include <iostream>
 #include "Eigen/Dense"
 
+#define INPUT_MATRIX "input_matrix.txt"
+#define INPUT_VECTOR "input_vector.txt"
+#define INPUT_INITIAL_STATE "input_initial-state.txt"
+#define RESULT_GAUSS_PARTIAL "result_eigen_gauss-partial.txt"
+#define WINCHANCE_GAUSS_PARTIAL "winchance_result_eigen_gauss-partial.txt"
+
 using namespace Eigen;
 using namespace std;
 using namespace chrono;
 
 MatrixXd loadMatrix(const char* fileName);
 VectorXd loadVector(const char* fileName);
+int loadInitialStateIndex(const char* fileName);
 void saveMatrix(char* fileName, int size, long long durationNs, string result);
 
 
@@ -25,8 +32,8 @@ int main(int argc, char* argv[])
 
     
     // LOAD MATRICES
-    MatrixXd dA = loadMatrix("input_matrix.txt");
-    VectorXd dX = loadVector("input_vector.txt");
+    MatrixXd dA = loadMatrix(INPUT_MATRIX);
+    VectorXd dX = loadVector(INPUT_VECTOR);
     int matrixSize = dA.rows();
 
 
@@ -44,7 +51,14 @@ int main(int argc, char* argv[])
     
     stringstream dPartialResult;
     dPartialResult << dPartial.format(VResultFormat);
-    saveMatrix("eigen_gauss-partial.txt", matrixSize, dPartialNs / testCount, dPartialResult.str());
+    saveMatrix(RESULT_GAUSS_PARTIAL, matrixSize, dPartialNs / testCount, dPartialResult.str());
+
+    // PARTIAL PIVOT - WIN CHANCE
+    VectorXd dPartialWinChance(1);
+    dPartialWinChance(0) = dPartial(loadInitialStateIndex(INPUT_INITIAL_STATE)); 
+    stringstream dPartialWinChanceResult;
+    dPartialWinChanceResult << dPartialWinChance.format(VResultFormat);
+    saveMatrix(WINCHANCE_GAUSS_PARTIAL, 1, dPartialNs / testCount, dPartialWinChanceResult.str());
 
 
     // SPARSE LU
@@ -93,4 +107,13 @@ void saveMatrix(char* fileName, int size, long long durationNs, string result)
     file << size;
     file << "\n";
     file << result;
+}
+
+int loadInitialStateIndex(const char* fileName)
+{
+    ifstream file(fileName);
+    int index;
+    file >> index;
+
+    return index;
 }
