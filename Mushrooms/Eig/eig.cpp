@@ -11,6 +11,8 @@
 #define INPUT_INITIAL_STATE "input_initial-state.txt"
 #define RESULT_GAUSS_PARTIAL "result_eigen_gauss-partial.txt"
 #define WINCHANCE_GAUSS_PARTIAL "winchance_result_eigen_gauss-partial.txt"
+#define RESULT_SPARSE "result_eigen_gauss-partial-sparse.txt"
+#define WINCHANCE_SPARSE "winchance_result_eigen_gauss-partial-sparse.txt"
 
 using namespace Eigen;
 using namespace std;
@@ -64,18 +66,35 @@ int main(int argc, char* argv[])
 
 
     // SPARSE LU
+    SparseMatrix<double> sdA = dA.sparseView();
+    SparseVector<double> sdX = dX.sparseView();
 
-    SparseMatrix<double, ColMajor> sdA = dA.sparseView;
-    SparseVector<double, ColMajor> sdX = dX.sparseView;
+    SparseLU<Eigen::SparseMatrix<double>> solver;
+    sdA.makeCompressed();
+    solver.analyzePattern(sdA);
+    solver.factorize(sdA);
 
-    //SparseLU<SparseMatrix<double, ColMajor>, COLAMDOrdering<Index> >   solver;
-    // fill A and b;
-    // Compute the ordering permutation vector from the structural pattern of A
-    //solver.analyzePattern(sdA); 
-    // Compute the numerical factorization 
-    //solver.factorize(sdA); 
-    //Use the factors to solve the linear system 
-    //auto x = solver.solve(sdX); 
+    VectorXd dSparse;
+
+    long long dSparseNs = 0;
+    for (int i = 0; i < testCount; i++)
+    {
+        start = high_resolution_clock::now();  
+        dSparse = solver.solve(sdX);
+        end = high_resolution_clock::now();
+        dSparseNs += duration_cast<nanoseconds>(end - start).count();
+    }
+
+    stringstream dSparseResult;
+    dSparseResult << dSparse.format(VResultFormat);
+    saveMatrix(RESULT_SPARSE, matrixSize, dSparseNs / testCount, dSparseResult.str());
+
+    // SPARSE - WIN CHANCE
+    VectorXd dSparseWinChance(1);
+    dSparseWinChance(0) = dSparse(loadInitialStateIndex(INPUT_INITIAL_STATE)); 
+    stringstream dSparseWinChanceResult;
+    dSparseWinChanceResult << dSparseWinChance.format(VResultFormat);
+    saveMatrix(WINCHANCE_SPARSE, 1, dSparseNs / testCount, dSparseWinChanceResult.str());
 }
 
 MatrixXd loadMatrix(const char* fileName)
