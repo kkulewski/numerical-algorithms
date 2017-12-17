@@ -72,7 +72,7 @@ namespace Mushrooms
                     gtr.SolveGameIterative(tests, iterations);
                     break;
 
-                case "-c":
+                case "-s":
                     MyMatrixTestAnalyzer.WinChanceTimeSummary();
                     MyMatrixTestAnalyzer.WinChanceErrorSummary();
                     MyMatrixTestAnalyzer.TimeSummary();
