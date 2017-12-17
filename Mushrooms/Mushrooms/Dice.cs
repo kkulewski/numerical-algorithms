@@ -65,10 +65,10 @@ namespace Mushrooms
 
         private static bool DiceIsValid(IDictionary<int, DiceFace> diceFaces)
         {
-            const double tolerance = 0.001;
+            const double tolerance = 0.00000000000001;
 
             var sum = diceFaces.Sum(f => f.Value.Probability);
-            return Math.Abs(sum - 1.0) < tolerance;
+            return Math.Abs(1.0 - sum) < tolerance;
         }
     }
     
