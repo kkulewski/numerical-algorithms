@@ -74,12 +74,16 @@ namespace Mushrooms
                 time);
         }
 
-        public void SolveGame(int testCount, int iterations)
+        public void SolveGameIterative(int testCount, int iterations)
         {
             LoadMatrices();
-
             SolveJacobi(testCount, iterations);
             SolveGaussSeidel(testCount, iterations);
+        }
+
+        public void SolveGameGauss(int testCount)
+        {
+            LoadMatrices();
             SolveGaussPartialPivot(testCount);
             SolveGaussPartialPivotSparse(testCount);
         }

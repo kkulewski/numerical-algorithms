@@ -34,33 +34,42 @@ namespace Mushrooms
             const int defaultTestCount = 1;
             const int defaultSolveIterations = 100;
             var gtr = new GameTestRunner();
+            int tests;
 
             switch (args[0])
             {
                 case "-p":
-                    var configFileName = args.Length > 1 && args[1] != null 
-                        ? args[1] 
-                        : IoConsts.GameConfig;
-
-                    var monteCarloIterations = args.Length > 2 && args[2] != null 
-                        ? int.Parse(args[2]) 
+                    var monteCarloIterations = args.Length > 1 && args[1] != null
+                        ? int.Parse(args[1])
                         : defaultMonteCarloIterations;
+
+                    var configFileName = args.Length > 2 && args[2] != null 
+                        ? args[2] 
+                        : IoConsts.GameConfig;
 
                     var config = new GameConfig(configFileName);
                     gtr.CreateGame(config);
                     gtr.RunMonteCarlo(monteCarloIterations);
                     break;
 
-                case "-t":
-                    var tests = args.Length > 1 && args[1] != null 
+                case "-g":
+                    tests = args.Length > 1 && args[1] != null 
                         ? int.Parse(args[1]) 
                         : defaultTestCount;
 
-                    var iterations = args.Length > 2 && args[2] != null 
-                        ? int.Parse(args[2]) 
+                    gtr.SolveGameGauss(tests);
+                    break;
+
+                case "-i":
+                    tests = args.Length > 1 && args[1] != null
+                        ? int.Parse(args[1])
+                        : defaultTestCount;
+
+                    var iterations = args.Length > 2 && args[2] != null
+                        ? int.Parse(args[2])
                         : defaultSolveIterations;
 
-                    gtr.SolveGame(tests, iterations);
+                    gtr.SolveGameIterative(tests, iterations);
                     break;
 
                 case "-c":
@@ -79,8 +88,9 @@ namespace Mushrooms
         public static void DisplayHelp()
         {
             Console.WriteLine("Invalid option!");
-            Console.WriteLine("-p  CONFIG_FILE M_CARLO_ITERATIONS   -- prepare game + run Monte-Carlo");
-            Console.WriteLine("-t  TEST_COUNT  ITERATIONS           -- run tests (solve game matrix)");
+            Console.WriteLine("-p  M_CARLO_ITERATIONS  CONFIG_FILE  -- prepare game + run Monte-Carlo");
+            Console.WriteLine("-g  TEST_COUNT                       -- solve game matrix (gauss)");
+            Console.WriteLine("-i  TEST_COUNT  ITERATIONS           -- solve game matrix (iterative)");
             Console.WriteLine("-s                                   -- create summary");
         }
     }
