@@ -36,12 +36,12 @@ namespace Mushrooms.IO
 
             var sb = new StringBuilder();
             sb.AppendLine(GetRow("op", "norm"));
-            sb.AppendLine(GetRow("csh-gauss-seidel", MyMatrix<double>.VectorNorm(cshGaussSeidel.Item1, eigenGaussPartial.Item1)));
-            sb.AppendLine(GetRow("csh-jacobi", MyMatrix<double>.VectorNorm(cshJacobi.Item1, eigenGaussPartial.Item1)));
-            sb.AppendLine(GetRow("csh-gauss-partial", MyMatrix<double>.VectorNorm(cshGaussPartial.Item1, eigenGaussPartial.Item1)));
-            sb.AppendLine(GetRow("csh-gauss-partial-sparse", MyMatrix<double>.VectorNorm(cshGaussPartialSparse.Item1, eigenGaussPartial.Item1)));
-            sb.AppendLine(GetRow("eig-gauss-partial", MyMatrix<double>.VectorNorm(eigenGaussPartial.Item1, eigenGaussPartial.Item1)));
-            sb.AppendLine(GetRow("eig-gauss-partial-sparse", MyMatrix<double>.VectorNorm(eigenGaussPartialSparse.Item1, eigenGaussPartial.Item1)));
+            sb.AppendLine(GetRow("csh-gauss-seidel", MyMatrix<double>.VectorNorm(cshGaussSeidel.Item1, eigenGaussPartialSparse.Item1)));
+            sb.AppendLine(GetRow("csh-jacobi", MyMatrix<double>.VectorNorm(cshJacobi.Item1, eigenGaussPartialSparse.Item1)));
+            sb.AppendLine(GetRow("csh-gauss-partial", MyMatrix<double>.VectorNorm(cshGaussPartial.Item1, eigenGaussPartialSparse.Item1)));
+            sb.AppendLine(GetRow("csh-gauss-partial-sparse", MyMatrix<double>.VectorNorm(cshGaussPartialSparse.Item1, eigenGaussPartialSparse.Item1)));
+            sb.AppendLine(GetRow("eig-gauss-partial", MyMatrix<double>.VectorNorm(eigenGaussPartial.Item1, eigenGaussPartialSparse.Item1)));
+            sb.AppendLine(GetRow("eig-gauss-partial-sparse", MyMatrix<double>.VectorNorm(eigenGaussPartialSparse.Item1, eigenGaussPartialSparse.Item1)));
 
             File.WriteAllText(IoConsts.SummaryNorm, sb.ToString());
         }
@@ -78,12 +78,11 @@ namespace Mushrooms.IO
 
             var sb = new StringBuilder();
             sb.AppendLine(GetRow("op", "relative_error"));
-            sb.AppendLine(GetRow("csh-gauss-seidel", GetRelativeError(cshGaussSeidel.Item1[0], eigenGaussPartial.Item1[0])));
-            sb.AppendLine(GetRow("csh-jacobi", GetRelativeError(cshJacobi.Item1[0], eigenGaussPartial.Item1[0])));
-            sb.AppendLine(GetRow("csh-gauss-partial", GetRelativeError(cshGaussPartial.Item1[0], eigenGaussPartial.Item1[0])));
-            sb.AppendLine(GetRow("csh-gauss-partial-sparse", GetRelativeError(cshGaussPartialSparse.Item1[0], eigenGaussPartial.Item1[0])));
-            sb.AppendLine(GetRow("eig-gauss-partial", GetRelativeError(eigenGaussPartial.Item1[0], eigenGaussPartial.Item1[0])));
-            sb.AppendLine(GetRow("eig-gauss-partial-sparse", GetRelativeError(eigenGaussPartialSparse.Item1[0], eigenGaussPartial.Item1[0])));
+            sb.AppendLine(GetRow("csh-gauss-seidel", GetRelativeError(cshGaussSeidel.Item1[0], eigenGaussPartialSparse.Item1[0])));
+            sb.AppendLine(GetRow("csh-jacobi", GetRelativeError(cshJacobi.Item1[0], eigenGaussPartialSparse.Item1[0])));
+            sb.AppendLine(GetRow("csh-gauss-partial", GetRelativeError(cshGaussPartial.Item1[0], eigenGaussPartialSparse.Item1[0])));
+            sb.AppendLine(GetRow("csh-gauss-partial-sparse", GetRelativeError(cshGaussPartialSparse.Item1[0], eigenGaussPartialSparse.Item1[0])));
+            sb.AppendLine(GetRow("eig-gauss-partial", GetRelativeError(eigenGaussPartial.Item1[0], eigenGaussPartialSparse.Item1[0])));
 
             File.WriteAllText(IoConsts.SummaryWinChanceError, sb.ToString());
         }
