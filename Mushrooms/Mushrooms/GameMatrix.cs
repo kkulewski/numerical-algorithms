@@ -13,7 +13,7 @@
                 stateMatrix[row, row] = 1;
                 foreach (var transition in states[row].Transitions)
                 {
-                    stateMatrix[row, transition.Value.GameStateId] = -transition.Key.Probability;
+                    stateMatrix[row, transition.Value.GameStateId] += -transition.Key.Probability;
                 }
             }
 
