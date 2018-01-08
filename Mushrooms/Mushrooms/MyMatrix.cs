@@ -366,12 +366,6 @@ namespace Mushrooms
 
         private void ReduceRow(T[] vector, int selected, int current)
         {
-            // if current row is already reduced (leading 0) => return
-            if (this[current, selected] == (dynamic) new T())
-            {
-                return;
-            }
-
             // get scalar for current row
             var scalar = this[current, selected] / (dynamic) this[selected, selected];
 
