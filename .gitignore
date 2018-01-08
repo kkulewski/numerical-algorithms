@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Eigen
+**/Eigen/*
+
+# VS Code
+**/.vscode/*
+
 # User-specific files
 *.suo
 *.user
