@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Threading;
 using Mushrooms.IO;
+using Mushrooms.Helpers;
 
 namespace Mushrooms
 {
@@ -76,6 +77,18 @@ namespace Mushrooms
                     MyMatrixTestAnalyzer.WinChanceErrorSummary();
                     MyMatrixTestAnalyzer.TimeSummary();
                     MyMatrixTestAnalyzer.NormSummary();
+                    break;
+
+                case "-a":
+                    var gameConfig = new GameConfig(IoConsts.GameConfig);
+                    gtr.CreateGame(gameConfig);
+
+                    gtr.SolveGameGauss(1);
+                    gtr.SolveGameIterative(1, 100);
+                    break;
+
+                case "-c":
+                    Summarizer.SummarizeTime();
                     break;
 
                 default:
