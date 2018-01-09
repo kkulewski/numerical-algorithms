@@ -31,11 +31,18 @@ namespace Mushrooms
         public void CreateGame(GameConfig config)
         {
             _dice = Dice.GetDice(config.DiceFaces);
+
+            _stopwatch.Reset();
+            _stopwatch.Start();
+
             _game = new Game(config.BoardSize, config.Player1Position, config.Player2Position, _dice);
             _game.GeneratePossibleStates();
             _game.GeneratePossibleTransitions();
 
-            WriteGameMatrix(_game);
+            _stopwatch.Stop();
+            var time = _stopwatch.Elapsed;
+
+            WriteGameMatrix(_game, time.TotalMilliseconds);
             WriteProbabilityVector(_game);
             WriteInitialStateIndex(_game);
         }
@@ -88,10 +95,11 @@ namespace Mushrooms
             SolveGaussPartialPivotSparse(testCount);
         }
 
-        private void WriteGameMatrix(Game game)
+        private void WriteGameMatrix(Game game, double totalMiliseconds)
         {
             var matrix = GameMatrix.GetStateMatrix(game);
             MyMatrixIoHandler.WriteMatrixToFile(matrix, IoConsts.Matrix);
+            MyMatrixIoHandler.WriteTimespanToFile(totalMiliseconds, IoConsts.MatrixGenerationTime);
         }
 
         private void WriteProbabilityVector(Game game)

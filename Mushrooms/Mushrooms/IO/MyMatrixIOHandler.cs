@@ -37,6 +37,11 @@ namespace Mushrooms.IO
             WriteToFile(fileName, formattedVector, vector.Length);
         }
 
+        public static void WriteTimespanToFile(double totalMiliseconds, string fileName)
+        {
+            WriteToFile(fileName, totalMiliseconds.ToString(), 0);
+        }
+
         public static Tuple<MyMatrix<double>, double> LoadDoubleMatrix(string fileName, bool withTime)
         {
             var lineOffset = withTime ? 1 : 0;

@@ -14,6 +14,7 @@
         public const string GameConfig = PrefixInput + "config" + FileType;
         public const string Matrix = PrefixInput + "matrix" + FileType;
         public const string Vector = PrefixInput + "vector" + FileType;
+        public const string MatrixGenerationTime = PrefixInput + "time_matrix" + FileType;
         public const string InitialStateIndex = PrefixInput + "initial-state" + FileType;
 
         public const string CsharpMonteCarlo = PrefixResult + PrefixCsharp + "monte-carlo" + FileType;
