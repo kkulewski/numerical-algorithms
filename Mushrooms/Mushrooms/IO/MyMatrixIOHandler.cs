@@ -39,7 +39,7 @@ namespace Mushrooms.IO
 
         public static void WriteTimespanToFile(double totalMiliseconds, string fileName)
         {
-            WriteToFile(fileName, totalMiliseconds.ToString(), 0);
+            WriteToFileWithTimespan(fileName, string.Empty, 0, totalMiliseconds);
         }
 
         public static Tuple<MyMatrix<double>, double> LoadDoubleMatrix(string fileName, bool withTime)
