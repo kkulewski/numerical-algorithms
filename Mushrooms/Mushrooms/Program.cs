@@ -49,7 +49,6 @@ namespace Mushrooms
 
                     var config = new GameConfig(configFileName);
                     gtr.CreateGame(config);
-                    gtr.RunMonteCarlo(monteCarloIterations);
                     break;
 
                 case "-g":
