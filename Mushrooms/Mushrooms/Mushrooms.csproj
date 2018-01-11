@@ -47,6 +47,8 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameMatrix.cs" />
     <Compile Include="GameConfig.cs" />
+    <Compile Include="Helpers\ApproximationFunction.cs" />
+    <Compile Include="Helpers\Approximator.cs" />
     <Compile Include="Helpers\Summarizer.cs" />
     <Compile Include="IO\IoConsts.cs" />
     <Compile Include="IO\MyMatrixFormatter.cs" />
