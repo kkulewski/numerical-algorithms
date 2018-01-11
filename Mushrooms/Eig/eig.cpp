@@ -9,10 +9,8 @@
 #define INPUT_MATRIX "input_matrix.txt"
 #define INPUT_VECTOR "input_vector.txt"
 #define INPUT_INITIAL_STATE "input_initial-state.txt"
-#define RESULT_GAUSS_PARTIAL "result_eigen_gauss-partial.txt"
-#define WINCHANCE_GAUSS_PARTIAL "winchance_result_eigen_gauss-partial.txt"
-#define RESULT_SPARSE "result_eigen_gauss-partial-sparse.txt"
-#define WINCHANCE_SPARSE "winchance_result_eigen_gauss-partial-sparse.txt"
+#define WINCHANCE_GAUSS_PARTIAL "result_eigen_gauss-partial.txt"
+#define WINCHANCE_SPARSE "result_eigen_gauss-partial-sparse.txt"
 
 using namespace Eigen;
 using namespace std;

@@ -108,7 +108,7 @@ namespace Mushrooms
             }
 
             var time = _time.TotalMilliseconds / testCount;
-            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpGaussSeidel,
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussSeidel,
                 MyMatrixFormatter.GetFormattedVector(new[] { vector[GetInitialStateIndex()] }),
                 1,
                 time);
@@ -132,7 +132,7 @@ namespace Mushrooms
             }
 
             var time = _time.TotalMilliseconds / testCount;
-            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpGaussSeidel,
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussSeidel,
                 MyMatrixFormatter.GetFormattedVector(new[] { vector[GetInitialStateIndex()] }),
                 1,
                 time);
@@ -156,7 +156,7 @@ namespace Mushrooms
             }
 
             var time = _time.TotalMilliseconds / testCount;
-            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivot,
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussPartialPivot,
                 MyMatrixFormatter.GetFormattedVector(new[] { vector[GetInitialStateIndex()] }),
                 1,
                 time);
@@ -180,7 +180,7 @@ namespace Mushrooms
             }
 
             var time = _time.TotalMilliseconds / testCount;
-            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpGaussPartialPivotSparse,
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussPartialPivotSparse,
                 MyMatrixFormatter.GetFormattedVector(new[] { vector[GetInitialStateIndex()] }),
                 1,
                 time);
