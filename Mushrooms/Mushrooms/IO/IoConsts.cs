@@ -9,6 +9,7 @@
         public const string PrefixResult = "result_";
         public const string PrefixCsharp = "csh_";
         public const string PrefixEigen = "eigen_";
+        public const string PrefixTime = "time_";
 
         public const string GameConfig = PrefixInput + "config" + FileType;
         public const string Matrix = PrefixInput + "matrix" + FileType;

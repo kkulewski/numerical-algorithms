@@ -25,5 +25,29 @@ namespace Mushrooms.Helpers
             var output = $"{size};{generationTime};{gaussPartialTime};{gaussPartialSparseTime};{gaussSeidelTime};{eigenSparseTime}";
             File.AppendAllText(IoConsts.SummaryMethodsTime, output + Environment.NewLine);
         }
+
+        public static void WriteTimePerMethod()
+        {
+            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(0), IoConsts.PrefixTime + "size" + IoConsts.FileType);
+            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(1), IoConsts.PrefixTime + "generation" + IoConsts.FileType);
+            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(2), IoConsts.PrefixTime + IoConsts.CsharpGaussPartialPivot);
+            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(3), IoConsts.PrefixTime + IoConsts.CsharpGaussPartialPivotSparse);
+            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(4), IoConsts.PrefixTime + IoConsts.CsharpGaussSeidel);
+            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(5), IoConsts.PrefixTime + IoConsts.EigenGaussPartialPivotSparse);
+        }
+
+        public static double[] LoadVectorFromSummary(int column)
+        {
+            var lines = File.ReadAllLines(IoConsts.SummaryMethodsTime);
+            var linesCount = lines.Length;
+
+            var boardSizes = new double[linesCount - 1];
+            for (var i = 1; i < linesCount; i++)
+            {
+                boardSizes[i - 1] = double.Parse(lines[i].Split(';')[column]);
+            }
+
+            return boardSizes;
+        }
     }
 }

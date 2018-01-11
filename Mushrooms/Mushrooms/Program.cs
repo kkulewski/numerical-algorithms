@@ -80,6 +80,8 @@ namespace Mushrooms
                         Summarizer.WriteTimes();
                         Console.WriteLine(" ...finished");
                     }
+
+                    Summarizer.WriteTimePerMethod();
                     break;
 
                 case "-s":
