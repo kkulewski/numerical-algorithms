@@ -16,7 +16,7 @@ namespace Mushrooms.Helpers
             var eigenSparseTime = File.ReadAllLines(IoConsts.EigenGaussPartialPivotSparse)[0];
 
             var output = $"{size};{generationTime};{gaussPartialTime};{gaussPartialSparseTime};{gaussSeidelTime};{eigenSparseTime}";
-            File.WriteAllText(IoConsts.SummaryMethodsTime, output);
+            File.AppendAllText(IoConsts.SummaryMethodsTime, output);
         }
     }
 }
