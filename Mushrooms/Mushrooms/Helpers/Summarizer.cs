@@ -1,11 +1,18 @@
 ﻿using Mushrooms.IO;
+using System;
 using System.IO;
 
 namespace Mushrooms.Helpers
 {
     public static class Summarizer
     {
-        public static void SummarizeTime()
+        public static void WriteHeader()
+        {
+            var output = "size;generation-time;gauss-partial;gauss-partial-sparse;gauss-seidel;eigen-sparse";
+            File.WriteAllText(IoConsts.SummaryMethodsTime, output + Environment.NewLine);
+        }
+
+        public static void WriteTimes()
         {
             var size = File.ReadAllLines(IoConsts.Matrix)[0];
 
@@ -16,7 +23,7 @@ namespace Mushrooms.Helpers
             var eigenSparseTime = File.ReadAllLines(IoConsts.EigenGaussPartialPivotSparse)[0];
 
             var output = $"{size};{generationTime};{gaussPartialTime};{gaussPartialSparseTime};{gaussSeidelTime};{eigenSparseTime}";
-            File.AppendAllText(IoConsts.SummaryMethodsTime, output);
+            File.AppendAllText(IoConsts.SummaryMethodsTime, output + Environment.NewLine);
         }
     }
 }
