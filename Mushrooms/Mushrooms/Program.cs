@@ -33,7 +33,8 @@ namespace Mushrooms
         {
             const int defaultMonteCarloIterations = 1000000;
             const int defaultTestCount = 1;
-            const int defaultSolveIterations = 100;
+            const double defaultIterativeAccuracy = 1e-10;
+
             var gtr = new GameTestRunner();
             int tests;
 
@@ -57,7 +58,8 @@ namespace Mushrooms
                         ? int.Parse(args[1]) 
                         : defaultTestCount;
 
-                    gtr.SolveGameGauss(tests);
+                    gtr.SolveGameGaussPartial(tests);
+                    gtr.SolveGameGaussPartialSparse(tests);
                     break;
 
                 case "-i":
@@ -65,11 +67,7 @@ namespace Mushrooms
                         ? int.Parse(args[1])
                         : defaultTestCount;
 
-                    var iterations = args.Length > 2 && args[2] != null
-                        ? int.Parse(args[2])
-                        : defaultSolveIterations;
-
-                    gtr.SolveGameIterative(tests, iterations);
+                    gtr.SolveGameGaussSeidel(tests, defaultIterativeAccuracy);
                     break;
 
                 case "-s":
@@ -83,8 +81,9 @@ namespace Mushrooms
                     var gameConfig = new GameConfig(IoConsts.GameConfig);
                     gtr.CreateGame(gameConfig);
 
-                    gtr.SolveGameGauss(1);
-                    gtr.SolveGameIterative(1, 100);
+                    gtr.SolveGameGaussPartial(defaultTestCount);
+                    gtr.SolveGameGaussPartialSparse(defaultTestCount);
+                    gtr.SolveGameGaussSeidel(defaultTestCount, defaultIterativeAccuracy);
                     break;
 
                 case "-c":

@@ -81,17 +81,21 @@ namespace Mushrooms
                 time);
         }
 
-        public void SolveGameIterative(int testCount, int iterations)
+        public void SolveGameGaussSeidel(int testCount, double accuracy)
         {
             LoadMatrices();
-            SolveJacobi(testCount, iterations);
-            SolveGaussSeidel(testCount, iterations);
+            SolveGaussSeidel(testCount, accuracy);
         }
 
-        public void SolveGameGauss(int testCount)
+        public void SolveGameGaussPartial(int testCount)
         {
             LoadMatrices();
             SolveGaussPartialPivot(testCount);
+        }
+
+        public void SolveGameGaussPartialSparse(int testCount)
+        {
+            LoadMatrices();
             SolveGaussPartialPivotSparse(testCount);
         }
 
@@ -163,6 +167,35 @@ namespace Mushrooms
                 _stopwatch.Reset();
                 _stopwatch.Start();
                 matrix.GaussSeidel(vector, iterations);
+                _stopwatch.Stop();
+                _time += _stopwatch.Elapsed;
+            }
+
+            var time = _time.TotalMilliseconds / testCount;
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.CsharpGaussSeidel,
+                MyMatrixFormatter.GetFormattedVector(vector),
+                CurrentMatrixSize,
+                time);
+
+            MyMatrixIoHandler.WriteToFileWithTimespan(IoConsts.PrefixWinChance + IoConsts.CsharpGaussSeidel,
+                MyMatrixFormatter.GetFormattedVector(new[] { vector[GetInitialStateIndex()] }),
+                1,
+                time);
+        }
+
+        private void SolveGaussSeidel(int testCount, double accuracy)
+        {
+            _time = new TimeSpan();
+            var vector = Vector;
+
+            for (var i = 0; i < testCount; i++)
+            {
+                var matrix = new MyMatrix<double>(Matrix);
+                vector = Vector;
+
+                _stopwatch.Reset();
+                _stopwatch.Start();
+                matrix.GaussSeidel(vector, accuracy);
                 _stopwatch.Stop();
                 _time += _stopwatch.Elapsed;
             }
