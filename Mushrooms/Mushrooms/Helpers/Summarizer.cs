@@ -49,5 +49,15 @@ namespace Mushrooms.Helpers
 
             return boardSizes;
         }
+
+        public static void DisplayFunction()
+        {
+            var args = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixTime + "size" + IoConsts.FileType, false).Item1;
+            var vals = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixTime + IoConsts.CsharpGaussPartialPivot, false).Item1;
+
+            var func = Approximator.GetApproximation(3, args, vals);
+            Console.WriteLine(func.GetFunctionString());
+            Console.WriteLine(func.GetResult(576));
+        }
     }
 }

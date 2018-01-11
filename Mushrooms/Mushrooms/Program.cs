@@ -82,6 +82,7 @@ namespace Mushrooms
                     }
 
                     Summarizer.WriteTimePerMethod();
+                    Summarizer.DisplayFunction();
                     break;
 
                 case "-s":
