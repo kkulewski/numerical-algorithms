@@ -25,11 +25,10 @@ namespace Mushrooms
                 var lines = File.ReadAllLines(fileName);
 
                 BoardBound = int.Parse(lines[0]);
-                var positions = lines[1].Split(' ');
-                Player1Position = int.Parse(positions[0]);
-                Player2Position = int.Parse(positions[1]);
-                DiceFacesCount = int.Parse(lines[2]);
-                DiceFaces = ParseDiceFaces(DiceFacesCount, lines[3], lines[4]);
+                Player1Position = BoardBound;
+                Player2Position = -BoardBound;
+                DiceFacesCount = int.Parse(lines[1]);
+                DiceFaces = ParseDiceFaces(DiceFacesCount, lines[2], lines[3]);
             }
             catch
             {
