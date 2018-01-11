@@ -432,6 +432,31 @@ namespace Mushrooms
             }
         }
 
+        public void GaussSeidel(T[] bVector, double accuracy)
+        {
+            var xVector = new T[Cols];
+            var xVectorFromPreviousIteration = new T[bVector.Length];
+
+            bool enoughAccurracy = false;
+            while (!enoughAccurracy)
+            {
+                xVectorFromPreviousIteration = (T[])xVector.Clone();
+                
+                // approximate each unknown (x1, x2, x3...) in equation
+                for (var row = 0; row < Rows; row++)
+                {
+                    xVector[row] = (dynamic)JacobiApproximateUnknown(bVector, xVector, row);
+                }
+
+                enoughAccurracy = Math.Abs(VectorNorm(xVector, xVectorFromPreviousIteration)) <= accuracy/10;
+            }
+
+            for (var i = 0; i < Rows; i++)
+            {
+                bVector[i] = xVector[i];
+            }
+        }
+
         public void Jacobi(T[] bVector, int iterations)
         {
             var xVector = new T[Cols];
