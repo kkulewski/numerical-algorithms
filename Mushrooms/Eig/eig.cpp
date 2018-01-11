@@ -52,10 +52,6 @@ int main(int argc, char* argv[])
         end = high_resolution_clock::now();
         dPartialNs += duration_cast<nanoseconds>(end - start).count();
     }
-    
-    stringstream dPartialResult;
-    dPartialResult << dPartial.format(VResultFormat);
-    saveMatrix(RESULT_GAUSS_PARTIAL, matrixSize, dPartialNs / testCount, dPartialResult.str());
 
     // PARTIAL PIVOT - WIN CHANCE
     VectorXd dPartialWinChance(1);
@@ -84,10 +80,6 @@ int main(int argc, char* argv[])
         end = high_resolution_clock::now();
         dSparseNs += duration_cast<nanoseconds>(end - start).count();
     }
-
-    stringstream dSparseResult;
-    dSparseResult << dSparse.format(VResultFormat);
-    saveMatrix(RESULT_SPARSE, matrixSize, dSparseNs / testCount, dSparseResult.str());
 
     // SPARSE - WIN CHANCE
     VectorXd dSparseWinChance(1);

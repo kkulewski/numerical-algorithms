@@ -51,7 +51,6 @@
     <Compile Include="IO\IoConsts.cs" />
     <Compile Include="IO\MyMatrixFormatter.cs" />
     <Compile Include="IO\MyMatrixIoHandler.cs" />
-    <Compile Include="IO\MyMatrixTestAnalyzer.cs" />
     <Compile Include="GameTestRunner.cs" />
     <Compile Include="MyMatrix.cs" />
     <Compile Include="Program.cs" />

@@ -16,9 +16,7 @@
         public const string Vector = PrefixInput + "vector" + FileType;
         public const string MatrixGenerationTime = PrefixInput + "time_matrix" + FileType;
         public const string InitialStateIndex = PrefixInput + "initial-state" + FileType;
-
-        public const string CsharpMonteCarlo = PrefixResult + PrefixCsharp + "monte-carlo" + FileType;
-        public const string CsharpJacobi = PrefixResult + PrefixCsharp + "jacobi" + FileType;
+        
         public const string CsharpGaussSeidel = PrefixResult + PrefixCsharp + "gauss-seidel" + FileType;
         public const string CsharpGaussPartialPivot = PrefixResult + PrefixCsharp + "gauss-partial" + FileType;
         public const string CsharpGaussPartialPivotSparse = PrefixResult + PrefixCsharp + "gauss-partial-sparse" + FileType;
