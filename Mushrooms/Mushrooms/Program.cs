@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Threading;
 using Mushrooms.IO;
 using Mushrooms.Helpers;
+using System.Diagnostics;
 
 namespace Mushrooms
 {
@@ -31,24 +32,17 @@ namespace Mushrooms
 
         public static void Run(string[] args)
         {
-            const int defaultTestCount = 1;
-            const int defaultBoardSize = 10;
             const double defaultIterativeAccuracy = 1e-10;
-            var gtr = new GameTestRunner();
+            const int defaultTestCount = 1;
+            const int defaultBoardStartSize = 3;
+            const int defaultBoardEndSize = 10;
 
+            var gtr = new GameTestRunner();
             switch (args[0])
             {
                 case "-p":
                     var config = new GameConfig(IoConsts.GameConfig);
                     gtr.CreateGame(config);
-                    break;
-
-                case "-p2":
-                    var size = args.Length > 1 && args[1] != null
-                        ? int.Parse(args[1])
-                        : defaultBoardSize;
-
-
                     break;
 
                 case "-g":
@@ -61,16 +55,36 @@ namespace Mushrooms
                     break;
 
                 case "-a":
-                    var gameConfig = new GameConfig(IoConsts.GameConfig);
-                    gtr.CreateGame(gameConfig);
+                    var startSize = args.Length > 1 && args[1] != null
+                        ? int.Parse(args[1])
+                        : defaultBoardStartSize;
 
-                    gtr.SolveGameGaussPartial(defaultTestCount);
-                    gtr.SolveGameGaussPartialSparse(defaultTestCount);
-                    gtr.SolveGameGaussSeidel(defaultTestCount, defaultIterativeAccuracy);
+                    var endSize = args.Length > 2 && args[2] != null
+                        ? int.Parse(args[2])
+                        : defaultBoardEndSize;
+
+                    var gameConfig = new GameConfig(IoConsts.GameConfig);
+
+                    Summarizer.WriteHeader();
+                    for (var i = startSize; i <= endSize; i++)
+                    {
+                        Console.Write("Board size: " + i);
+                        gameConfig.BoardBound = i;
+                        gtr.CreateGame(gameConfig);
+
+                        Process.Start("eig.exe").WaitForExit();
+                        gtr.SolveGameGaussPartial(defaultTestCount);
+                        gtr.SolveGameGaussPartialSparse(defaultTestCount);
+                        gtr.SolveGameGaussSeidel(defaultTestCount, defaultIterativeAccuracy);
+
+                        Summarizer.WriteTimes();
+                        Console.WriteLine(" ...finished");
+                    }
                     break;
 
                 case "-s":
-                    Summarizer.SummarizeTime();
+                    Summarizer.WriteHeader();
+                    Summarizer.WriteTimes();
                     break;
 
                 default:
