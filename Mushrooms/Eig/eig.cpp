@@ -25,7 +25,7 @@ void saveMatrix(char* fileName, int size, long long durationNs, string result);
 int main(int argc, char* argv[])
 {
     int testCountArg = atoi(argv[1]);
-    int testCount = testCountArg > 0 ? testCountArg : 1;
+    int testCount = testCountArg > 0 ? testCountArg : 10;
 
     IOFormat VResultFormat(FullPrecision, DontAlignCols, " ", " ", "", "", "", "");
     IOFormat MResultFormat(FullPrecision, DontAlignCols, " ", "", "", "\n", "", "");
