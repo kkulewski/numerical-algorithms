@@ -9,7 +9,7 @@ namespace Mushrooms.Helpers
     {
         public static void WriteHeader()
         {
-            var output = "size;generation-time;gauss-partial;gauss-partial-sparse;gauss-seidel;eigen-sparse";
+            const string output = "size;generation-time;gauss-partial;gauss-partial-sparse;gauss-seidel;eigen-sparse";
             File.WriteAllText(IoConsts.SummaryMethodsTime, output + Environment.NewLine);
         }
 
@@ -29,8 +29,8 @@ namespace Mushrooms.Helpers
 
         public static void WriteTimePerMethod()
         {
-            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(0), IoConsts.PrefixTime + "size" + IoConsts.FileType);
-            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(1), IoConsts.PrefixTime + "generation" + IoConsts.FileType);
+            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(0), IoConsts.PrefixTime + IoConsts.Size + IoConsts.FileType);
+            MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(1), IoConsts.PrefixTime + IoConsts.Generation + IoConsts.FileType);
             MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(2), IoConsts.PrefixTime + IoConsts.CsharpGaussPartialPivot);
             MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(3), IoConsts.PrefixTime + IoConsts.CsharpGaussPartialPivotSparse);
             MyMatrixIoHandler.WriteVectorToFile(LoadVectorFromSummary(4), IoConsts.PrefixTime + IoConsts.CsharpGaussSeidel);
@@ -69,12 +69,12 @@ namespace Mushrooms.Helpers
         private static void WriteApproximationFunctionToFile(int polynomialDegree, string functionFileName)
         {
             var function = GetApproximationFunction(polynomialDegree, functionFileName);
-            File.WriteAllText("approximation_" + functionFileName, function.GetFunctionString());
+            File.WriteAllText(IoConsts.PrefixApproximation + functionFileName, function.GetFunctionString());
         }
 
         private static double[] GetMatrixSizeVector()
         {
-            return MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixTime + "size" + IoConsts.FileType, false).Item1;
+            return MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixTime + IoConsts.Size + IoConsts.FileType, false).Item1;
         }
 
         private static double[] GetFunctionValuesVector(string functionFileName)
