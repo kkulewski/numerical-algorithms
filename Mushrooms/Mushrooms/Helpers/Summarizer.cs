@@ -50,14 +50,35 @@ namespace Mushrooms.Helpers
             return boardSizes;
         }
 
-        public static void DisplayFunction()
+        public static void WriteApproximationFunctions()
         {
-            var args = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixTime + "size" + IoConsts.FileType, false).Item1;
-            var vals = MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixTime + IoConsts.CsharpGaussPartialPivot, false).Item1;
+            WriteApproximationFunctionToFile(3, IoConsts.CsharpGaussPartialPivot);
+            WriteApproximationFunctionToFile(2, IoConsts.CsharpGaussPartialPivotSparse);
+            WriteApproximationFunctionToFile(1, IoConsts.EigenGaussPartialPivotSparse);
+            WriteApproximationFunctionToFile(2, IoConsts.CsharpGaussSeidel);
+        }
 
-            var func = Approximator.GetApproximation(3, args, vals);
-            Console.WriteLine(func.GetFunctionString());
-            Console.WriteLine(func.GetResult(576));
+        public static ApproximationFunction GetApproximationFunction(int polynomialDegree, string functionFileName)
+        {
+            var args = GetMatrixSizeVector();
+            var vals = GetFunctionValuesVector(functionFileName);
+            return Approximator.GetApproximation(polynomialDegree, args, vals);
+        }
+
+        private static void WriteApproximationFunctionToFile(int polynomialDegree, string functionFileName)
+        {
+            var function = GetApproximationFunction(polynomialDegree, functionFileName);
+            File.WriteAllText("approximation_" + functionFileName, function.GetFunctionString());
+        }
+
+        private static double[] GetMatrixSizeVector()
+        {
+            return MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixTime + "size" + IoConsts.FileType, false).Item1;
+        }
+
+        private static double[] GetFunctionValuesVector(string functionFileName)
+        {
+            return MyMatrixIoHandler.LoadDoubleVector(IoConsts.PrefixTime + functionFileName, false).Item1;
         }
     }
 }
