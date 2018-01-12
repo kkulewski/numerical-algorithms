@@ -82,7 +82,7 @@ namespace Mushrooms
                     Summarizer.WriteHeader();
                     for (var i = startSize; i <= endSize; i++)
                     {
-                        Console.WriteLine(Environment.NewLine + "## Board size: " + i);
+                        Console.WriteLine(Environment.NewLine + $"## Board size: {i}");
                         gameConfig.BoardBound = i;
 
                         Console.Write("# Creating game...".PadRight(padding));
