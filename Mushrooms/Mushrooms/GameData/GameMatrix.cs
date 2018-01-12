@@ -1,4 +1,4 @@
-﻿namespace Mushrooms
+﻿namespace Mushrooms.GameData
 {
     public static class GameMatrix
     {

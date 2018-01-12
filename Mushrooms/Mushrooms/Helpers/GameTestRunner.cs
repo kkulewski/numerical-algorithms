@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using Mushrooms.GameData;
 using Mushrooms.IO;
 
-namespace Mushrooms
+namespace Mushrooms.Helpers
 {
     public class GameTestRunner
     {
         private readonly Stopwatch _stopwatch;
         private TimeSpan _time;
-
-        private int CurrentMatrixSize => _matrix.Rows;
 
         private MyMatrix<double> _matrix;
         private double[,] Matrix => (double[,]) _matrix.Matrix.Clone();

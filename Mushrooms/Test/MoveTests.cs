@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mushrooms;
+using Mushrooms.GameData;
 using Xunit;
 
 namespace Test

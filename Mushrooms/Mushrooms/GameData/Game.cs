@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Mushrooms
+namespace Mushrooms.GameData
 {
     public class Game
     {

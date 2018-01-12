@@ -4,6 +4,7 @@ using System.Threading;
 using Mushrooms.IO;
 using Mushrooms.Helpers;
 using System.Diagnostics;
+using Mushrooms.GameData;
 
 namespace Mushrooms
 {
@@ -37,6 +38,7 @@ namespace Mushrooms
             const int defaultBoardStartSize = 3;
             const int defaultBoardEndSize = 10;
             const string eigenExecutableName = "eig.exe";
+            const int eigenTestMultiplier = 10;
 
             var gtr = new GameTestRunner();
             switch (args[0])
@@ -70,8 +72,13 @@ namespace Mushrooms
                         ? int.Parse(args[2])
                         : defaultBoardEndSize;
 
-                    var gameConfig = new GameConfig(IoConsts.GameConfig);
+                    var testCount = args.Length > 3 && args[3] != null
+                        ? int.Parse(args[3])
+                        : defaultTestCount;
 
+                    var gameConfig = new GameConfig(IoConsts.GameConfig);
+                    
+                    Console.WriteLine($"## Tests: {testCount} (x{eigenTestMultiplier} eigen)");
                     Summarizer.WriteHeader();
                     for (var i = startSize; i <= endSize; i++)
                     {
@@ -83,13 +90,14 @@ namespace Mushrooms
                         Console.WriteLine("done");
 
                         Console.Write("# Solving with Eigen...".PadRight(padding));
-                        Process.Start(eigenExecutableName)?.WaitForExit();
+                        var processInfo = GetEigenProcess(eigenExecutableName, testCount * eigenTestMultiplier);
+                        Process.Start(processInfo)?.WaitForExit();
                         Console.WriteLine("done");
 
                         Console.Write("# Solving with C#...".PadRight(padding));
-                        gtr.SolveGameGaussPartial(defaultTestCount);
-                        gtr.SolveGameGaussPartialSparse(defaultTestCount);
-                        gtr.SolveGameGaussSeidel(defaultTestCount, defaultIterativeAccuracy);
+                        gtr.SolveGameGaussPartial(testCount);
+                        gtr.SolveGameGaussPartialSparse(testCount);
+                        gtr.SolveGameGaussSeidel(testCount, defaultIterativeAccuracy);
                         Console.WriteLine("done");
 
                         Console.Write("# Writing time summary...".PadRight(padding));
@@ -112,13 +120,22 @@ namespace Mushrooms
             }
         }
 
-        public static void DisplayHelp()
+        private static void DisplayHelp()
         {
             Console.WriteLine("Invalid option!");
-            Console.WriteLine("-a START_SIZE  END_SIZE   -- run complete procedure");
-            Console.WriteLine("-g                        -- solve game matrix (gauss)");
-            Console.WriteLine("-i                        -- solve game matrix (iterative)");
-            Console.WriteLine("-s                        -- create summary");
+            Console.WriteLine("-a START_SIZE  END_SIZE  TESTS   -- run complete procedure");
+            Console.WriteLine("-g                               -- solve game matrix (gauss)");
+            Console.WriteLine("-i                               -- solve game matrix (iterative)");
+            Console.WriteLine("-s                               -- create summary");
+        }
+
+        private static ProcessStartInfo GetEigenProcess(string executableFileName, int testCount)
+        {
+            return new ProcessStartInfo
+            {
+                FileName = executableFileName,
+                Arguments = $"{testCount}"
+            };
         }
     }
 }

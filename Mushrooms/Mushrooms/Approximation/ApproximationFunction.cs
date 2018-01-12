@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mushrooms.Helpers
+namespace Mushrooms.Approximation
 {
     public class ApproximationFunction
     {

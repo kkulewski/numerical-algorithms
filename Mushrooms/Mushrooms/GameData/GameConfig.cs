@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Mushrooms
+namespace Mushrooms.GameData
 {
     public class GameConfig
     {

@@ -1,6 +1,7 @@
 ﻿using Mushrooms.IO;
 using System;
 using System.IO;
+using Mushrooms.Approximation;
 
 namespace Mushrooms.Helpers
 {

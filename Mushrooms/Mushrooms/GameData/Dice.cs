@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mushrooms
+namespace Mushrooms.GameData
 {
     public class Dice : IEnumerable<DiceFace>
     {
