@@ -36,6 +36,7 @@ namespace Mushrooms
             const int defaultTestCount = 1;
             const int defaultBoardStartSize = 3;
             const int defaultBoardEndSize = 10;
+            const string eigenExecutableName = "eig.exe";
 
             var gtr = new GameTestRunner();
             switch (args[0])
@@ -54,7 +55,13 @@ namespace Mushrooms
                     gtr.SolveGameGaussSeidel(defaultTestCount, defaultIterativeAccuracy);
                     break;
 
+                case "-s":
+                    Summarizer.WriteHeader();
+                    Summarizer.WriteTimes();
+                    break;
+
                 case "-a":
+                    const int padding = 40;
                     var startSize = args.Length > 1 && args[1] != null
                         ? int.Parse(args[1])
                         : defaultBoardStartSize;
@@ -68,26 +75,35 @@ namespace Mushrooms
                     Summarizer.WriteHeader();
                     for (var i = startSize; i <= endSize; i++)
                     {
-                        Console.Write("Board size: " + i);
+                        Console.WriteLine(Environment.NewLine + "## Board size: " + i);
                         gameConfig.BoardBound = i;
-                        gtr.CreateGame(gameConfig);
 
-                        Process.Start("eig.exe").WaitForExit();
+                        Console.Write("# Creating game...".PadRight(padding));
+                        gtr.CreateGame(gameConfig);
+                        Console.WriteLine("done");
+
+                        Console.Write("# Solving with Eigen...".PadRight(padding));
+                        Process.Start(eigenExecutableName)?.WaitForExit();
+                        Console.WriteLine("done");
+
+                        Console.Write("# Solving with C#...".PadRight(padding));
                         gtr.SolveGameGaussPartial(defaultTestCount);
                         gtr.SolveGameGaussPartialSparse(defaultTestCount);
                         gtr.SolveGameGaussSeidel(defaultTestCount, defaultIterativeAccuracy);
+                        Console.WriteLine("done");
 
+                        Console.Write("# Writing time summary...".PadRight(padding));
                         Summarizer.WriteTimes();
-                        Console.WriteLine(" ...finished");
+                        Console.WriteLine("done");
                     }
 
+                    Console.WriteLine(Environment.NewLine + "## Summaries");
+                    Console.Write("# Writing time per method...".PadRight(padding));
                     Summarizer.WriteTimePerMethod();
-                    Summarizer.DisplayFunction();
-                    break;
-
-                case "-s":
-                    Summarizer.WriteHeader();
-                    Summarizer.WriteTimes();
+                    Console.WriteLine("done");
+                    Console.Write("# Writing approximation functions...".PadRight(padding));
+                    Summarizer.WriteApproximationFunctions();
+                    Console.WriteLine("done");
                     break;
 
                 default:
@@ -99,9 +115,10 @@ namespace Mushrooms
         public static void DisplayHelp()
         {
             Console.WriteLine("Invalid option!");
-            Console.WriteLine("-g  TEST_COUNT                       -- solve game matrix (gauss)");
-            Console.WriteLine("-i  TEST_COUNT  ITERATIONS           -- solve game matrix (iterative)");
-            Console.WriteLine("-s                                   -- create summary");
+            Console.WriteLine("-a START_SIZE  END_SIZE   -- run complete procedure");
+            Console.WriteLine("-g                        -- solve game matrix (gauss)");
+            Console.WriteLine("-i                        -- solve game matrix (iterative)");
+            Console.WriteLine("-s                        -- create summary");
         }
     }
 }
