@@ -435,12 +435,11 @@ namespace Mushrooms
         public void GaussSeidel(T[] bVector, double accuracy)
         {
             var xVector = new T[Cols];
-            var xVectorFromPreviousIteration = new T[bVector.Length];
 
-            bool enoughAccurracy = false;
+            var enoughAccurracy = false;
             while (!enoughAccurracy)
             {
-                xVectorFromPreviousIteration = (T[])xVector.Clone();
+                var xVectorFromPreviousIteration = (T[])xVector.Clone();
                 
                 // approximate each unknown (x1, x2, x3...) in equation
                 for (var row = 0; row < Rows; row++)
