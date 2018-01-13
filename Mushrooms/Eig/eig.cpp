@@ -7,6 +7,8 @@
 #include "Eigen/SparseLU"
 
 #define INPUT_MATRIX "input_matrix.txt"
+#define INPUT_SPARSE_MATRIX "input_sparse_matrix.txt"
+#define INPUT_SPARSE_MATRIX_DENSITY "input_sparse_matrix_density.txt"
 #define INPUT_VECTOR "input_vector.txt"
 #define INPUT_INITIAL_STATE "input_initial-state.txt"
 #define WINCHANCE_GAUSS_PARTIAL "result_eigen_gauss-partial.txt"
@@ -17,6 +19,7 @@ using namespace std;
 using namespace chrono;
 
 MatrixXd loadMatrix(const char* fileName);
+SparseMatrix<double> loadMatrixSparse(const char* fileName, VectorXd matrixSparseDensity);
 VectorXd loadVector(const char* fileName);
 int loadInitialStateIndex(const char* fileName);
 void saveMatrix(char* fileName, int size, long long durationNs, string result);
@@ -26,23 +29,31 @@ int main(int argc, char* argv[])
 {
     int testCountArg = atoi(argv[1]);
     int testCount = testCountArg > 0 ? testCountArg : 10;
+    bool sparseSource = argv[2] != NULL ? true : false;
 
     IOFormat VResultFormat(FullPrecision, DontAlignCols, " ", " ", "", "", "", "");
     IOFormat MResultFormat(FullPrecision, DontAlignCols, " ", "", "", "\n", "", "");
     auto start = high_resolution_clock::now();
     auto end = high_resolution_clock::now();
 
-    
-    // LOAD MATRICES
-    MatrixXd dA = loadMatrix(INPUT_MATRIX);
+    // LOAD GAME MATRIX
+    SparseMatrix<double> sdA;
+    if(sparseSource == true)
+    {
+        VectorXd sparseMatrixDensity = loadVector(INPUT_SPARSE_MATRIX_DENSITY);
+        sdA = loadMatrixSparse(INPUT_SPARSE_MATRIX, sparseMatrixDensity);
+    }
+    else
+    {
+        MatrixXd dA = loadMatrix(INPUT_MATRIX);
+        sdA = dA.sparseView();
+    }
+
+    // LOAD PROBABILITY VECTOR
     VectorXd dX = loadVector(INPUT_VECTOR);
-    int matrixSize = dA.rows();
-
-
-    // SPARSE LU
-    SparseMatrix<double> sdA = dA.sparseView();
     SparseVector<double> sdX = dX.sparseView();
 
+    // SPARSE LU
     SparseLU<Eigen::SparseMatrix<double>> solver;
     sdA.makeCompressed();
     solver.analyzePattern(sdA);
@@ -67,17 +78,17 @@ int main(int argc, char* argv[])
     saveMatrix(WINCHANCE_SPARSE, 1, dSparseNs / testCount, dSparseWinChanceResult.str());
 }
 
-SparseMatrix<double> loadMatrixSparse(const char* fileName, VectorXd vector) 
+SparseMatrix<double> loadMatrixSparse(const char* fileName, VectorXd matrixSparseDensity) 
 {
     ifstream file(fileName);
 	int rows;
 	file >> rows;
     
 	SparseMatrix<double> matrix(rows, rows);
-	matrix.reserve(vector);
+	matrix.reserve(matrixSparseDensity);
     
 	double row, col, value;
-    int totalNonZeroValues = vector.sum();
+    int totalNonZeroValues = matrixSparseDensity.sum();
     for (int i = 0; i < totalNonZeroValues; i++) 
     {
 		file >> row;
