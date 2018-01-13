@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mushrooms", "Mushrooms\Mushrooms.csproj", "{BB92A950-B3F9-42DB-B543-76FF4DA6A29D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{84E2E5B0-C42B-4405-8098-0ABF9F3AEDAD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{BB92A950-B3F9-42DB-B543-76FF4DA6A29D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB92A950-B3F9-42DB-B543-76FF4DA6A29D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB92A950-B3F9-42DB-B543-76FF4DA6A29D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{84E2E5B0-C42B-4405-8098-0ABF9F3AEDAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{84E2E5B0-C42B-4405-8098-0ABF9F3AEDAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{84E2E5B0-C42B-4405-8098-0ABF9F3AEDAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{84E2E5B0-C42B-4405-8098-0ABF9F3AEDAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
