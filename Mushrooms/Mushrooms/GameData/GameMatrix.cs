@@ -1,4 +1,8 @@
-﻿namespace Mushrooms.GameData
+﻿using System.Dynamic;
+using System.IO;
+using System.Text;
+
+namespace Mushrooms.GameData
 {
     public static class GameMatrix
     {
@@ -35,6 +39,28 @@
             }
 
             return probabilityVector;
+        }
+
+        public static void SaveEquationsToSparseMatrix(Game game)
+        {
+            var states = game.GameStates;
+            var size = states.Count;
+
+            var output = new StringBuilder();
+            output.AppendLine($"{size}");
+
+            for (var row = 0; row < size; row++)
+            {
+                output.AppendLine($"{row} {row} 1");
+                foreach (var transition in states[row].Transitions)
+                {
+                    var column = transition.Value.GameStateId;
+                    var value = -transition.Key.Probability;
+                    output.AppendLine($"{row} {column} {value}");
+                }
+            }
+
+            File.WriteAllText("sparse_input_matrix.txt", output.ToString());
         }
     }
 }

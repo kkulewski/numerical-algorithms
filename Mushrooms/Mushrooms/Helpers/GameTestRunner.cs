@@ -46,6 +46,17 @@ namespace Mushrooms.Helpers
             WriteInitialStateIndex(_game);
         }
 
+        public void CreateGameSparse(GameConfig config)
+        {
+            _dice = Dice.GetDice(config.DiceFaces);
+            _game = new Game(config.BoardSize, config.Player1Position, config.Player2Position, _dice);
+            _game.GeneratePossibleStates();
+            _game.GeneratePossibleTransitions();
+            GameMatrix.SaveEquationsToSparseMatrix(_game);
+            WriteProbabilityVector(_game);
+            WriteInitialStateIndex(_game);
+        }
+
         public void SolveGameGaussSeidel(int testCount, double accuracy)
         {
             LoadMatrices();
