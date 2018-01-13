@@ -1,5 +1,6 @@
 ﻿using System.Dynamic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Mushrooms.GameData
@@ -44,23 +45,39 @@ namespace Mushrooms.GameData
         public static void SaveEquationsToSparseMatrix(Game game)
         {
             var states = game.GameStates;
-            var size = states.Count;
+            var totalRows = states.Count;
+            var nonZeroValuesInRow = new int[totalRows];
 
-            var output = new StringBuilder();
-            output.AppendLine($"{size}");
+            var sparseMatrix = new StringBuilder();
+            sparseMatrix.AppendLine($"{totalRows}");
 
-            for (var row = 0; row < size; row++)
+            for (var row = 0; row < totalRows; row++)
             {
-                output.AppendLine($"{row} {row} 1");
+                nonZeroValuesInRow[row] += 1;
+                sparseMatrix.AppendLine($"{row} {row} 1");
+
                 foreach (var transition in states[row].Transitions)
                 {
+                    nonZeroValuesInRow[row] += 1;
                     var column = transition.Value.GameStateId;
                     var value = -transition.Key.Probability;
-                    output.AppendLine($"{row} {column} {value}");
+                    sparseMatrix.AppendLine($"{row} {column} {value}");
                 }
             }
 
-            File.WriteAllText("sparse_input_matrix.txt", output.ToString());
+            File.WriteAllText("input_sparse_matrix.txt", sparseMatrix.ToString());
+
+
+            var sparseMatrixDensity = new StringBuilder();
+            sparseMatrixDensity.AppendLine($"{nonZeroValuesInRow.Sum()}");
+            sparseMatrixDensity.AppendLine($"{totalRows}");
+
+            for (var row = 0; row < totalRows; row++)
+            {
+                sparseMatrixDensity.AppendLine($"{nonZeroValuesInRow[row]}");
+            }
+
+            File.WriteAllText("input_sparse_matrix_density.txt", sparseMatrixDensity.ToString());
         }
     }
 }
