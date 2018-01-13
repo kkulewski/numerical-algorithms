@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
     MatrixXd dA = loadMatrix(INPUT_MATRIX);
     VectorXd dX = loadVector(INPUT_VECTOR);
     int matrixSize = dA.rows();
-    
+
 
     // SPARSE LU
     SparseMatrix<double> sdA = dA.sparseView();
@@ -65,6 +65,45 @@ int main(int argc, char* argv[])
     stringstream dSparseWinChanceResult;
     dSparseWinChanceResult << dSparseWinChance.format(VResultFormat);
     saveMatrix(WINCHANCE_SPARSE, 1, dSparseNs / testCount, dSparseWinChanceResult.str());
+}
+
+SparseMatrix<double> loadMatrixSparse(const char* fileName, VectorXi vector) 
+{
+    ifstream file(fileName);
+	int rows;
+	file >> rows;
+    
+	SparseMatrix<double> matrix(rows, rows);
+	matrix.reserve(vector);
+    
+	double row, col, value;
+    int totalNonZeroValues = vector.sum();
+    for (int i = 0; i < totalNonZeroValues; i++) 
+    {
+		file >> row;
+		file >> col;
+		file >> value;
+		matrix.insert(row, col) = value;
+    }
+    
+	return matrix;
+}
+
+VectorXi loadMatrixSparseDensity(string fileName) 
+{
+    ifstream file(fileName);
+	int rows;
+    file >> rows;
+    
+    int nonZeroValuesInRow;
+	VectorXi densityVector(rows);
+    for (int row = 0; row < rows; row++) 
+    {
+		file >> nonZeroValuesInRow;
+		densityVector(row) = nonZeroValuesInRow;
+	}
+
+	return densityVector;
 }
 
 MatrixXd loadMatrix(const char* fileName)
