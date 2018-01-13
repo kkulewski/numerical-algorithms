@@ -38,7 +38,7 @@ namespace Mushrooms
             const int defaultBoardStartSize = 3;
             const int defaultBoardEndSize = 10;
             const string eigenExecutableName = "eig.exe";
-            const int eigenTestMultiplier = 10;
+            const int eigenTestMultiplier = 10000;
 
             var gtr = new GameTestRunner();
             switch (args[0])
@@ -62,6 +62,19 @@ namespace Mushrooms
                     Summarizer.WriteTimes();
                     break;
 
+                case "-e":
+                    const int testsCount = 1000;
+                    var boardSize = args.Length > 1 && args[1] != null
+                        ? int.Parse(args[1])
+                        : defaultBoardStartSize;
+
+                    var gc = new GameConfig(IoConsts.GameConfig) { BoardBound = boardSize };
+                    gtr.CreateGameSparse(gc);
+
+                    var pi = GetEigenProcess(eigenExecutableName, testsCount);
+                    Process.Start(pi)?.WaitForExit();
+                    break;
+
                 case "-a":
                     const int padding = 40;
                     var startSize = args.Length > 1 && args[1] != null
@@ -72,21 +85,24 @@ namespace Mushrooms
                         ? int.Parse(args[2])
                         : defaultBoardEndSize;
 
-                    var testCount = args.Length > 3 && args[3] != null
+                    var tests = args.Length > 3 && args[3] != null
                         ? int.Parse(args[3])
                         : defaultTestCount;
 
                     var gameConfig = new GameConfig(IoConsts.GameConfig);
                     
-                    Console.WriteLine($"## Tests: {testCount} (x{eigenTestMultiplier} eigen)");
                     Summarizer.WriteHeader();
                     for (var i = startSize; i <= endSize; i++)
                     {
+                        // more tests on small matrices for accuracy
+                        var testCount = i < 10 ? 10 - i : 1;
+
                         Console.WriteLine(Environment.NewLine + $"## Board size: {i}");
                         gameConfig.BoardBound = i;
 
                         Console.Write("# Creating game...".PadRight(padding));
                         gtr.CreateGame(gameConfig);
+                        gtr.CreateGameSparse(gameConfig);
                         Console.WriteLine("done");
 
                         Console.Write("# Solving with Eigen...".PadRight(padding));
@@ -134,7 +150,7 @@ namespace Mushrooms
             return new ProcessStartInfo
             {
                 FileName = executableFileName,
-                Arguments = $"{testCount}"
+                Arguments = $"{testCount} true"
             };
         }
     }
