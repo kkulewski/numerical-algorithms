@@ -69,7 +69,6 @@ namespace Mushrooms.GameData
 
 
             var sparseMatrixDensity = new StringBuilder();
-            sparseMatrixDensity.AppendLine($"{nonZeroValuesInRow.Sum()}");
             sparseMatrixDensity.AppendLine($"{totalRows}");
 
             for (var row = 0; row < totalRows; row++)

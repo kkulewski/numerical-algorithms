@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     saveMatrix(WINCHANCE_SPARSE, 1, dSparseNs / testCount, dSparseWinChanceResult.str());
 }
 
-SparseMatrix<double> loadMatrixSparse(const char* fileName, VectorXi vector) 
+SparseMatrix<double> loadMatrixSparse(const char* fileName, VectorXd vector) 
 {
     ifstream file(fileName);
 	int rows;
@@ -87,23 +87,6 @@ SparseMatrix<double> loadMatrixSparse(const char* fileName, VectorXi vector)
     }
     
 	return matrix;
-}
-
-VectorXi loadMatrixSparseDensity(string fileName) 
-{
-    ifstream file(fileName);
-	int rows;
-    file >> rows;
-    
-    int nonZeroValuesInRow;
-	VectorXi densityVector(rows);
-    for (int row = 0; row < rows; row++) 
-    {
-		file >> nonZeroValuesInRow;
-		densityVector(row) = nonZeroValuesInRow;
-	}
-
-	return densityVector;
 }
 
 MatrixXd loadMatrix(const char* fileName)
