@@ -37,27 +37,7 @@ int main(int argc, char* argv[])
     MatrixXd dA = loadMatrix(INPUT_MATRIX);
     VectorXd dX = loadVector(INPUT_VECTOR);
     int matrixSize = dA.rows();
-
-
-    // PARTIAL PIVOT
-    VectorXd dPartial(matrixSize);
-
-    long long dPartialNs = 0;
-    for (int i = 0; i < testCount; i++)
-    {
-        start = high_resolution_clock::now();
-        dPartial = dA.partialPivLu().solve(dX);
-        end = high_resolution_clock::now();
-        dPartialNs += duration_cast<nanoseconds>(end - start).count();
-    }
-
-    // PARTIAL PIVOT - WIN CHANCE
-    VectorXd dPartialWinChance(1);
-    dPartialWinChance(0) = dPartial(loadInitialStateIndex(INPUT_INITIAL_STATE)); 
-    stringstream dPartialWinChanceResult;
-    dPartialWinChanceResult << dPartialWinChance.format(VResultFormat);
-    saveMatrix(WINCHANCE_GAUSS_PARTIAL, 1, dPartialNs / testCount, dPartialWinChanceResult.str());
-
+    
 
     // SPARSE LU
     SparseMatrix<double> sdA = dA.sparseView();
