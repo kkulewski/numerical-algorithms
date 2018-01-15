@@ -95,7 +95,7 @@ namespace Mushrooms
                     for (var i = startSize; i <= endSize; i++)
                     {
                         // more tests on small matrices for accuracy
-                        var testCount = i < 10 ? 10 - i : 1;
+                        var testCount = i < 10 ? tests * (10 - i) : tests;
 
                         Console.WriteLine(Environment.NewLine + $"## Board size: {i}");
                         gameConfig.BoardBound = i;
