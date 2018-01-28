@@ -63,7 +63,7 @@ namespace Mushrooms
                     break;
 
                 case "-e":
-                    const int testsCount = 1000;
+                    const int testsCount = 100;
                     var boardSize = args.Length > 1 && args[1] != null
                         ? int.Parse(args[1])
                         : defaultBoardStartSize;
@@ -128,6 +128,10 @@ namespace Mushrooms
                     Console.Write("# Writing approximation functions...".PadRight(padding));
                     Summarizer.WriteApproximationFunctions();
                     Console.WriteLine("done");
+                    break;
+
+                case "-r":
+                    Summarizer.WriteApproximationFunctions();
                     break;
 
                 default:
