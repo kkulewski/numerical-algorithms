@@ -48,15 +48,6 @@ namespace Mushrooms
                     gtr.CreateGame(config);
                     break;
 
-                case "-g":
-                    gtr.SolveGameGaussPartial(defaultTestCount);
-                    gtr.SolveGameGaussPartialSparse(defaultTestCount);
-                    break;
-
-                case "-i":
-                    gtr.SolveGameGaussSeidel(defaultTestCount, defaultIterativeAccuracy);
-                    break;
-
                 case "-s":
                     Summarizer.WriteHeader();
                     Summarizer.WriteTimes();
@@ -128,10 +119,6 @@ namespace Mushrooms
                     Console.Write("# Writing approximation functions...".PadRight(padding));
                     Summarizer.WriteApproximationFunctions();
                     Console.WriteLine("done");
-                    break;
-
-                case "-r":
-                    Summarizer.WriteApproximationFunctions();
                     break;
 
                 default:
